@@ -1,0 +1,217 @@
+O-antigen,Structure,sugar
+O1 A,->3)aLRha(1->3)aLRha(1->3)bLRha(1->4)bDGlcNAc(1-> | bDManNAc(1->2),aLRha|bDGlcNAc|bLRha
+O1 A1,->3)aLRha(1->3)aLRha(1->3)bLRha(1->4)bDGlcNAc(1-> | bDManNAc(1->2),aLRha|bDGlcNAc|bLRha
+O1 B,->3)aLRha(1->2)aLRha(1->2)aDGal(1->3)bDGlcNAc(1-> | bDManNAc(1->2),aDGal|aLRha|bDGlcNAc
+O1 C,->3)aLRha(1->2)aLRha(1->3)aDGal(1->3)bDGlcNAc(1-> | bDManNAc(1->2),aDGal|aLRha|bDGlcNAc
+O2,->3)aLRha(1->2)aLRha(1->3)bLRha(1->4)bDGlcNAc(1-> | aDFuc3NAc(1->2),aLRha|bDGlcNAc|bLRha
+O3,bLRhaNAc(1->4) aDGlc(1->4) | ->3)bDGlcNAc(1->3)aDGal(1->3)bDGlcNAc(1->, aDGlc|aDGal|bDGlcNAc
+O4,->2)aLRha(1->6)aDGlc(1->3)aLFucNAc(1->3)bDGlcNAc(1->,aDGlc|aLFucNAc|aLRha|bDGlcNAc
+O4,aDGlc(1->3) | ->2)aLRha(1->6)aDGlc(1->3)aLFucNAc(1->3)bDGlcNAc(1->,aDGlc|aLFucNAc|aLRha|bDGlcNAc
+O5 ab,->4)bDQui3NAc(1->3)bDRibf(1->4)bDGal(1->3)aDGalNAc(1->,aDGalNAc|bDGal|bDQui3NAc|bDRibf
+O5 ac,->2)bDQui3NAc(1->3)bDRibf(1->4)bDGal(1->3)aDGalNAc(1->,aDGalNAc|bDGal|bDQui3NAc|bDRibf
+O6,->4)aDGalNAc(1->3)bDMan(1->4)bDMan(1->3)aDGlcNAc(1-> | bDGlc(1->2),aDGalNAc|aDGlcNAc|bDMan
+O6,->4)aDGalNAc(1->3)bDMan(1->4)bDMan(1->3)aDGlcNAc(1-> | bDGlcNAc(1->2),aDGalNAc|aDGlcNAc|bDMan
+O6,->4)aDGalNAc(1->3)bDMan(1->4)bDMan(1->3)aDGlcNAc(1-> | bDGlc(1->2),aDGalNAc|aDGlcNAc|bDMan
+O7,aLRha(1->3) | ->3)bDQui4NAc(1->2)aDMan(1->4)bDGal(1->3)aDGlcNAc(1->,aDGlcNAc|aDMan|bDGal|bDQui4NAc
+O8,->3)bDMan(1->2)aDMan(1->2)aDMan(1->,aDMan|bDMan
+O9,->3)aDMan(1->3)aDMan(1->2)aDMan(1->2)aDMan(1->2)aDMan(1->,aDMan
+O9 a,->3)aDMan(1->3)aDMan(1->2)aDMan(1->2)aDMan(1->,aDMan
+O10,->3)aLRha(1->3)aLRha(1->3)aDGal(1->3)bDGlcNAc(1-> | aDFuc4NBuR3OH(1->2),aDGal|aLRha|bDGlcNAc
+O11,->4)aDGalNAc(1->6)aDMan(1->3)aLFuc(1->3)bDGalNAc(1-> | aLFuc(1->3),aDGalNAc|aDMan|aLFuc|bDGalNAc
+O12,->2)bDGlc(1->6)aDGlcNAc(1->3)aLFucNAc(1->3)bDGlcNAc(1->,aDGlcNAc|aLFucNAc|bDGlc|bDGlcNAc
+O13,aDGlc(1->2) | ->2)aLRha(1->2)aLRha(1->3)aLRha(1->3)bDGlcNAc(1->,aLRha|bDGlcNAc
+O14,,
+O15,->2)bDGal(1->3)aLFucNAc(1->3)bDGlcNAc(1->,aLFucNAc|bDGal|bDGlcNAc
+O16,aDGlc(1->6) | ->2)bDGalf(1->6)aDGlc(1->3)aLRha2Ac(1->3)aDGlcNAc(1->,aDGlc|aDGlcNAc|aLRha2Ac|bDGalf
+O16,->2)bDGalf(1->6)aDGlc(1->3)aLRha(1->3)aDGlcNAc(1->,aDGlc|aDGlcNAc|aLRha|bDGalf
+O16,->2)bDGalf(1->6)aDGlc(1->3)aLRha2Ac(1->3)aDGlcNAc(1->,aDGlc|aDGlcNAc|aLRha2Ac|bDGalf
+O17,aDGlc(1->6) | ->6)aDMan(1->2)aDMan(1->2)bDMan(1->3)aDGlcNAc(1->,aDGlcNAc|aDMan|bDMan
+O18 A,->2)aLRha(1->6)aDGlc(1->4)aDGal(1->3)aDGlcNAc(1-> | bDGlcNAc(1->3),aDGal|aDGlc|aDGlcNAc|aLRha
+O18 A1,aDGlc(1->6) | ->2)aLRha(1->6)aDGlc(1->4)aDGal(1->3)aDGlcNAc(1-> | bDGlcNAc(1->3,aDGal|aDGlc|aDGlcNAc|aLRha
+O18 A1A2,bDGlc/bDGlcNAc(1->3) (6<-1)aDGlc | ->2)aLRha(1->6)aDGlc(1->4)aDGal(1->3)aDGlcNAc(1->, |aDGal|aDGlc|aDGlcNAc|aLRha
+O18 ab,->3)aLRha(1->6)aDGlc(1->4)aDGal(1->3)aDGlcNAc(1-> | bDGlc(1->3),aDGal|aDGlc|aDGlcNAc|aLRha
+O18 ac,->2)aLRha(1->6)aDGlc(1->4)aDGal(1->3)aDGlcNAc(1-> | bDGlcNAc(1->3),aDGal|aDGlc|aDGlcNAc|aLRha
+O18 B,->3)aLRha(1->6)aDGlc(1->4)aDGal(1->3)aDGlcNAc(1-> | bDGlc(1->3),aDGal|aDGlc|aDGlcNAc|aLRha
+O18 B1,aDGlc(1->4) | ->3)aLRha(1->6)aDGlc(1->4)aDGal(1->3)aDGlcNAc(1-> | bDGlc(1->3),aDGal|aDGlc|aDGlcNAc|aLRha
+O19 ab,->2)aLRha(1->2)aLRha(1->2)aLRha(1->2)aDGlc(1->3)aDGlcNAc6Ac(1->,aDGlc|aDGlcNAc6Ac|aLRha
+O20 ab,->2)bDRibf(1->4)aDGal(1->,aDGal|bDRibf
+O20 ac,aDGal(1->3) | ->2)bDRibf(1->4)aDGal(1->... O21,aDGal|bDRibf
+O21,bDGal(1->4) | ->3)bDGal(1->4)bDGlc(1->3)bDGalNAc(1-> | bDGlcNAc(1->2),bDGal|bDGalNAc|bDGlc
+O22,->6)aDGlc(1->4)bDGlcA(1->4)bDGalNAc3Ac(1->3)aDGal(1->3)bDGalNAc(1->,aDGal|aDGlc|bDGalNAc|bDGalNAc3Ac|bDGlcA
+O23 A,aDGlc(1->6) | ->6)aDGlc(1->4)bDGal(1->3)aDGalNAc(1->3)bDGlcNAc(1-> | bDGlcNAc(1->3),aDGalNAc|aDGlc|bDGal|bDGlcNAc
+O24,->7)aNeu5Ac(2->3)bDGlc(1->3)bDGalNAc(1-> | aDGlc(1->2),aNeu5Ac|bDGalNAc|bDGlc
+O25,bDGlc(1->6) | ->4)aDGlc(1->3)aLFucNAc(1->3)bDGlcNAc(1-> | aLRha(1->3),aDGlc|aLFucNAc|bDGlcNAc
+O25 B,bDGlc(1->6) | ->4)aDGlc(1->3)aLRha2Ac(1->3)bDGlcNAc(1-> | aLRha(1->3),aDGlc|aLRha2Ac|bDGlcNAc
+O26,->3)aLRha(1->4)aLFucNAc(1->3)bDGlcNAc(1->,aLFucNAc|aLRha|bDGlcNAc
+O27,bDGlc(1->2) bDGlc(1->6) | ->4)aDGal(1->6)bDGlc(1->3)bDGalNAc(1-> | bDGlcA3/4Ac(1->3), bDGlc|aDGal|bDGalNAc|bDGlc
+O28 ab,->3)bDGlc(1->3)DGro(1-P-4)bDGlcNAc(1->3)aDGlcNAc(1->,DGro|aDGlcNAc|bDGlc|bDGlcNAc
+O28 ac,->2)DGro(1-P-4)bDGlcNAc(1->3)bDGalf2Ac(1->3)aDGlcNAc(1->,DGro|aDGlcNAc|bDGalf2Ac|bDGlcNAc
+O29,aDGlc(1->6)aDGal(1->3) | ->3)DGro(1-P-6)bDGlc(1->4)aLFucNAc(1->3)bDGlcNAc(1->,DGro|aDGal|aLFucNAc|bDGlc|bDGlcNAc
+O30,bDGlcNAc(1->2) | ->4)bDGlc(1->4)bDGlcA(1->3)aDGlcNAc(1->,aDGlcNAc|bDGlc|bDGlcA
+O32,->6)aDGal(1->4)bDGlcA(1->6)bDGal(1->4)bDGal2Ac3Ac(1->4)bDGlcNAc(1->,aDGal|bDGal|bDGal2Ac3Ac|bDGlcA|bDGlcNAc
+O33,->2)bDGal(1->4)bDGlcNAc(1->3)bDGal(1->3)bDGalNAc(1-> | Gro(2-P-3),bDGal|bDGalNAc|bDGlcNAc
+O34,,
+O35,->3)aLRha(1->2)aLRha(1->3)aLRha(1->2)aLRha(1->3)bDGlcNAc(1-> | aDGalNAcAN(1->2),aLRha|bDGlcNAc
+O36,aLRha(1->2)aLFuc(1->3) | ->4)aDMan(1->3)aLFuc(1->3)bDGlcNAc(1->,aDMan|aLFuc|bDGlcNAc
+O37,->4)bDGalNAc(1->3)aDGal(1->4)bDGal(1->3)bDGalNAc(1-> | DGro(1-P-3),aDGal|bDGal|bDGalNAc
+O38,aDGlcNAc(1->4) | ->6)bDGlcNAc(1->3)bDGalNAc(1->4)bDGlcA(1->3)bDGalNAc(1->,bDGalNAc|bDGlcA|bDGlcNAc
+O39,aDGal(1->3) | ->3)bDQui4NBuR3OH(1->2)aDMan(1->4)aLRha(1->3)aDGlcNAc(1->,aDGlcNAc|aDMan|aLRha|bDQui4NBuR3OH
+O40,->2)bDGal(1->4)bDMan(1->4)aDGal(1->3)bDGlcNAc(1->,aDGal|bDGal|bDGlcNAc|bDMan
+O41,bDGlc(1->4) | ->3)aDGal(1->3)aLFuc(1->4)bDGlcNAc(1->3)aLFuc(1->3)bDGlcNAc(1->,aDGal|aLFuc|bDGlcNAc
+O42,->2)DGro(1-P-4)bDGlcNAc(1->3)bDGalf2Ac(1->3)aDGlcNAc(1-> | aDGlc(1->3),DGro|aDGlcNAc|bDGalf2Ac|bDGlcNAc
+O43,aLFuc(1->3) | ->4)bDMan2Ac(1->3)aDMan(1->3)aLFuc(1->3)bDGalNAc(1->,aDMan|aLFuc|bDGalNAc|bDMan2Ac
+O44,aDGlc(1->4) | ->6)aDMan(1->2)aDMan(1->2)bDMan(1->3)aDGlcNAc(1->,aDGlcNAc|aDMan|bDMan
+O45,->2)bDGlc(1->3)aLTal6d2Ac(1->3)aDFucNAc(1->,aDFucNAc|aLTal6d2Ac|bDGlc
+O45 rel,->2)bDGlc(1->3)aLTal6d2Ac(1->3)bDGlcNAc(1->,aLTal6d2Ac|bDGlc|bDGlcNAc
+O46,->4)bDGlcA6LThr(1->6)bDGal(1->6)bDGlc(1->3)bDGalNAc(1->,bDGal|bDGalNAc|bDGlc|bDGlcA6LThr
+O48,->4)bDGalNAc(1->3)aDGal(1->4)aLRha(1->3)bDGlcNAc(1-> | aDGalA(1->3),aDGal|aLRha|bDGalNAc|bDGlcNAc
+O49,->2)aDQui4NBuS3OH(1->4)bDGalNAc(1->4)aLRha(1->3)bDGlcNAc6Ac(1->,aDQui4NBuS3OH|aLRha|bDGalNAc|bDGlcNAc6Ac
+O50,->3)aLRha(1->2)aLRha(1->3)bLRha(1->4)bDGlcNAc(1->,aLRha|bDGlcNAc|bLRha
+O51,->3)aLRha(1->2)aLRha(1->4)aDGlc(1->3)bDGalNAc(1-> | bDGlcNAc(1->2),aDGlc|aLRha|bDGalNAc
+O52,->3)bDFucf(1->3)bD6dManHep2Ac(1->,bD6dManHep2Ac|bDFucf
+O53,aDGlc(1->2) | ->3)aLRha(1->4)bDGlcA(1->3)bLRha(1->4)bDGlcNAc(1->,aLRha|bDGlcA|bDGlcNAc|bLRha
+O54,->4)aDGalA(1->2)aLRha(1->2)bDRibf(1->4)bDGal(1->3)bDGlcNAc(1->,aDGalA|aLRha|bDGal|bDGlcNAc|bDRibf
+O55,->6)bDGlcNAc(1->3)aDGal(1->3)bDGalNAc(1-> | aCol(1->2)bDGal(1->3),aDGal|bDGal|bDGalNAc|bDGlcNAc
+O55,->6)bDGlcNAc(1->3)aDGal(1->3)bDGalNAc(1-> | aCol(1->2)bDGal(1->3),aDGal|bDGal|bDGalNAc|bDGlcNAc
+O56,->7)aNeu5Ac(2->3)bDGlc(1->3)bDGlcNAc(1-> | aDGal(1->2),aNeu5Ac|bDGlc|bDGlcNAc
+O57,bDGlc(1->4) | ->3)aDGal(1->3)aLFucNAc(1->3)aDGlcNAc(1-> | aDGalA2Ac3Ac(1->2),aDGal|aDGlcNAc|aLFucNAc
+O58,->4)bDMan(1->4)aDMan(1->3)bDGlcNAc(1-> | aLRha2Ac3RLac(1->3)... O59,aDMan|bDGlcNAc|bDMan
+O59,aDGalA(1->3) | ->6)aDMan(1->3)aDMan(1->3)bDMan(1->3)aDGlcNAc(1->,aDGlcNAc|aDMan|bDMan
+O60,->2)aLRha(1->2)aLRha(1->4)bDGal(1-> | aDGal(1->3),aLRha|bDGal
+O61,->4)a8eLeg5Ac7Ac8Ac(2->4)bDGlc(1->3)aDGalNAc(1->,a8eLeg5Ac7Ac8Ac|aDGalNAc|bDGlc
+O62,aDGlc(1->2) | ->5)bDGalf(1->5)bDGalf(1->3)bDGalf(1-> | aDGlc(1->2),bDGalf
+O63,->2)bDQui3NDalloThrAc(1->2)bDRibf(1->4)bDGal(1->3)aDGlcNAc(1->,aDGlcNAc|bDGal|bDQui3NDalloThrAc|bDRibf
+O64,bDGal(1->6) | ->3)aDManNAc(1->3)bDGlcA(1->3)bDGal(1->3)bDGlcNAc(1->,aDManNAc|bDGal|bDGlcA|bDGlcNAc
+O65,->2)bDQui3NAc(1->4)aDGalA6N(1->4)aDGalNAc(1->4)bDGalA(1->3)aDGlcNAc(1->,aDGalA6N|aDGalNAc|aDGlcNAc|bDGalA|bDQui3NAc
+O66,->2)bDGlc3Ac(1->3)aLTal6d(1->3)aDGlcNAc(1->2)bDMan(1->3)aDGlcNAc(1->,aDGlcNAc|aLTal6d|bDGlc3Ac|bDMan
+O68,aLRha(1->3) | ->6)aDMan(1->2)aDMan(1->2)aDMan(1->2)bDMan(1->3)aDGlcNAc(1-> | aDGlc(1->3),aDGlcNAc|aDMan|bDMan
+O69,->3)bDGlcNAc4RLac(1->2)aLRha(1->2)aLRha(1->2)aDGal(1->3)aDGlcNAc(1->,aDGal|aDGlcNAc|aLRha|bDGlcNAc4RLac
+O70,->4)bDQui3NAc(1->3)aDFuc(1->3)bDGal(1->3)aDGalNAc(1-> | aDGlc(1->4),aDFuc|aDGalNAc|bDGal|bDQui3NAc
+O71,->4)aDQui3NAc(1->3)aLRha(1->4)bDGal(1->3)aDGalNAc(1->,aDGalNAc|aDQui3NAc|aLRha|bDGal
+O73,aDGlc(1->4) | ->6)aDMan(1->2)aDMan(1->2)bDMan(1->3)aDGlcNAc(1-> | aDGlc(1->3),aDGlcNAc|aDMan|bDMan
+O73 ab,aDGlc(1->3) | ->4)aDMan(1->2)aDMan(1->2)bDMan(1->3)aDGalNAc(1->,aDGalNAc|aDMan|bDMan
+O74,->6)aDGlcNAc(1->4)bDGalA(1->3)bDGlcNAc(1-> | bDFuc3NAc(1->3),aDGlcNAc|bDGalA|bDGlcNAc
+O75,bDMan(1->4) | ->3)aDGal(1->4)aLRha(1->3)bDGlcNAc(1->,aDGal|aLRha|bDGlcNAc
+O76,->4)bDGlcA(1->4)bDGalNAc3Ac(1->4)aDGalNAc(1->3)bDGalNAc(1->,aDGalNAc|bDGalNAc|bDGalNAc3Ac|bDGlcA
+O77,->6)aDMan(1->2)aDMan(1->2)bDMan(1->3)aDGlcNAc(1->,aDGlcNAc|aDMan|bDMan
+O78,->4)bDGlcNAc(1->4)bDMan(1->4)aDMan(1->3)bDGlcNAc(1->,aDMan|bDGlcNAc|bDMan
+O79,aLRha(1->3) | ->2)bDGal(1->4)bDMan6Ac(1->3)bDMan(1->4)bDGlcA(1->3)aDGlcNAc(1->,aDGlcNAc|bDGal|bDGlcA|bDMan|bDMan6Ac
+O80,aLFuc(1->2) aLFuc(1->4) | ->6)bDGlc(1->3)bDGalNAc(1->4)bDGlcA(1->3)bDGlcNAc(1->, aLFuc|bDGalNAc|bDGlc|bDGlcA|bDGlcNAc
+O81,DGro(1-P-3) aDGal(1->6) | ->6)bDGalNAc(1->4)bDGalNAc(1->4)bDGlc(1->3)bDGalNAc(1->, aDGal|bDGalNAc|bDGlc
+O82,DGroA(2-P-6) | ->4)aDGlc(1->4)bDGal(1->4)bDGlc(1->3)bDGlcNAc(1->,aDGlc|bDGal|bDGlc|bDGlcNAc
+O83,->6)aDGlc(1->4)bDGlcA(1->6)bDGal(1->4)bDGal(1->4)bDGlcNAc(1->,aDGlc|bDGal|bDGlcA|bDGlcNAc
+O84,6daDTal2Ac3Ac4Ac(1->3) | ->2)bLFuc(1->P-4)aDGlc(1->3)aLFuc(1->3)bDGlcNAc(1->,aDGlc|aLFuc|bDGlcNAc|bLFuc
+O85,aDGalf(1->4) | ->2)aDGal(1->3)bDManNAc(1->6)bDGalf(1->3)bDGlcNAc(1->,aDGal|bDGalf|bDGlcNAc|bDManNAc
+O86,aDGal(1->3) | ->4)aLFuc(1->2)bDGal(1->3)aDGalNAc(1->3)bDGalNAc(1->,aDGalNAc|aLFuc|bDGal|bDGalNAc
+O86,->2)aDGal(1->3)bDGal(1->3)aDGalNAc(1->3)aDGalNAc(1-> | aLFuc(1->2),aDGal|aDGalNAc|bDGal
+O86,aDGal(1->3) | ->4)aLFuc(1->2)bDGal(1->3)aDGalNAc(1->3)bDGalNAc(1->,aDGalNAc|aLFuc|bDGal|bDGalNAc
+O87,->3)bDGalf(1->4)aDGal(1->3)aDGalA4Ac(1->3)bDGalNAc(1->,aDGal|aDGalA4Ac|bDGalNAc|bDGalf
+O88,->4)aDMan(1->3)aDMan(1->3)bDGlcNAc(1-> | aLTal6d(1->3),aDMan|bDGlcNAc
+O89,,
+O90,->4)aLFuc2Ac3Ac(1->2)bDGal(1->3)aDGalNAc(1->3)bDGalNAc(1->,aDGalNAc|aLFuc2Ac3Ac|bDGal|bDGalNAc
+O91,->4)aDQui3NBuR3OH(1->4)bDGal(1->4)bDGlcNAc(1->4)bDGlcA6NGly(1->3)bDGlcNAc(1->,aDQui3NBuR3OH|bDGal|bDGlcA6NGly|bDGlcNAc
+O92,->1)bDFruf3Ac(2->3)bDFruf(2->,bDFruf|bDFruf3Ac
+O93,->2)bDMan(1->3)bDMan2Ac6Ac(1->4)bDGlcA(1->3)aDGlcNAc(1->,aDGlcNAc|bDGlcA|bDMan|bDMan2Ac6Ac
+O95,->3)aDFuc(1->3)bDXulf(2->,aDFuc|bDXulf
+O96,->2)aDGlcA(1->4)bDGlcNAc(1->5)bDGalf(1->3)bDGlcNAc(1-> | bDGalf(1->4),aDGlcA|bDGalf|bDGlcNAc
+O97,bDXulf(2->2) | ->3)aLRha(1->3)bLRha(1-> | bDXulf(2->2)... O98,aLRha|bLRha
+O98,->3)aLQuiNAc(1->4)aDGalNAcA(1->3)aLQuiNAc(1->3)bDGlcNAc(1->,aDGalNAcA|aLQuiNAc|bDGlcNAc
+O99,aDGlc(1->2) aDGlc(1->2) | ->3)aDRha(1->2)aDRha(1->2)aDRha(1->3)aDRha(1->, aDGlc|aDRha
+O100,->2)aLRha(1->3)aLRha(1->3)aDGal(1->3)bDGlcNAc(1-> | DGro(1-P-6),aDGal|aLRha|bDGlcNAc
+O101,->6)aDGlcNAc(1->4)aDGalNAc(1->,aDGalNAc|aDGlcNAc
+O101,->4)bDGalNAc(1->4)aDGalNAc(1->,aDGalNAc|bDGalNAc
+O102,aLRha(1->4)bDGalNAc(1->3) | ->4)aDGal(1->6)bDGlc(1->3)bDGalNAc(1->,aDGal|bDGalNAc|bDGlc
+O103,->2)bDGlc(1->2)bDFuc3NBuR3OH(1->6)aDGlcNAc(1->4)aDGalNAc(1->3)bDGlcNAc(1->,aDGalNAc|aDGlcNAc|bDFuc3NBuR3OH|bDGlc|bDGlcNAc
+O104,->4)aDGal(1->4)aNeu5Ac7Ac9Ac(2->3)bDGal(1->3)bDGalNAc(1->,aDGal|aNeu5Ac7Ac9Ac|bDGal|bDGalNAc
+O105,bDRibf(1->4)aDGlcA(1->2) | ->3)aLRha(1->3)bLRha(1->4)aLRha(1->3)bDGlcNAc(1->,aDGlcA|aLRha|bDGlcNAc|bLRha
+O106,aDGlc(1->4) | ->6)aDMan(1->2)aDMan(1->2)bDMan(1->3)aDGlcNAc(1-> | aDGlc(1->6),aDGlcNAc|aDMan|bDMan
+O107,->4)bDGalNAc(1->3)aLRha(1->4)aDGlcNAc(1->4)bDGal(1->3)aDGalNAc(1->,aDGalNAc|aDGlcNAc|aLRha|bDGal|bDGalNAc
+O108,->4)a8eLeg5Ac7Ac(2->6)aDGal(1->3)aLFucNAc(1->3)aDGlcNAc(1->,a8eLeg5Ac7Ac|aDGal|aDGlcNAc|aLFucNAc
+O109,bLRhaNAc3NAc4Ac(1->3) | ->4)aDGlc(1->3)aLTal6d2Ac(1->3)bDGlcNAc(1->,aDGlc|aLTal6d2Ac|bDGlcNAc
+O110,->4)aDGalA6DaThr(1->4)aDGal(1->3)aDGal(1->3)bDGlcNAc(1->,aDGal|aDGalA6DaThr|bDGlcNAc
+O111,aCol(1->6) | ->4)aDGlc(1->4)aDGal(1->3)bDGlcNAc(1-> | aCol(1->3),aDGal|aDGlc|bDGlcNAc
+O112 ab,bDGlcNAc(1->3) | ->4)aDGalNAc(1->4)aDGlc(1->4)aLIdoA(1->3)bDGalNAc(1->,aDGalNAc|aDGlc|aLIdoA|bDGalNAc
+O112 ac,"bDGlcNAc4,6(S)Pyr(1->3) | ->4)aDGalNAc(1->4)aDGlc(1->4)bDGal(1->3)bDGalNAc(1->",Pyr|aDGalNAc|aDGlc|bDGal|bDGalNAc
+O113,->4)aDGalNAc(1->4)aDGalA(1->3)aDGal(1->3)bDGlcNAc(1-> | bDGal(1->3),aDGal|aDGalA|aDGalNAc|bDGlcNAc
+O114,->4)bDQui3NLSerAc(1->3)bDRibf(1->4)bDGal(1->3)aDGlcNAc(1->... O115,aDGlcNAc|bDGal|bDQui3NLSerAc|bDRibf
+O115,bLRha(1->4) | ->3)bDGlcNAc(1->4)aDGalA(1->3)aDMan(1->3)bDGlcNAc(1->,aDGalA|aDMan|bDGlcNAc
+O116,->2)bDQui4NAc(1->6)aDGlcNAc(1->4)aDGalNAc(1->4)aDGalA(1->3)bDGlcNAc(1->,aDGalA|aDGalNAc|aDGlcNAc|bDGlcNAc|bDQui4NAc
+O117,->4)bDGalNAc(1->3)aLRha(1->4)aDGlc(1->4)bDGal(1->3)aDGalNAc(1->,aDGalNAc|aDGlc|aLRha|bDGal|bDGalNAc
+O118,->3)DRibitol(5-P-6)aDGal(1->3)aLFucNAm(1->3)bDGlcNAc(1->,DRibitol|aDGal|aLFucNAm|bDGlcNAc
+O119,aLRhaNAc3NFo(1->3) | ->2)bDMan(1->3)aDGal(1->4)aLRha(1->3)aDGlcNAc(1->,aDGal|aDGlcNAc|aLRha|bDMan
+O120,aLRha(1->4) | ->3)aDGlc(1->2)aLRha(1->2)aLRha(1->2)aDGal(1->3)bDGalNAc(1->,aDGal|aDGlc|aLRha|bDGalNAc
+O121,->3)bDQui4NGlyAc(1->4)aDGalNAcA6N(1->4)aDGalNAcA(1->3)aDGlcNAc(1->,aDGalNAcA|aDGalNAcA6N|aDGlcNAc|bDQui4NGlyAc
+O123,->3)bDQui4NLAlaBuS3OH(1->6)aDGlcNAc(1->3)aLQuiNAc(1->3)aDGlcNAc(1->,aDGlcNAc|aLQuiNAc|bDQui4NLAlaBuS3OH
+O124,bDGlc4RLac(1->6)aDGlc(1->4) | ->3)bDGal(1->6)bDGalf(1->3)bDGalNAc(1->,aDGlc|bDGal|bDGalNAc|bDGalf
+O125 ab,aDGlc(1->3) | ->4)bDGalNAc(1->2)aDMan(1->3)aLFuc(1->3)aDGalNAc(1-> | bDGal(1->3),aDGalNAc|aDMan|aLFuc|bDGalNAc
+O125 ac,->4)bDGalNAc(1->2)aDMan(1->3)aLFuc(1->3)aDGalNAc(1-> | bDGal(1->3),aDGalNAc|aDMan|aLFuc|bDGalNAc
+O126,->2)bDMan(1->3)bDGal(1->3)aDGlcNAc(1->3)bDGlcNAc(1-> | aLFuc(1->2),aDGlcNAc|bDGal|bDGlcNAc|bDMan
+O126,->2)bDMan(1->3)aDGal(1->3)bDGlcNAc(1-> | bLFuc(1->2),aDGal|bDGlcNAc|bDMan
+O127,->2)aLFuc(1->2)bDGal(1->3)aDGalNAc(1->3)aDGalNAc(1->,aDGalNAc|aLFuc|bDGal
+O128 ab,->6)bDGal(1->3)bDGalNAc(1->4)aDGal(1->3)bDGalNAc(1-> | aLFuc(1->2),aDGal|bDGal|bDGalNAc
+O128 ab,->6)bDGal(1->3)bDGalNAc(1->4)aDGalNAc(1->3)bDGalNAc(1-> | aLFuc(1->2),aDGalNAc|bDGal|bDGalNAc
+O128 ac,->6)bDGal(1->3)bDGalNAc(1->4)aDGal(1->3)bDGalNAc(1-> | aLFuc(1->2),aDGal|bDGal|bDGalNAc
+O129,aDGlc(1->3) | ->2)aLRha3Ac4Ac(1->2)aLRha(1->3)aLRha(1->3)bDGlcNAc(1->,aLRha|aLRha3Ac4Ac|bDGlcNAc
+O130,Gro(2-P-4)bDGalNAc(1->3) | ->4)aDGal(1->6)bDGlc(1->3)bDGalNAc(1->,aDGal|bDGalNAc|bDGlc
+O131,->8)aNeu5Ac(2->6)bDGal(1->6)bDGal(1->3)bDGalNAc(1->,aNeu5Ac|bDGal|bDGalNAc
+O132,->2)aDGalf(1->3)aLRha2Ac(1->4)aDGlc(1->2)aLRha(1->3)bDGlcNAc(1->,aDGalf|aDGlc|aLRha|aLRha2Ac|bDGlcNAc
+O133,->3)aLRha(1->2)aLRha(1->2)aLRha(1->4)aDGalA(1->3)aDGlcNAc(1-> | aDGlc(1->3),aDGalA|aDGlcNAc|aLRha
+O134,->4)bDGlcA6LThr(1->6)bDGal(1->6)bDGlc(1->3)bDGalNAc(1->,bDGal|bDGalNAc|bDGlc|bDGlcA6LThr
+O135,aDGlc(1->6) | ->2)aLRha(1->2)aLRha(1->3)aLRha2Ac(1->3)bDGlcNAc(1->,aLRha|aLRha2Ac|bDGlcNAc
+O136,->4)bPse(2->4)bDGal(1->4)bDGlcNAc(1->,bDGal|bDGlcNAc|bPse
+O137,bDGlc(1->4) | ->6)aDGlcNAc(1->4)bDGlcA(1->4)bDGlcNAc(1->,aDGlcNAc|bDGlcA|bDGlcNAc
+O138,->2)aLRha(1->3)aLRha(1->4)aDGalNAcA(1->3)bDGlcNAc(1->,aDGalNAcA|aLRha|bDGlcNAc
+O139,bDGlc(1->3) | ->3)aLRha(1->4)aDGalA(1->2)aLRha(1->3)aLRha(1->2)aLRha(1->3)aDGlcNAc(1->,aDGalA|aDGlcNAc|aLRha
+O140,aDGalf(1->2)aLRha(1->4) | ->3)bDGal(1->4)aDGlc(1->4)bDGlcA(1->3)bDGalNAc(1->,aDGlc|aLRha|bDGal|bDGalNAc|bDGlcA
+O141,aLRha(1->3) | ->4)aDMan(1->3)aDMan6Ac(1->3)bDGlcNAc(1-> | bDGlcA(1->2),aDMan|aDMan6Ac|bDGlcNAc
+O142,->2)aLRha(1->6)aDGalNAc(1->4)aDGalNAc(1->3)aDGalNAc(1-> | bDGlcNAc(1->3),aDGalNAc|aLRha
+O143,Gro(2-N-6) | ->2)bDGalA(1->3)aDGalNAc(1->4)bDGlcA(1->3)bDGlcNAc(1->,aDGalNAc|bDGalA|bDGlcA|bDGlcNAc
+O144,,
+O145,->4)aNeu5Ac(2->3)aLFucNAm(1->3)bDGlcNAc(1->... O146,aLFucNAm|aNeu5Ac|bDGlcNAc
+O146,aDGlc3SLac(1->3) | ->2)aLRha(1->2)aLRha(1->4)bDGal(1->3)bDGalNAc(1->,aLRha|bDGal|bDGalNAc
+O147,->2)aLRha(1->2)aLRha(1->4)bDGalA(1->3)bDGalNAc(1->,aLRha|bDGalA|bDGalNAc
+O148,->3)aLRha(1->3)aLRha(1->2)aDGlc(1->3)aDGlcNAc(1->,aDGlc|aDGlcNAc|aLRha
+O149,"->3)bDGlcNAc4,6(S)Pyr(1->3)bLRha(1->4)bDGlcNAc(1->","Pyr|bDGlcNAc|bDGlcNAc4,6|bLRha"
+O150,bDGlc(1->2) | ->3)bDGlcNAc4SLac(1->2)aLRha(1->2)aLRha(1->3)aLRha(1->3)bDGlcNAc(1->,aLRha|bDGlcNAc|bDGlcNAc4SLac
+O151,bDGlcNAc(1->4) | ->2)DRibitol(5-P-6)aDGal(1->3)aLFucNAm(1->3)bDGlcNAc(1->,DRibitol|aDGal|aLFucNAm|bDGlcNAc
+O152,bLRha(1->4) | ->3)aDGlcNAc(1->P-6)aDGlc(1->2)bDGlc(1->3)bDGlcNAc(1->,aDGlc|aDGlcNAc|bDGlc|bDGlcNAc
+O153,->2)bDRibf(1->4)bDGal(1->4)aDGlcNAc(1->4)bDGal(1->3)aDGlcNAc(1->,aDGlcNAc|bDGal|bDRibf
+O154,aDManNAc(1->3) | ->2)aLRha(1->3)aLRha(1->3)aLRha(1->3)aDGalNAc(1->,aDGalNAc|aLRha
+O155,bDGalA(1->4) | ->3)aDGal(1->3)bDGal(1->3)bDGalNAc(1-> | aDGal(1->6),aDGal|bDGal|bDGalNAc
+O156,"->4)aLFuc(1->6)aDGal(1->3)aLFuc(1->3)bDGlcNAc(1-> | aDGal4,6(R)Pyr(1->3)",Pyr|aDGal|aLFuc|bDGlcNAc
+O157,->2)aDRha4NAc(1->3)aLFuc(1->4)bDGlc(1->3)aDGalNAc(1->,aDGalNAc|aDRha4NAc|aLFuc|bDGlc
+O158 ab,aDGlc(1->6) | ->4)aDGlc(1->3)aDGalNAc(1->3)bDGalNAc(1-> | aLRha(1->3),aDGalNAc|aDGlc|bDGalNAc
+O158 ac,aLRha(1->3) | ->4)bDManNAc(1->4)aDGalA(1->3)bDGlcNAc(1-> | bDGlc(1->6),aDGalA|bDGlcNAc|bDManNAc
+O159,aLFuc(1->4) | ->3)bDGlcNAc(1->4)aDGalA(1->3)aLFuc(1->3)bDGlcNAc(1->,aDGalA|aLFuc|bDGlcNAc
+O160,bDGlc(1->6) | ->4)bDGlcNAc(1->3)aDGal(1->P-6)bDGal(1->3)bDGalNAc(1->,aDGal|bDGal|bDGalNAc|bDGlcNAc
+O161,->8)aLeg5Ac7DAla(2->4)bDGlcA(1->3)bDGlcNAc(1->,aLeg5Ac7DAla|bDGlcA|bDGlcNAc
+O162,bDara4dHex(1->3) | ->6)aDGlcNAc(1->4)aDGalNAc(1->,aDGalNAc|aDGlcNAc
+O162,->6)aDGlcNAc(1->4)aDGalNAc(1->,aDGalNAc|aDGlcNAc
+O162,bDara4dHex(1->3) | ->4)bDGalNAc(1->4)aDGalNAc(1->,aDGalNAc|bDGalNAc
+O163,->2)bDMan(1->4)bDGlcA(1->3)aLQuiNAc(1->3)aDGlcNAc(1->,aDGlcNAc|aLQuiNAc|bDGlcA|bDMan
+O164,bDGlc(1->6)aDGlc(1->4) | ->3)bDGal(1->6)bDGalf(1->3)bDGalNAc(1->,aDGlc|bDGal|bDGalNAc|bDGalf
+O165,->8)aPse5NBuR3OH(2->6)bDGal(1->4)bDGlc(1->3)aDGlcNAc(1->,aDGlcNAc|aPse5NBuR3OH|bDGal|bDGlc
+O166,->3)aDGal(1->6)aDGal(1->4)aDGalNAc(1->3)bDGalNAc(1-> | bDGlc(1->3),aDGal|aDGalNAc|bDGalNAc
+O167,aDGalf(1->4) | ->2)bDGalA6NLAla(1->3)aDGlcNAc(1->2)bDGalf(1->5)bDGalf(1->3)bDGlcNAc(1->,aDGlcNAc|bDGalA6NLAla|bDGalf|bDGlcNAc
+O168,aLFuc(1->3) | ->4)aDGlcNAc(1->4)aDGlcA(1->3)aLFuc(1->3)bDGlcNAc(1->,aDGlcA|aDGlcNAc|aLFuc|bDGlcNAc
+O169,bDGlc(1->6) | ->3)aDGal(1->6)aDMan(1->2)aDMan(1->3)bDGalNAc(1-> | bDGlcA(1->4),aDGal|aDMan|bDGalNAc
+O170,->4)bDGlcNAc(1->4)bDGlcA(1->3)bDGalf(1->3)bDGlcNAc(1-> | bDGalf(1->3),bDGalf|bDGlcA|bDGlcNAc
+O171,->4)aNeu5Ac7Ac9Ac(2->6)bDGal(1->6)bDGlc(1->3)bDGal(1->3)bDGalNAc(1->,aNeu5Ac7Ac9Ac|bDGal|bDGalNAc|bDGlc
+O172,->3)aLFucNAc(1->4)aDGlc6Ac(1->P-4)aDGlc(1->3)aLFucNAc(1->3)aDGlcNAc(1->,aDGlc|aDGlc6Ac|aDGlcNAc|aLFucNAc
+O173,aLFuc(1->4) | ->3)aDGlc(1->P-6)aDGlc(1->2)bDGlc(1->3)bDGlcNAc(1->,aDGlc|bDGlc|bDGlcNAc
+O174 ab,bDGlcNAc(1->2) | ->4)bDGlcA(1->3)bDGal(1->3)bDGalNAc(1->,bDGal|bDGalNAc|bDGlcA
+O174 ac,bDGlcNAc(1->2) | ->4)bDGlcA(1->3)bDGal(1->3)bDGlcNAc(1->,bDGal|bDGlcA|bDGlcNAc
+O175,->2)aDGlc(1->4)aDGlcA(1->3)aDMan(1->2)aDMan(1->3)bDGalNAc(1->,aDGlc|aDGlcA|aDMan|bDGalNAc
+O176,->4)aDMan(1->2)aDMan(1->2)bDMan(1->3)aDGalNAc(1->,aDGalNAc|aDMan|bDMan
+O177,->2)aLRha(1->3)aLFucNAc(1->3)aLFucNAc(1->3)bDGlcNAc(1->,aLFucNAc|aLRha|bDGlcNAc
+O178,->4)aDGlcNAc(1->4)aDGalA(1->2)bDRibf(1->4)bDGal(1->3)bDGalNAc(1->,aDGalA|aDGlcNAc|bDGal|bDGalNAc|bDRibf
+O179,->4)aDGlcA(1->3)bDMan(1->4)bDMan(1->3)bDGlcNAc(1-> | bDGlc(1->2),aDGlcA|bDGlcNAc|bDMan
+O180,->4)bDManNAc3NAcA(1->2)aLRha(1->3)bLRha(1->4)aDGlcNAc(1->,aDGlcNAc|aLRha|bDManNAc3NAcA|bLRha
+O181,aLQuiNAc(1->3) | ->4)aDGalNAc6Ac(1->6)aDGlc(1->P-4)aLQuiNAc(1->3)bDGlcNAc(1->,aDGalNAc6Ac|aDGlc|aLQuiNAc|bDGlcNAc
+O182,->4)bDGlcNAc(1->4)bDGlcA(1->3)bDGlcNAc(1-> | bLRhaNAc3NAc(1->3),bDGlcA|bDGlcNAc
+O183,bDRibf(1->4)bDGlcA(1->4) | ->3)bDGal(1->6)aDMan(1->2)aDMan(1->3)bDGalNAc(1->,aDMan|bDGal|bDGalNAc|bDGlcA
+O184,->2)aDFuc3NBuR3OH(1->3)aDMan6Ac(1->3)aLFuc(1->3)aDGalNAc(1->,aDFuc3NBuR3OH|aDGalNAc|aDMan6Ac|aLFuc
+O185,->4)bDGalNAc(1->2)bDGlcA(1->3)bDRibf(1->4)bDGal(1->3)aDGalNAc(1->,aDGalNAc|bDGal|bDGalNAc|bDGlcA|bDRibf
+O186,->3)bDQui4NLAlaBuS3OH(1->6)aDGlc(1->3)aLQuiNAc(1->3)aDGlcNAc6Ac(1->,aDGlc|aDGlcNAc6Ac|aLQuiNAc|bDQui4NLAlaBuS3OH
+O187,->2)bDFuc3NAc(1->3)aDGlcNAc(1->4)aDGlcA(1->3)aDMan(1->2)aDMan(1->3)bDGlcNAc(1->,aDGlcA|aDGlcNAc|aDMan|bDFuc3NAc|bDGlcNAc
+O188,->4)bDGlcA(1->2)bDMan(1->4)bDMan(1->3)bDGlcNAc(1-> | aDGal(1->3),bDGlcA|bDGlcNAc|bDMan

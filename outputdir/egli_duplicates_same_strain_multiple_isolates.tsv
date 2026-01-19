@@ -1,0 +1,15 @@
+genome_id	genome_id_not_unique_for_lookup	predicted	manual_ktyp	group	age	invasiveness	host_age	host_gender	geographic_group	host_health
+CUEN23-1_SAMEA111331008_ISOG	130874-19	K_neg_partial	K_partial	G2A	89.2330827067669	invasive	Adult	Female	Europe	Bloodstream Infection
+CUEN23-1_SAMEA111331011_ISOG	130874-19	K_neg_partial	K_partial	G2A	89.2330827067669	invasive	Adult	Female	Europe	Bloodstream Infection
+CUEN23-1_SAMEA111331010_ISOG	130874-19	K_neg_partial	K_partial	G2A	89.2330827067669	invasive	Adult	Female	Europe	Bloodstream Infection
+CUEN23-1_SAMEA111331009_ISOG	130874-19	K5	K_pos	G2A	89.2330827067669	invasive	Adult	Female	Europe	Bloodstream Infection
+CUEN23-1_SAMEA111331012_ISOG	130874-19	K_neg_partial	K_partial	G2A	89.2330827067669	invasive	Adult	Female	Europe	Bloodstream Infection
+CUEN23-1_SAMEA111331013_ISOG	130874-19	K5	K_pos	G2A	89.2330827067669	invasive	Adult	Female	Europe	Bloodstream Infection
+CUEN23-1_SAMEA111331014_ISOG	130874-19	K_neg_partial	K_partial	G2A	89.2330827067669	invasive	Adult	Female	Europe	Bloodstream Infection
+CUEN23-1_SAMEA111331015_ISOG	130874-19	K_neg_partial	K_partial	G2A	89.2330827067669	invasive	Adult	Female	Europe	Bloodstream Infection
+CUEN23-1_SAMEA111331017_ISOG	130874-19	K5	K_pos	G2A	89.2330827067669	invasive	Adult	Female	Europe	Bloodstream Infection
+CUEN23-1_SAMEA111331016_ISOG	130874-19	K5	K_pos	G2A	89.2330827067669	invasive	Adult	Female	Europe	Bloodstream Infection
+CUEN23-1_SAMEA111331644_ISOG	719800-18	K5	K_pos	G2A	31.9671907040328	non-invasive	Adult	Female	Europe	Urinary Tract Infection
+CUEN23-1_SAMEA111331645_ISOG	719800-18	K_neg_partial	K_neg	G3B	31.9671907040328	non-invasive	Adult	Female	Europe	Urinary Tract Infection
+CUEN23-1_SAMEA111331873_ISOG	721837-18	K117	K_pos	G2A	77.2877648667122	non-invasive	Adult	Female	Europe	Urinary Tract Infection
+CUEN23-1_SAMEA111331874_ISOG	721837-18	K1	K_pos	G2A	77.2877648667122	non-invasive	Adult	Female	Europe	Urinary Tract Infection
