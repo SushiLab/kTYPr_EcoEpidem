@@ -7,5 +7,6 @@ This repository contains code and data used for the analysis of *E. coli* transp
 ```text
 code_Ecocapsules.Rmd   # Main analysis and figure-generation code
 inputdir/              # Input data
-outputdir/             # Processed outputs including supplementary tables.
+outputdir/             # Processed outputs including supplementary tables
+plotdir/	       # Empty directory to reproduce all figures.
 
