@@ -317,7 +317,7 @@ gutmags = gutmags %>%
 # write file to use for downstream analyses
 write.xlsx(gutmags, paste0(outputdir,"gutmags_annotated_metad_ectyper.xlsx"), sep ="\t")
 # write Table S5
-write.xlsx(gutmags, paste0(outputdir,"EDTable_13.xlsx"))
+write.xlsx(gutmags, paste0(outputdir,"EDTable_13_MAGs.xlsx"))
 ```
 
 
@@ -461,7 +461,7 @@ egli = egli %>%
 write.xlsx(egli, paste0(outputdir,"egli_annotated_metad_ectyper.xlsx"), sep ="\t")
 ```
 
-# ED Table 12
+# ED Table 12 - ncbi egli
 
 ```{r}
 egli = readxl::read_xlsx(paste0(outputdir,"egli_annotated_metad_ectyper.xlsx")) %>%
@@ -472,7 +472,7 @@ egli = readxl::read_xlsx(paste0(outputdir,"egli_annotated_metad_ectyper.xlsx")) 
 
 sheets <- list("annotated_NCBI_collection" = ncbi_short, "dereplicated_NCBI_collection" = ncbi_derep, "Cuenod_collection" = egli)
 
-write_xlsx(sheets,paste0(outputdir,"EDTable_12.xlsx"))
+write_xlsx(sheets,paste0(outputdir,"EDTable_12_ncbiegli.xlsx"))
 
 rm(sheets)
 ```
@@ -1306,7 +1306,7 @@ write.table(model_results, paste0(outputdir,"OddsRatio_GLMM_260122.tsv"), sep = 
 ```
 
 
-### Table S6
+### ED Table 14 - GLMM results K-types
 
 ```{r}
 towrite = model_results %>%
@@ -1315,7 +1315,7 @@ towrite = model_results %>%
   dplyr::rename(term=term_update)
   
 
-write.xlsx(towrite, paste0(outputdir,"EDTable_14.xlsx"))
+write.xlsx(towrite, paste0(outputdir,"EDTable_14_OR_invasiveness.xlsx"))
 
 ```
 
