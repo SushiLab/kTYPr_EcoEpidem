@@ -1,0 +1,1 @@
+skani triangle -l <genome_list> -t 50 --fast > skani_matrix.txt
