@@ -94,6 +94,7 @@ metad = readxl::read_xlsx(paste0(inputdir,"ncbi_collection_curatedmetadata_26011
 # deprecated and duplicated genomes were removed in this file so this is the set of 32043 genomes to keep
 
 ncbi_short = ncbi_short %>% inner_join(metad, by="genome_id")
+
 ```
 
 ### Annotate with ST, phylogroup and O and H type from ectyper
@@ -303,16 +304,20 @@ gutmags = gutmags %>% left_join(mlst) %>% left_join(ectyper) %>% left_join(phylo
   mutate(mlst = gsub("\\.0","",mlst))
 
 n_distinct(gutmags$genome_id)
+
+# remove phylogroup- MAG
+gutmags = gutmags %>%
+  filter(!is.na(phylogroup))
 ```
 
 
-# Table S5 and final file to use
+# ED Table 13 and final file to use
 
 ```{r}
 # write file to use for downstream analyses
 write.xlsx(gutmags, paste0(outputdir,"gutmags_annotated_metad_ectyper.xlsx"), sep ="\t")
 # write Table S5
-write.xlsx(gutmags, paste0(outputdir,"Table_S5.xlsx"))
+write.xlsx(gutmags, paste0(outputdir,"EDTable_13.xlsx"))
 ```
 
 
@@ -456,7 +461,7 @@ egli = egli %>%
 write.xlsx(egli, paste0(outputdir,"egli_annotated_metad_ectyper.xlsx"), sep ="\t")
 ```
 
-# Table S4
+# ED Table 12
 
 ```{r}
 egli = readxl::read_xlsx(paste0(outputdir,"egli_annotated_metad_ectyper.xlsx")) %>%
@@ -467,7 +472,7 @@ egli = readxl::read_xlsx(paste0(outputdir,"egli_annotated_metad_ectyper.xlsx")) 
 
 sheets <- list("annotated_NCBI_collection" = ncbi_short, "dereplicated_NCBI_collection" = ncbi_derep, "Cuenod_collection" = egli)
 
-write_xlsx(sheets,paste0(outputdir,"Table_S4.xlsx"))
+write_xlsx(sheets,paste0(outputdir,"EDTable_12.xlsx"))
 
 rm(sheets)
 ```
@@ -1281,7 +1286,7 @@ model_results = coefs %>%
   as.data.frame() %>%
   rownames_to_column(var="term") %>%
   clean_names() %>%
-  rename(p.value=pr_t) %>%
+  dplyr::rename(p.value=pr_t) %>%
   mutate(fixed_effect = case_when(grepl("predicted", term) ~ "K-type",
                                   grepl("o_type", term) ~ "O-type",
                                   grepl("phylogroup", term) ~ "Phylogroup",
@@ -1297,8 +1302,7 @@ model_results = coefs %>%
                                 p.value <= 0.05 & p.value > 0.01 ~"0.05",
                                 TRUE ~ "Not Significant"))
 
-write.table(model_results, paste0(outputdir,"OddsRatio_GLMM_260116.tsv"), sep = "\t",quote = F,row.names = F)
-
+write.table(model_results, paste0(outputdir,"OddsRatio_GLMM_260122.tsv"), sep = "\t",quote = F,row.names = F)
 ```
 
 
@@ -1311,7 +1315,7 @@ towrite = model_results %>%
   dplyr::rename(term=term_update)
   
 
-write.xlsx(towrite, paste0(outputdir,"Table_S6.xlsx"))
+write.xlsx(towrite, paste0(outputdir,"EDTable_14.xlsx"))
 
 ```
 
@@ -1321,7 +1325,7 @@ write.xlsx(towrite, paste0(outputdir,"Table_S6.xlsx"))
 
 pacman::p_load(ggbreak)
 
-test = fread(paste0(outputdir,"OddsRatio_GLMM_260116.tsv"), sep = "\t")
+test = fread(paste0(outputdir,"OddsRatio_GLMM_260122.tsv"), sep = "\t")
 
 
 pdf(paste0(plotdir,"4D_OR_glmer_predicted_expec_forfigure.pdf"), width = 8, height = 3)
@@ -1359,7 +1363,7 @@ dev.off()
 
 # ---------- SUPPLEMENTARY FIGS------------
 
-## Fig. S3
+## ED Fig. 3
 
 ```{r}
 
@@ -1380,9 +1384,7 @@ table(refseq_short$manual_ktyp, refseq_short$pred_is_complete, refseq_short$KpsE
 
 ```
 
-### S3A - upset plot categories refseq
-
-
+### ED3A - upset plot categories refseq
 
 ```{r}
 
@@ -1463,7 +1465,7 @@ refseq_short %>%
 
 ```
 
-### S3B - barplot K-types
+### ED3B - barplot K-types
 
 ```{r}
 
@@ -1487,7 +1489,6 @@ toplot <- refseq_short %>%
 
 
 pdf(paste0(plotdir,"ED3B_Refseq_Ktype_prevalence.pdf"),width = 18,height=5)
-# ggplot(toplot, aes(x = factor(predicted, levels = c(setdiff(predicted[order(-proportion)], "other"),"other")),
 ggplot(toplot, aes(x = reorder(predicted, -proportion),
                    y = proportion, fill = group)) +
   geom_bar(stat = "identity", color = "black") +
@@ -1522,7 +1523,7 @@ dev.off()
 ```
 
 
-## Fig. S4
+## ED Fig. 6
 
 #### prep data (same as Fig. 3)
 ```{r}
@@ -1530,7 +1531,7 @@ totest = readxl::read_xlsx(paste0(outputdir, "ncbi_egli_combined_for_analysis.xl
 ```
 
 
-### S4A. Geography capsule positivity
+### ED6A. Geography capsule positivity
 
 ```{r}
 toplot = totest %>%
@@ -1545,7 +1546,7 @@ toplot = totest %>%
   ungroup() 
 
 
-pdf(paste0(plotdir,"S4A_ncbi_kps+_geography.pdf"),width = 8,height=5)
+pdf(paste0(plotdir,"ED6A_ncbi_kps+_geography.pdf"),width = 8,height=5)
 ggplot(toplot,aes(x=reorder(geographic_group, count),y=count,fill=posorneg,label=count)) +
   geom_bar(stat = "identity", color = "black") +
    geom_text(aes(y = total+400, label =total),
@@ -1568,7 +1569,7 @@ dev.off()
 
 ```
 
-### S4B -  Barplot of k-types
+### ED6B -  Barplot of k-types
 
 ##### for text: how many distinct k-types per environment?
 
@@ -1628,11 +1629,11 @@ test <- toplot %>%
 test$host_group <- factor(test$host_group, levels=rev(c("Human","Human-/animal-\nassociated Environment","Pets","Avian","Livestock","Food","Livestock-\nassociated Environment","Wild Animals","Other Environmental Source","Laboratory","Unknown")))
 
 
-#take color mapping from S4E
+#take color mapping from ED6E --> need to plot this first if rerunning all figures
 color_mapping <- readRDS(paste0(outputdir,"Ktype_color_mapping.rds"))
 
 
-pdf(paste0(plotdir,"S4B_ktype_hostdistribution.pdf"),width = 7, height =4.5)
+pdf(paste0(plotdir,"ED6B_ktype_hostdistribution.pdf"),width = 7, height =4.5)
 
 # set order
 test <- test %>%
@@ -1671,7 +1672,7 @@ dev.off()
 ```
 
 
-### S4C. Heatmap Ktypes individual hosts - CORRELATION VERSION
+### ED6C. Heatmap Ktypes individual hosts - CORRELATION VERSION
 ```{r}
 toplot = totest %>%
   filter(manual_ktyp == "K_pos") %>%
@@ -1768,7 +1769,7 @@ geo_group_colors <- setNames(colorRampPalette(brewer.pal(8, "Paired"))(length(un
 ra <- rowAnnotation(
   hostgroup = row_annotation_data$host_group,
    Geographical_Group = row_annotation_data$geographic_group,
-  annotation_label = c("Host Group", "Geographical Group"),
+  annotation_label = c("Host", "Geography"),
   col = list(hostgroup = host_group_colors,
              Geographical_Group = geo_group_colors),
   annotation_width = unit(4, "mm")
@@ -1781,34 +1782,46 @@ library(circlize)
 col_fun = colorRamp2(c(min(corr_long), 0, max(corr_long)), hcl_palette = "RdBu")
 col_fun(seq(-20, 20))
 
+# Increase space between heatmap body and the heatmap legend (right side)
+ht_opt$HEATMAP_LEGEND_PADDING = unit(10, "mm")   # try 5–20 mm
 
-pdf(paste0(plotdir,"S4C_hm_hosts_corr_matrix.pdf"), width=13, height=10)
+# If you also have annotation legends on the right:
+ht_opt$ANNOTATION_LEGEND_PADDING = unit(10, "mm")
 
-  Heatmap(corr_long,
-        row_names_gp = gpar(fontsize = 6),
-        column_title="host-location",
-        row_title ="host-location",
-        #cluster_rows = dend1,
-        show_column_names = FALSE,
-        #col= RColorBrewer::brewer.pal(10, "RdBu"),
-        col=col_fun,
-        #col=viridis(10),
-        #column_names_gp = gpar(fontsize = 6),
-        row_split = 10, 
-        column_split = 10,
-        heatmap_legend_param = list(title = "Pearson correlation coefficient",legend_direction = "horizontal"),
-        # top_annotation = ha,
-        left_annotation = ra,
-        use_raster = TRUE, raster_quality = 5)
+
+ht <- Heatmap(
+  corr_long,
+  row_names_gp = gpar(fontsize = 9),
+  column_title="host-location",
+  row_title ="host-location",
+  show_column_names = FALSE,
+  col=col_fun,
+  row_split = 10,
+  column_split = 10,
+  heatmap_legend_param = list(
+    title = "Pearson correlation coefficient",
+    legend_direction = "horizontal"
+  ),
+  left_annotation = ra,
+  use_raster = TRUE, raster_quality = 5
+)
+
+pdf(paste0(plotdir,"ED6C_hm_hosts_corr_matrix.pdf"), width=14, height=10)
+
+draw(
+  ht,
+  heatmap_legend_side = "right",
+)
+
 
 
 dev.off()
 
-
+ht_opt(RESET = TRUE)
 ```
 
 
-### S4D. K-type frequency overall
+### ED6D. K-type frequency overall
 ```{r}
 
 toplot <- totest %>%
@@ -1827,7 +1840,7 @@ toplot <- totest %>%
 
 
 
-pdf(paste0(plotdir,"S4D_ncbi_Ktype_prevalence.pdf"),width = 6,height=10)
+pdf(paste0(plotdir,"ED6D_ncbi_Ktype_prevalence.pdf"),width = 6,height=10)
 ggplot(toplot, aes(y = factor(predicted, levels = c("other",setdiff(predicted[order(proportion)], "other"))),
                    x = proportion, fill = group)) +
   geom_bar(stat = "identity", color = "black") +
@@ -1881,7 +1894,7 @@ toplot <- totest %>%
 ```
 
 
-### S4E. geography
+### ED6E. geography
 
 ```{r}
 toplot <- totest %>%
@@ -1937,7 +1950,7 @@ test$host_group <- factor(test$host_group, levels = host_order)
 test$predicted <- factor(test$predicted, levels = unique(test$predicted))
 
 
-pdf(paste0(plotdir,"S4E_ktype_geography_distribution.pdf"),width = 15, height =7)
+pdf(paste0(plotdir,"ED6E_ktype_geography_distribution.pdf"),width = 15, height =7)
 
 totals <- toplot %>%
   group_by(geographic_group, host_group) %>%
@@ -1992,7 +2005,7 @@ mutate(host_group = case_when(
 
 
 
-## Fig. S5
+## ED Fig. 7
 
 ### prep data (same as Fig. 3)
 ```{r}
@@ -2000,7 +2013,7 @@ totest = read_xlsx(paste0(outputdir,"ncbi_egli_combined_for_analysis.xlsx"))
 
 ```
 
-#### S5A - phylogroups all hosts
+#### ED7A - phylogroups all hosts
 ```{r}
 
 toplot = totest %>%
@@ -2029,7 +2042,7 @@ toplot = toplot %>%
 
 toplot$phylogroup <- factor(toplot$phylogroup, levels=c("A","B1","C","E1","E2","G","B2-1","B2-2","D1","D2","D3","F"))
 
-pdf(paste0(plotdir,"S5A_phylogroup_group_percent_includingKneg_allhosts.pdf"),width = 8,height=3)
+pdf(paste0(plotdir,"ED7A_phylogroup_group_percent_includingKneg_allhosts.pdf"),width = 8,height=3)
 ggplot(toplot,aes(x=phylogroup,y=proportion,fill=group,label=count)) +
   geom_bar(stat = "identity", color = "black") +
   scale_fill_manual(values = mycolors,guide = guide_legend(ncol = 1), na.value = "grey") +
@@ -2070,7 +2083,7 @@ toplot = totest %>%
 ```
 
 
-#### S5B - isolation source ncbi + egli only Human
+#### ED7B - isolation source ncbi + egli only Human
 ```{r}
 
 toplot = totest %>%
@@ -2097,7 +2110,7 @@ toplot = toplot %>%
                                                  isolation_source == "Unspecified Clinical Isolate" ~ "Unspecified Clinical\nIsolate",
                                                  TRUE ~ isolation_source))
 
-pdf(paste0(plotdir,"ED5B_phylogroup_percent_includingKneg_isolationsources_stacked.pdf"),width = 7,height=3.5)
+pdf(paste0(plotdir,"ED7B_phylogroup_percent_includingKneg_isolationsources_stacked.pdf"),width = 7,height=3.5)
 ggplot(toplot , aes(x = phylogroup, y = proportion, fill = isolation_source)) +
  geom_bar(stat = "identity", color = "black") +
    geom_text(aes(y = proportion, label=count),
@@ -2124,7 +2137,7 @@ dev.off()
 
 ```
 
-#### S5C - gut commensal global distribution
+#### ED7C - gut commensal global distribution
 ```{r}
 gutmags = readxl::read_xlsx(paste0(outputdir,"gutmags_annotated_metad_ectyper.xlsx")) %>%
   mutate(group = case_when(predicted %in% c("No KpsC identified", "No K-type assigned") ~ predicted,
@@ -2150,10 +2163,10 @@ toplot = gutmags %>%
   ungroup() 
 
 
-pdf(paste0(plotdir,"ED5C_gutmags_kps+_geography.pdf"),width = 7,height=3.2)
+pdf(paste0(plotdir,"ED7C_gutmags_kps+_geography.pdf"),width = 7,height=3.5)
 ggplot(toplot,aes(x=reorder(geographic_group, count),y=count,fill=posorneg,label=count)) +
   geom_bar(stat = "identity", color = "black") +
-   geom_text(aes(y = total+100, label =total),
+   geom_text(aes(y = total+150, label =total),
             size = 5,
             color = "black",#fontface="bold",
             check_overlap = TRUE) +
@@ -2167,7 +2180,8 @@ ggplot(toplot,aes(x=reorder(geographic_group, count),y=count,fill=posorneg,label
   theme(axis.text.x = element_text(hjust=0.5, size =15),
         axis.text.y = element_text(size =15),
         legend.position="inside",
-        legend.text = element_text(size=8),
+        legend.text = element_text(size=16,face = "bold"),
+        legend.title = element_text(size=16,face = "bold"),
         axis.title=element_text(size=15))
 
 dev.off()
@@ -2183,7 +2197,7 @@ gutmags %>%
 
 
 
-#### S5D - MAGs vs genomes (healthy vs disease phylogroups) - only in stool
+#### ED7D - MAGs vs genomes (healthy vs disease phylogroups) - only in stool
 Same data as 4D (GLM)
 
 ```{r}
@@ -2272,7 +2286,7 @@ toplot$phylogroup <- factor(toplot$phylogroup, levels=c("A","B1","C","E1","E2","
 stat_results$phylogroup <- factor(stat_results$phylogroup, levels=c("A","B1","C","E1","E2","G","B2-1","B2-2","D1","D2","D3","F"))
 toplot$expec <- factor(toplot$expec, levels=c(0,1))
 
-pdf(paste0(plotdir,"ED5D_phylogroup_group_percent_includingKneg_NCBIandcommensals_onlyInvasiveasDisease_plusEgli.pdf"), width = 14, height = 3.5)
+pdf(paste0(plotdir,"ED7D_phylogroup_group_percent_includingKneg_NCBIandcommensals_onlyInvasiveasDisease_plusEgli.pdf"), width = 14, height = 3.5)
 
 ggplot(toplot , aes(x = expec, y = proportion, fill = group, label = count)) +
   geom_bar(stat = "identity", color = "black") +
@@ -2302,7 +2316,7 @@ ggplot(toplot , aes(x = expec, y = proportion, fill = group, label = count)) +
 ```
 
 
-#### S5E-G - Simpson's diversity, richness and evenness
+#### ED7E-G - Simpson's diversity, richness and evenness
 same data as S5D.
 ```{r}
 
@@ -2374,7 +2388,7 @@ diversity_long = diversity_long %>%
                                 TRUE ~ phylogroup))
 
 
-pdf(paste0(plotdir,"ED5E_diversitySimpson.pdf"), width =3, height = 2.5)
+pdf(paste0(plotdir,"ED7E_diversitySimpson.pdf"), width =3, height = 2.5)
 
 div_metric = "Simpson Diversity Index"
 
@@ -2408,7 +2422,7 @@ dev.off()
 
 
 #### Richness
-pdf(paste0(plotdir,"ED5F_Richness.pdf"), width = 3, height = 2.5)
+pdf(paste0(plotdir,"ED7F_Richness.pdf"), width = 3, height = 2.5)
 
 div_metric = "Richness"
 
@@ -2444,7 +2458,7 @@ ggplot(diversity_long %>% filter(metric == div_metric), aes(x = expec, y = value
 dev.off()
 
 
-pdf(paste0(plotdir,"ED5G_Evenness.pdf"), width = 3, height = 2.5)
+pdf(paste0(plotdir,"ED7G_Evenness.pdf"), width = 3, height = 2.5)
 
 div_metric = "Evenness"
 
@@ -2478,7 +2492,7 @@ dev.off()
 
 
 
-####S5H - distribution of Ktypes per isolation source
+#### ED7H - distribution of Ktypes per isolation source
 
 Same data as 4C.
 ###### left with K-neg
@@ -2587,7 +2601,7 @@ rightpanel$predicted <- factor(rightpanel$predicted, levels = predicted_levels)
 leftpanel$host_health <- factor(leftpanel$host_health, levels=rev(c("MAGs","Healthy (stool)","Healthy (other)","InPEC","UTI","BSI","Meningitis","Other disease")))
 
 
-pdf(paste0(plotdir,"ED5H_left_K_type_disease.pdf"), width = 7, height = 3)
+pdf(paste0(plotdir,"ED7H_left_K_type_disease.pdf"), width = 7, height = 3)
 
 totals <- leftpanel %>%
   group_by(host_health) %>%
@@ -2625,7 +2639,7 @@ rightpanel$host_health <- factor(rightpanel$host_health, levels=rev(c("MAGs","He
                                                                                 "Other disease")))
 
 
-pdf(paste0(plotdir,"ED5H_right_K_type_disease_onlyKpos.pdf"), width = 9, height = 3)
+pdf(paste0(plotdir,"ED7H_right_K_type_disease_onlyKpos.pdf"), width = 9, height = 3)
 
 # Calculate total counts per bar (disease + phylogroup)
 totals <- rightpanel %>%
@@ -2661,7 +2675,7 @@ dev.off()
 ```
 
 
-## Fig. S6
+## ED Fig. 8
 
 ##### prep data - same as fig. 4C
 NCBI + Egli + gutmags
@@ -2713,7 +2727,7 @@ totest %>% group_by(source) %>%
   summarise(count=n())
 ```
 
-### S6A - ST representative vs K-type
+### ED8A - ST representative vs K-type
 
 ```{r}
 
@@ -2738,7 +2752,7 @@ mycolors = c(
   "kps -" = "grey"
 )
 
-pdf(paste0(plotdir,"ED6A_sequencetype_genomes_ktypes_onKtypeside_ncbi_egli_gut.pdf"),width = 4,height = 3)
+pdf(paste0(plotdir,"ED8A_sequencetype_genomes_ktypes_onKtypeside_ncbi_egli_gut.pdf"),width = 4,height = 3)
 
 ggplot(toplot, aes(x=no_genomes,y = no_mlst)) +
   geom_point(aes(fill = group), pch=21,size =2, alpha=0.5) +
@@ -2755,7 +2769,7 @@ dev.off()
 
 ```
 
-### S6B - capsule diversity within ST (Shannon, Simpson)
+### ED8B - capsule diversity within ST (Shannon, Simpson)
 
 ```{r}
 library(forcats)
@@ -2784,7 +2798,7 @@ div_ST = div_ST %>%
     mlst_label = fct_reorder(mlst_label, shannon)
   )
 
-pdf(paste0(plotdir, "ED6C_ST_capsule_diversity_shannon.pdf"),width = 9,height = 3)
+pdf(paste0(plotdir, "ED8B_ST_capsule_diversity_shannon.pdf"),width = 9,height = 3)
 
 ggplot(div_ST, aes(x = reorder(mlst_label,-shannon), y = shannon)) +
   geom_bar(stat="identity") +
@@ -2799,7 +2813,7 @@ dev.off()
 ```
 
 
-### S6C - ST vs capsule heatmap
+### ED8C - ST vs capsule heatmap
 
 ```{r}
 #remove STs with <20 genomes and kps-neg genomes
@@ -2920,7 +2934,7 @@ col_fun <- colorRamp2(
     c("white", "orange", "red")
 )
 
-pdf(paste0(plotdir, "ED6C_ST_capsule_heatmap.pdf"), width = 8, height = 9)
+pdf(paste0(plotdir, "ED8C_ST_capsule_heatmap.pdf"), width = 8, height = 9)
 
 hm <- Heatmap(
   mat_A_xy,
@@ -2966,7 +2980,7 @@ dev.off()
 
 ```
 
-### S6D - Global association strength (Cramér's V) + permutation null (shuffle capsule within phylogroup)
+### ED8D - Global association strength (Cramér's V) + permutation null (shuffle capsule within phylogroup)
 
 
 #### - analysis w/o kps- or partial genomes
@@ -3052,7 +3066,7 @@ df_V <- tibble(
 )
 
 #takes a while to compute so save for fast replotting
-write.table(df_V, file=paste0(outputdir,"ED6D_cramersV_permutation_nokps-.tsv"),sep="\t", row.names=FALSE, col.names=TRUE, quote=FALSE)
+write.table(df_V, file=paste0(outputdir,"ED8D_cramersV_permutation_nokps-.tsv"),sep="\t", row.names=FALSE, col.names=TRUE, quote=FALSE)
 
 ```
 
@@ -3140,7 +3154,7 @@ df_V <- tibble(
   type = c("Observed", rep("Permuted", length(V_perm)))
 )
 
-write.table(df_V, file=paste0(outputdir,"ED6D_cramersV_permutation_withkps-.tsv"),
+write.table(df_V, file=paste0(outputdir,"ED8D_cramersV_permutation_withkps-.tsv"),
             sep="\t", row.names=FALSE, col.names=TRUE, quote=FALSE)
 
 ```
@@ -3149,9 +3163,9 @@ write.table(df_V, file=paste0(outputdir,"ED6D_cramersV_permutation_withkps-.tsv"
 #### - plot
 ```{r}
 
-df_nokps <- read.table(paste0(outputdir, "ED6D_cramersV_permutation_nokps-.tsv"),sep = "\t", header = TRUE)
+df_nokps <- read.table(paste0(outputdir, "ED8D_cramersV_permutation_nokps-.tsv"),sep = "\t", header = TRUE)
 
-df_withkps <- read.table(paste0(outputdir, "ED6D_cramersV_permutation_withkps-.tsv"),sep = "\t", header = TRUE)
+df_withkps <- read.table(paste0(outputdir, "ED8D_cramersV_permutation_withkps-.tsv"),sep = "\t", header = TRUE)
 
 # Extract observed values
 V_obs_nokps  <- df_nokps  %>% filter(type == "Observed") %>% dplyr::slice(1) %>% pull(V)
@@ -3179,7 +3193,7 @@ df_obs <- tibble(
 cols <- c("no" = "grey70","yes" = "grey20")
 
 
-pdf(file.path(plotdir, "ED6D_cramersV_overlay_histograms.pdf"),width = 4.5, height = 3)
+pdf(file.path(plotdir, "ED8D_cramersV_overlay_histograms.pdf"),width = 4.5, height = 3)
 ggplot(df_perm, aes(x = V, fill = dataset)) +
   geom_histogram(
     bins = 100,
@@ -3213,7 +3227,7 @@ dev.off()
 ```
 
 
-###S6E - ncbi collection - compare ST similarity according to K-types w/ ST similarity according to genomes (ANI99) or environments
+###ED8E - ncbi collection - compare ST similarity according to K-types w/ ST similarity according to genomes (ANI99) or environments
 I can do this only for ncbi where ANI99 clusters are available.
 
 ##### - prep data
@@ -3516,7 +3530,7 @@ df_mantel <- read.table(paste0(outputdir,"ED6E_mantel_permutation.tsv"),sep = "\
 df_obs <- read.table(paste0(outputdir,"ED6E_mantel_observed.tsv"),sep = "\t", header = TRUE)
 
 
-pdf(paste0(plotdir, "ED6E_mantel_overlay_histograms.pdf"), width = 4.5, height = 3)
+pdf(paste0(plotdir, "ED8E_mantel_overlay_histograms.pdf"), width = 4.5, height = 3)
 
 ggplot(df_mantel, aes(x = rho, fill = comparison)) +
   geom_histogram(aes(fill=comparison),bins = 100,alpha = 0.5,position = "identity") +
@@ -3547,7 +3561,7 @@ dev.off()
 
 
 
-## Fig. S7
+## ED Fig. 9
 
 ##### load annotation O-types
 ```{r}
@@ -3631,7 +3645,7 @@ totest %>% group_by(source) %>%
 ```
 
 
-### S7A - K-type/O-type proportions
+### ED9A - K-type/O-type proportions
 
 
 ```{r}
@@ -3644,7 +3658,7 @@ totest_filtered <- totest %>%
   ungroup() %>%
   filter(no_genomes > 25) %>%
   group_by(o_type, h_type) %>%
-  mutate(frac = n() / first(no_genomes)) %>%
+  mutate(frac = n() / dplyr::first(no_genomes)) %>%
   ungroup() %>%
   mutate(h_type = ifelse(frac < 0.3, "Other", h_type))
 
@@ -3652,8 +3666,8 @@ totest_filtered <- totest %>%
 # assign each (o_type, K-type) to one h_type only
 k_assignments <- totest_filtered %>%
   distinct(o_type, predicted, h_type) %>%
-  group_by(o_type, predicted) %>%
-  slice(1) %>%  # Assign each K-type to just one H-type per O-type
+  dplyr::group_by(o_type, predicted) %>%
+  dplyr::slice(1) %>%  # Assign each K-type to just one H-type per O-type
   ungroup()
 
 # count unique K-types per (o_type, h_type)
@@ -3664,8 +3678,8 @@ toplot <- k_assignments %>%
 
 # get genome counts per o_type for bar labels
 bar_labels <- totest_filtered %>%
-  group_by(o_type) %>%
-  summarise(no_genomes = n(), .groups = "drop") %>%
+  dplyr::group_by(o_type) %>%
+  dplyr::summarise(no_genomes = n(), .groups = "drop") %>%
   left_join(
     toplot %>%
       group_by(o_type) %>%
@@ -3685,7 +3699,7 @@ toplot <- toplot %>%
 
 
 # upper panel
-pdf(paste0(plotdir,"ED7A_upperpanel_OKtype_barplot_normgenomes.pdf"),width=10,height=5)
+pdf(paste0(plotdir,"ED9A_upperpanel_OKtype_barplot_normgenomes.pdf"),width=10,height=5)
 ggplot(toplot, aes(x = reorder(o_type, -total_height),
                    y = unique_ktypes, fill = h_type)) +
   geom_bar(stat = "identity", color = "black") +
@@ -3728,7 +3742,7 @@ toplot = totest %>%
 toplot$o_type <- factor(toplot$o_type, levels = desired_order)
 
 
-pdf(paste0(plotdir,"ED7A_lowerpanel_O_type_kps+.pdf"),width = 10,height=5)
+pdf(paste0(plotdir,"ED9A_lowerpanel_O_type_kps+.pdf"),width = 10,height=5)
 ggplot(toplot, aes(x = o_type, y = proportion, fill = manual_ktyp, label = count)) +
   geom_bar(stat = "identity", color = "black") +
   geom_text(aes(y = proportion),
@@ -3752,7 +3766,7 @@ dev.off()
 
 ```
 
-###S7B - O-type-K-type heatmap
+###ED9B - O-type-K-type heatmap
 
 
 ```{r}
@@ -3883,7 +3897,7 @@ col_fun <- colorRamp2(
 )
 
 # plot
-pdf(paste0(plotdir, "ED7B_clustered_OK.pdf"), width = 19, height = 16)
+pdf(paste0(plotdir, "ED9B_clustered_OK.pdf"), width = 19, height = 16)
 
 
 hm <- Heatmap(mat_data,
@@ -3967,8 +3981,6 @@ test <- test %>%
 
 
     
- 
-
 
 ```
 
