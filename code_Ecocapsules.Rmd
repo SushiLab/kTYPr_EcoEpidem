@@ -478,6 +478,7 @@ rm(sheets)
 ```
 
 
+
 #------------FIGURES-----------
 
 # Fig. 3
@@ -581,6 +582,22 @@ ggplot(toplot,aes(x=host_group,y=proportion,fill=posorneg,label=count)) +
         legend.title = element_text(size=15))
 
 dev.off()
+
+
+library(openxlsx)
+
+file_path = paste0(home_dir,"sourcedatadir/Source_Data_Fig3.xlsx")
+sheet_name = "3B_kps+_proportions"
+
+# Load existing file if it exists, otherwise create new
+wb <- if (file.exists(file_path)) loadWorkbook(file_path) else createWorkbook()
+
+# Add sheet and data
+addWorksheet(wb, sheet_name)
+writeData(wb, sheet_name, toplot)
+
+# Save
+saveWorkbook(wb, file_path, overwrite = TRUE)
 ```
 
 ##Fig. 3C - host capsule group proportion
@@ -666,6 +683,19 @@ ggplot(toplot,aes(x=host_group,y=proportion,fill=group,label=count)) +
 
 dev.off()
 
+
+file_path = paste0(home_dir,"sourcedatadir/Source_Data_Fig3.xlsx")
+sheet_name = "3C_ncbi_group_environments"
+
+# Load existing file if it exists, otherwise create new
+wb <- if (file.exists(file_path)) loadWorkbook(file_path) else createWorkbook()
+
+# Add sheet and data
+addWorksheet(wb, sheet_name)
+writeData(wb, sheet_name, toplot)
+
+# Save
+saveWorkbook(wb, file_path, overwrite = TRUE)
 ```
 
 
@@ -768,6 +798,19 @@ draw(hm,
 dev.off()
 
 
+file_path = paste0(home_dir,"sourcedatadir/Source_Data_Fig3.xlsx")
+sheet_name = "3D_heatmap_types_env"
+
+# Load existing file if it exists, otherwise create new
+wb <- if (file.exists(file_path)) loadWorkbook(file_path) else createWorkbook()
+
+# Add sheet and data
+addWorksheet(wb, sheet_name)
+writeData(wb, sheet_name, toplot)
+
+# Save
+saveWorkbook(wb, file_path, overwrite = TRUE)
+
 ```
 
 
@@ -851,6 +894,18 @@ ggplot(toplot,aes(x=host_group,y=proportion,fill=Knovel,label=count)) +
 dev.off()
 
 
+file_path = paste0(home_dir,"sourcedatadir/Source_Data_Fig3.xlsx")
+sheet_name = "3E_k_type_novel_old"
+
+# Load existing file if it exists, otherwise create new
+wb <- if (file.exists(file_path)) loadWorkbook(file_path) else createWorkbook()
+
+# Add sheet and data
+addWorksheet(wb, sheet_name)
+writeData(wb, sheet_name, toplot)
+
+# Save
+saveWorkbook(wb, file_path, overwrite = TRUE)
 ```
 
 
@@ -914,9 +969,20 @@ ggplot(toplot, aes(x=Knovel,y=normcount,color=Knovel)) +
 
 dev.off()
 
+
+file_path = paste0(home_dir,"sourcedatadir/Source_Data_Fig3.xlsx")
+sheet_name = "3F_Ktype_novel_unknown"
+
+# Load existing file if it exists, otherwise create new
+wb <- if (file.exists(file_path)) loadWorkbook(file_path) else createWorkbook()
+
+# Add sheet and data
+addWorksheet(wb, sheet_name)
+writeData(wb, sheet_name, toplot)
+
+# Save
+saveWorkbook(wb, file_path, overwrite = TRUE)
 ```
-
-
 
 
 #Fig. 4 
@@ -975,6 +1041,19 @@ ggplot(toplot,aes(x=phylogroup,y=proportion,fill=group,label=count)) +
 dev.off()
 
 
+
+file_path = paste0(home_dir,"sourcedatadir/Source_Data_Fig4.xlsx")
+sheet_name = "4A_phylogroups_groups_onlyhuman"
+
+# Load existing file if it exists, otherwise create new
+wb <- if (file.exists(file_path)) loadWorkbook(file_path) else createWorkbook()
+
+# Add sheet and data
+addWorksheet(wb, sheet_name)
+writeData(wb, sheet_name, toplot)
+
+# Save
+saveWorkbook(wb, file_path, overwrite = TRUE)
 ```
 
 
@@ -1023,6 +1102,9 @@ egli = readxl::read_xlsx(paste0(outputdir,"egli_annotated_metad_ectyper.xlsx")) 
 
 common_cols <- intersect(intersect(names(ncbi_analysis), names(egli)), names(gutmags))
 totest_invasive <- gdata::combine(ncbi_analysis[common_cols], egli[common_cols], gutmags[common_cols])
+
+
+write.xlsx(totest_invasive, paste0(outputdir,"ncbi_egli_gutmags_combined_invasiveness_subset.xlsx"), sep ="\t")
 ```
 
 ### Fig. 4B - K-type group proportion in disease
@@ -1076,6 +1158,18 @@ ggplot(test, aes(x = host_health, y = proportion, fill = group, label = count)) 
 dev.off()
 
 
+file_path = paste0(home_dir,"sourcedatadir/Source_Data_Fig4.xlsx")
+sheet_name = "4B_top_Kgroup_disease.pdf"
+
+# Load existing file if it exists, otherwise create new
+wb <- if (file.exists(file_path)) loadWorkbook(file_path) else createWorkbook()
+
+# Add sheet and data
+addWorksheet(wb, sheet_name)
+writeData(wb, sheet_name, test)
+
+# Save
+saveWorkbook(wb, file_path, overwrite = TRUE)
 
 ```
 
@@ -1148,1536 +1242,25 @@ ggplot(pcoa_to_visualize, aes(x = PCoA1, y = PCoA2)) +
         axis.title=element_text(size = 8))
 
 dev.off()
+
+
+file_path = paste0(home_dir,"sourcedatadir/Source_Data_Fig4.xlsx")
+sheet_name = "4C_PCoA.pdf"
+
+# Load existing file if it exists, otherwise create new
+wb <- if (file.exists(file_path)) loadWorkbook(file_path) else createWorkbook()
+
+# Add sheet and data
+addWorksheet(wb, sheet_name)
+writeData(wb, sheet_name, pcoa_to_visualize)
+
+# Save
+saveWorkbook(wb, file_path, overwrite = TRUE)
 ```
 
+## Fig. 4D - ST representative vs K-type
 
-###Fig. 4D - GLMM
-
-same data as for 4B-C but restricting to BSI and meningitis vs healthy stool.
-
-#### 1. data prep
-```{r}
-
-# ncbi isolates (subset)
-ncbi_analysis = read.xlsx(paste0(outputdir,"ncbi_annotated_derep_260112.xlsx")) %>% 
-  filter(host_group=="Human" & host_common_name == "Human" & !(isolation_source %in% c("Food","Probiotic","Sewage and wastewater","Meat","Plant"))) %>%
-  filter(isolation_source %in% c("Blood", "Brain and CSF") | host_health %in% c("Bloodstream Infection","Meningitis", "neonatal bacteremia","Healthy")) %>%
-  mutate(expec = case_when(host_health != "Healthy" ~ 1,
-                           TRUE ~ 0)) %>%
-  dplyr::ungroup() %>%
-  dplyr::select(predicted, host_gender, host_age, mlst, geographic_group, phylogroup,o_type,h_type, expec)
-
-# add healthy gut mags
-gutmags = readxl::read_xlsx(paste0(outputdir,"gutmags_annotated_metad_ectyper.xlsx")) %>%
- filter(!(host_health %in% c("IBD", "GI Tract and Diarrhoea","Urinary Tract Infection","Premature"))) %>%
-  mutate(group = case_when(predicted %in% c("No KpsC identified", "No K-type assigned") ~ predicted,
-                           TRUE ~ group),
-         expec = 0,
-         phylogroup = case_when(phylogroup == "C_original" ~"C",
-                                TRUE ~ phylogroup)) %>%
-  mutate(group = case_when(predicted == "K_neg_partial" ~ "kps -",
-                           TRUE ~ group)) %>%
-  dplyr::ungroup() %>%
-   dplyr::select(predicted, host_gender, host_age, mlst, geographic_group, phylogroup,o_type,h_type, expec)
-
-# add egli
-egli = readxl::read_xlsx(paste0(outputdir,"egli_annotated_metad_ectyper.xlsx")) %>%
-  filter(invasiveness == "invasive") %>%
-  mutate(expec = 1) %>%
-   dplyr::select(predicted, host_gender, host_age, mlst, geographic_group, phylogroup,o_type,h_type, expec)
-
-
-totest = gdata::combine(ncbi_analysis, gutmags, egli) %>%
-  filter(phylogroup != "NA") %>%
-   mutate(mlst = gsub("\\.0","",mlst))
-
-# fix O-type annotation as in fig. S6A
-#-------- harmonise O types
-harmonize_serotype <- function(x) {
-  if (grepl("/", x)) {
-    parts <- unlist(strsplit(x, "/"))
-    parts <- sort(parts)
-    return(paste(parts, collapse = "/"))
-  } else {
-    return(x)
-  }
-}
-
-totest$o_type <- sapply(totest$o_type, harmonize_serotype)
-
-
-totest %>% group_by(expec,source) %>%
-  summarise(n = n())
-```
-
-
-#### 2. GLMM
-
-
-```{r}
-
-pacman::p_load(glmmTMB)
-
-# Merge rare factor levels
-totest$o_type <- as.factor(ifelse(table(totest$o_type)[totest$o_type] < 15, "Other", totest$o_type))
-totest$h_type <- as.factor(ifelse(table(totest$h_type)[totest$h_type] < 10, "Other", totest$h_type))
-totest$mlst     <- as.factor(ifelse(table(totest$mlst)[totest$mlst] < 10, "Other", totest$mlst))
-
-# Merge rare geographic groups
-totest <- totest %>%
-  mutate(geographic_group = case_when(
-    geographic_group == "Middle East" ~ "Africa",
-    geographic_group == "Japan" ~ "Oceania",
-    TRUE ~ geographic_group
-  ))
-
-
-totest = totest %>%
-  mutate(host_age = as.factor(host_age),
-         geographic_group=as.factor(geographic_group),
-         host_gender=as.factor(host_gender))
-
-# pool k-types with 0 in any expected class
-predicted_expec_counts <- totest %>%
-  group_by(predicted, expec) %>%
-  summarise(n = n(), .groups = "drop") %>%
-  tidyr::pivot_wider(names_from = expec, values_from = n, values_fill = 0) %>%
-  filter(`0` <= 5 | `1` <= 5) %>%
-  pull(predicted)
-
-totest <- totest %>%
-  mutate(predicted = ifelse(predicted %in% predicted_expec_counts, "Other", as.character(predicted))) %>%
-  mutate(predicted = as.factor(predicted))
-
-# flag K-type at risk (low sample size in combination with other factors)
-totest <- totest %>%
-  group_by(predicted, o_type, h_type, phylogroup, host_age, host_gender, geographic_group, mlst) %>%
-  mutate(combo_n = n()) %>%
-  ungroup() %>%
-  mutate(rare_combo = combo_n < 6)
-
-predicted_flags <- totest %>%
-  group_by(predicted) %>%
-  summarise(predicted_at_risk = all(rare_combo)) %>%
-  ungroup()
-
-totest <- totest %>%
-  left_join(predicted_flags, by = "predicted")
-
-
-model <- glm(
-  expec ~ predicted + o_type + h_type + phylogroup + host_age + host_gender + geographic_group + mlst,
-  data = totest)
-
-
-# View(totest %>%
-#   group_by(predicted, expec) %>%
-#   summarise(count = n()) %>%
-#   pivot_wider(names_from = expec, values_from = count))
-
-```
-
-
-#### 3. convert to OR
-```{r}
-
-coefs <- coef(summary(model))
-model_results = coefs %>% 
-  as.data.frame() %>%
-  rownames_to_column(var="term") %>%
-  clean_names() %>%
-  dplyr::rename(p.value=pr_t) %>%
-  mutate(fixed_effect = case_when(grepl("predicted", term) ~ "K-type",
-                                  grepl("o_type", term) ~ "O-type",
-                                  grepl("phylogroup", term) ~ "Phylogroup",
-                                  grepl("mlst", term) ~ "MLST",
-                                  TRUE ~ "Other"),
-         term_update = gsub("o_type|mlst|phylogroup|predicted", "", term),
-         conf.low = estimate - 1.96 * std_error,
-         conf.high = estimate + 1.96 * std_error,
-         OR = exp(estimate),
-         OR_lower = exp(conf.low),
-         OR_upper = exp(conf.high),
-         significance=case_when(p.value <= 0.01 ~"0.01",
-                                p.value <= 0.05 & p.value > 0.01 ~"0.05",
-                                TRUE ~ "Not Significant"))
-
-write.table(model_results, paste0(outputdir,"OddsRatio_GLMM_260122.tsv"), sep = "\t",quote = F,row.names = F)
-```
-
-
-### ED Table 14 - GLMM results K-types
-
-```{r}
-towrite = model_results %>%
-  filter(fixed_effect == "K-type") %>%
-  dplyr::select(term_update, std_error,p.value,OR,OR_lower,OR_upper) %>%
-  dplyr::rename(term=term_update)
-  
-
-write.xlsx(towrite, paste0(outputdir,"EDTable_14_OR_invasiveness.xlsx"))
-
-```
-
-
-### Figure
-```{r}
-
-pacman::p_load(ggbreak)
-
-test = fread(paste0(outputdir,"OddsRatio_GLMM_260122.tsv"), sep = "\t")
-
-
-pdf(paste0(plotdir,"4D_OR_glmer_predicted_expec_forfigure.pdf"), width = 8, height = 3)
-
-ggplot(test %>% 
-         filter(fixed_effect %in% c("K-type")), 
-         #filter(fixed_effect %in% c("K-type")), 
-       aes(y = reorder(term_update, -OR), x = OR, xmin = OR_lower, xmax = OR_upper, color = significance)) +
-  geom_errorbar(size = 0.5, width = 0.3) +
-  geom_point() +
-  scale_color_manual(
-    values = c("0.01" = "darkblue", "0.05" = "dodgerblue2", "Not Significant" = "gray"),
-    labels = c("Not Significant" = "p ≥ 0.05", "0.05" = "p < 0.05", "0.01" = "p < 0.01")
-  ) +
-  theme_bw() +
- 
-  geom_vline(xintercept = 1, #linetype = "11",
-             color = "black", linewidth = 0.1) +
-  labs(x = "Odds Ratio", y = "K-types", color = "") +
-  coord_flip() +
-  theme(
-    axis.text.y = element_text(size = 12),
-    axis.text.x = element_text(size = 12, angle = 60, hjust = 1),
-    strip.text = element_text(size = 12),
-    plot.title = element_text(size = 14, face = "bold"),
-    legend.position = "right"
-  )
-
-
-dev.off()
-
-```
-
-
-
-# ---------- SUPPLEMENTARY FIGS------------
-
-## ED Fig. 3
-
-```{r}
-
-refseq_short = fread(paste0(inputdir,"refseq37_flank_20260107_ktyps.tsv")) %>%
-  dplyr::distinct(genome_id, predicted, pred_nr_genes, pred_genes_in_genome,pred_acc_bitscore,pred_is_complete, KpsEDCSMT_nr_genes,
-                  KpsEDCSMT_genes_in_genome,
-                  KpsEDCSMT_acc_bitscore, KpsEDCSMT_is_complete,
-                  KpsFU_nr_genes,KpsFU_genes_in_genome,
-                  KpsFU_acc_bitscore,KpsFU_is_complete) %>%
-  mutate(manual_ktyp = case_when(pred_is_complete == 1 & KpsEDCSMT_is_complete == 1 ~ "K_pos",
-                                 pred_is_complete ==0 & KpsEDCSMT_is_complete == 0 ~ "K_neg",
-                                 TRUE ~ "K_partial")) 
-
-# quick check of KpsC unidentified  
-table(refseq_short$manual_ktyp, refseq_short$predicted)
-
-table(refseq_short$manual_ktyp, refseq_short$pred_is_complete, refseq_short$KpsEDCSMT_is_complete)
-
-```
-
-### ED3A - upset plot categories refseq
-
-```{r}
-
-pacman::p_load(dplyr, UpSetR)
-
-toplot_upset <- refseq_short %>%
-  transmute(
-    `all K-type-specific genes` = as.integer(pred_is_complete == 1),
-    `complete kpsEDCMST`        = as.integer(KpsEDCSMT_is_complete == 1),
-    `complete kpsFU`            = as.integer(KpsFU_is_complete == 1),
-    kpsC     = as.integer(!predicted %in% c("No KpsC identified")),
-    assigned = as.integer(!predicted %in% c("No KpsC identified", "No K-type assigned"))
-  ) %>%
-  mutate(
-    `none` = as.integer(
-      `all K-type-specific genes` == 0 &
-      `complete kpsEDCMST` == 0 &
-      `complete kpsFU` == 0 &
-      kpsC == 0 &
-      assigned == 0
-    )
-  )
-
-set_order <- c(
-  "all K-type-specific genes",
-  "complete kpsEDCMST",
-  "complete kpsFU",
-  "kpsC",
-  "assigned",
-  "none"# bottom
-)
-
-# Write one PDF per page
-base_pattern <- file.path(plotdir, "ED3A_upsetRefseq_%03d.pdf")
-final_pdf    <- file.path(plotdir, "ED3A_upsetRefseq.pdf")
-
-pdf(base_pattern, width = 5, height = 2.5, onefile = FALSE)
-UpSetR::upset(
-  toplot_upset,
-  sets = set_order,
-  nsets = length(set_order),
-  keep.order = TRUE,
-  order.by = "freq",
-  nintersects = NA,
-  
-  mb.ratio = c(0.3, 0.3),
-
-  point.size = 1.8,
-  line.size  = 0.6,
-  text.scale = c(1, 1, 0.85, 0.75, 0.75, 0.85)
-)
-
-
-dev.off()
-
-# Keep page 2 (the plot) and delete page 1 (blank)
-file.rename(sprintf(base_pattern, 2), final_pdf)
-unlink(sprintf(base_pattern, 1))
-
-
-```
-
-
-
-### for text
-
-```{r}
-refseq_short %>%
-  #filter(predicted %in% c("No KpsC identified", "No K-type assigned")) %>%
-  mutate(assigned = case_when(predicted %in% c("No KpsC identified", "No K-type assigned") ~ "not assigned",
-                              TRUE ~ "assigned"),
-         kpsC = case_when(predicted %in% c("No KpsC identified") ~ "-",
-                              TRUE ~ "+")) %>%
-  group_by(manual_ktyp, assigned,kpsC, pred_is_complete,KpsEDCSMT_is_complete, KpsFU_is_complete) %>%
-  summarise(n = n()) %>% 
-  arrange(assigned)
-  
-
-```
-
-### ED3B - barplot K-types
-
-```{r}
-
-Kgroups <- readxl::read_xlsx(paste0(inputdir,"subgroups.xlsx"))
-
-refseq_short = refseq_short %>%
-  left_join(Kgroups, by=c("predicted"="new_name")) %>%
-  mutate(group = case_when(predicted %in% c("No KpsC identified", "No K-type assigned") ~ predicted,
-                           TRUE ~ group))
-
-toplot <- refseq_short %>%
-  filter(manual_ktyp == "K_pos") %>%
-  dplyr::group_by(predicted, group) %>%
-  dplyr::mutate(count = n()) %>%
-  mutate(proportion = (count / nrow(.)) * 100) %>%
-  ungroup() %>%
-  dplyr::group_by(predicted, group) %>%
-  dplyr::summarise(count = n(), .groups = "drop") %>%
-  mutate(proportion = (count / sum(count)) * 100) %>%
-  ungroup()
-
-
-pdf(paste0(plotdir,"ED3B_Refseq_Ktype_prevalence.pdf"),width = 18,height=5)
-ggplot(toplot, aes(x = reorder(predicted, -proportion),
-                   y = proportion, fill = group)) +
-  geom_bar(stat = "identity", color = "black") +
-  scale_fill_manual(values = c("G2A" = "#71B7E2",
-                               "G2B" = "#345C7B",
-                               "G3A" = "#7653AB",
-                               "G3B" = "#A48DCC",
-                               "K_partial_or_neg" = "grey"),
-  guide = guide_legend(ncol = 1),
-  na.value = "grey") +
- # coord_flip() +
-  geom_text(aes(y = proportion + 1, label = count,angle=90, hjust=0.2),
-            size = 5, #angle = 90,
-            color = "black", #angle = 90, hjust = -0.1,
-            check_overlap = TRUE) + 
-  labs(y = expression(paste("% ", italic("kps"), "+ genomes")),
-       x= "", 
-       fill="Capsule Group", title="") + 
-  scale_y_continuous(limits = c(0, 20)) +
-  theme_bw() +
-  theme(axis.text.x = element_text(size = 15, angle=60, hjust=1),
-        axis.title = element_text(size = 18),
-        axis.text.y = element_text(size = 15),
-        legend.position = "none",
-        strip.text = element_text(size = 15))
-
-
-dev.off()
-
-
-
-```
-
-
-## ED Fig. 6
-
-#### prep data (same as Fig. 3)
-```{r}
-totest = readxl::read_xlsx(paste0(outputdir, "ncbi_egli_combined_for_analysis.xlsx"))
-```
-
-
-### ED6A. Geography capsule positivity
-
-```{r}
-toplot = totest %>%
-  mutate(posorneg = case_when(manual_ktyp == "K_pos" ~ "K_pos",
-                              TRUE ~ "K_neg")) %>%
-  mutate(geographic_group= replace_na(geographic_group, "Unknown")) %>%
-  mutate(geographic_group= gsub("^$", "Unknown", geographic_group)) %>%
-  dplyr::group_by(geographic_group) %>%
-  mutate(total=n()) %>% ungroup() %>%
-  dplyr::group_by(geographic_group, total, posorneg) %>%
-  summarise(count=n()) %>%
-  ungroup() 
-
-
-pdf(paste0(plotdir,"ED6A_ncbi_kps+_geography.pdf"),width = 8,height=5)
-ggplot(toplot,aes(x=reorder(geographic_group, count),y=count,fill=posorneg,label=count)) +
-  geom_bar(stat = "identity", color = "black") +
-   geom_text(aes(y = total+400, label =total),
-            size = 5,
-            color = "black",
-            check_overlap = TRUE) +
-  scale_fill_manual(values =c("white","grey"), label = c("-","+")) +
-  theme(legend.position="bottom",
-        axis.text.x=element_text(angle=60,hjust=1)) +
-  labs(y = "# genomes", x= "", fill="Capsule") +
-  coord_flip() +
-  theme_classic() +
-  theme(axis.text.x = element_text(hjust=0.5, size =15),
-        axis.text.y = element_text(size =15),
-        legend.position="inside",
-        legend.text = element_text(size=8),
-        axis.title=element_text(size=15))
-
-dev.off()
-
-```
-
-### ED6B -  Barplot of k-types
-
-##### for text: how many distinct k-types per environment?
-
-```{r}
-
-toplot = totest %>%
-  filter(manual_ktyp == "K_pos") %>%
-  dplyr::mutate(total = nrow(.)) %>%
-  dplyr::ungroup() %>%
-  dplyr::group_by(total, predicted) %>%
-  dplyr::summarise(count = n()) %>%
-  ungroup() %>%
-  mutate(proportion = (count/total) * 100)
-
-```
-
-
-
-##### figure
-```{r}
-
-toplot = totest %>%
-  filter(manual_ktyp == "K_pos") %>%
-  mutate(host_common_name = case_when(
-    host_group == "Environmental" & isolation_source %in% c("Sewage and wastewater", "River", "Seawater", "Sediment and soil","Air and dust","Manure","Unspecified Clinical Isolate") ~ isolation_source,
-    host_group == "Environmental" & host_common_name %in% c("Water") & !(isolation_source %in% c("Sewage and wastewater", "River", "Seawater")) ~ "Water",
-    host_group == "Human" ~ "Human",
-    host_group == "Laboratory" ~ "Laboratory",
-    TRUE ~ host_common_name)) %>%
-  mutate(host_common_name = gsub("Unmapped", "Unknown", host_common_name),
-         host_common_name = gsub("Environmental Source", "Unknown", host_common_name),
-         host_common_name = gsub("Food", "Unknown", host_common_name)) %>%
-  mutate(host_group = case_when(
-    host_group == "Other Animals" & host_common_name %in% c("Cat", "Dog", "Horse","Mouse","Rabbit") ~ "Pets",
-    host_group == "Other Animals" & !(host_common_name %in% c("Cat", "Dog", "Horse","Mouse","Rabbit")) ~ "Wild Animals",
-    host_group == "Environmental" ~ "Other Environmental Source",
-    host_group == "Human-/animal-\nassociated Environment" & host_common_name %in% c("Pig","Cow","Sheep","Other or unspecified livestock") ~ "Livestock-\nassociated Environment",
-    TRUE ~ host_group)) %>%
-  dplyr::group_by(host_group) %>%
-  dplyr::mutate(total = n()) %>%
-  dplyr::ungroup() %>%
-  dplyr::group_by(total, host_group, predicted) %>%
-  dplyr::summarise(count = n()) %>%
-  ungroup() %>%
-  mutate(proportion = (count/total) * 100) %>%
-  dplyr::select(host_group, predicted, proportion,total)
-
-
-# --- GROUP LOW PROPORTION K-TYPES (< 0.5%) AS "OTHER" ---
-test <- toplot %>%
-  mutate(predicted = ifelse(proportion < 8, "Other", predicted)) %>% 
-  # Recalculate total proportions
-  group_by(host_group, predicted) %>%
-  summarise(proportion = sum(proportion), .groups = "drop")  
-
-
-test$host_group <- factor(test$host_group, levels=rev(c("Human","Human-/animal-\nassociated Environment","Pets","Avian","Livestock","Food","Livestock-\nassociated Environment","Wild Animals","Other Environmental Source","Laboratory","Unknown")))
-
-
-#take color mapping from ED6E --> need to plot this first if rerunning all figures
-color_mapping <- readRDS(paste0(outputdir,"Ktype_color_mapping.rds"))
-
-
-pdf(paste0(plotdir,"ED6B_ktype_hostdistribution.pdf"),width = 7, height =4.5)
-
-# set order
-test <- test %>%
-  arrange(host_group, desc(proportion))  
-test$predicted <- factor(test$predicted, levels = unique(test$predicted))
-
-
-# calculate total counts per bar (disease + phylogroup)
-
-totals <- toplot %>%
-  group_by(host_group) %>%
-  summarise(total_count = unique(total), .groups = "drop")
-
-
-ggplot(test, aes(x = host_group, y = proportion, fill = predicted)) +
-  geom_bar(stat = "identity", color = "black") +  # Dodge for clustered bars
-  scale_fill_manual(values = color_mapping,
-                  guide = guide_legend(nrow = 3)) +
-  labs(title = "",
-       x = "", 
-       y = expression(paste("% ", italic("kps"), "+ genomes")),
-       fill = "K-Type") +
-    geom_text(data = totals, aes(x = host_group, y = 105, label = total_count),
-            inherit.aes = FALSE,nudge_y = -3,
-            size = 3, hjust = 0.2) +
-  coord_flip() +
-  theme_classic() +
-  theme(legend.text= element_text(size=10),
-        legend.key.height = unit(3, "mm"),
-        legend.key.width = unit(5, "mm"),
-        legend.position="bottom",
-        axis.text = element_text(size = 11))
-
-dev.off()
-
-```
-
-
-### ED6C. Heatmap Ktypes individual hosts - CORRELATION VERSION
-```{r}
-toplot = totest %>%
-  filter(manual_ktyp == "K_pos") %>%
-  mutate(host_common_name = case_when(host_group == "Environmental" & isolation_source %in% c("Sewage and wastewater", "River", "Seawater", "Sediment and soil","Air and dust","Manure","Unspecified Clinical Isolate") ~ isolation_source,
-                                      host_group == "Environmental" & host_common_name %in% c("Water") & !(isolation_source %in% c("Sewage and wastewater", "River", "Seawater")) ~ "Water",
-                                      host_group == "Human" ~ "Human",
-                                      host_group == "Laboratory" ~ "Laboratory",
-                                      TRUE ~ host_common_name)) %>%
-    mutate(host_common_name= gsub("Unmapped", "Unknown", host_common_name)) %>%
-  mutate(host_common_name= gsub("Environmental Source", "Unknown", host_common_name)) %>%
-  mutate(host_common_name= gsub("Food", "Unknown", host_common_name)) %>%
-    mutate(host_group = case_when(host_group == "Other Animals" & host_common_name %in% c("Cat", "Dog", "Horse","Mouse","Rabbit") ~ "Pets",
-                                host_group == "Other Animals" & !(host_common_name %in% c("Cat", "Dog", "Horse","Mouse","Rabbit")) ~ "Wild Animals",
-                                host_group == "Environmental" ~ "Other Environmental Source",
-                                host_group == "Human-/animal-\nassociated Environment" & host_common_name %in% c("Pig","Cow","Sheep","Other or unspecified livestock") ~ "Livestock-\nassociated Environment",
-                                TRUE ~ host_group)) %>%
-  mutate(host_group_name=interaction(host_group,host_common_name, geographic_group)) %>%
-  dplyr::group_by(host_group, host_group_name) %>%
-  dplyr::mutate(total=n()) %>%
-  dplyr::ungroup() %>%
-  # keep only hosts with > 15
-  filter(total >= 15 ) %>%
-  dplyr::group_by(total, host_group,host_group_name,predicted) %>%
-  dplyr::summarise(count = n()) %>%
-  ungroup() %>%
-  mutate(proportion = (count/total)*100) %>%
-  filter(predicted != "K_neg_partial") %>%
- # filter(proportion > 10) %>%
-  mutate(host_group_name=paste0(host_group_name, " (n=",total,")")) %>%
-  complete(host_group_name, predicted, fill = list(proportion = NA, label = ""))
-  
-
-mat_data = toplot %>%
-  distinct(predicted,host_group_name, proportion) %>%
-  pivot_wider(names_from = host_group_name,values_from = proportion)
-
-mat_data[is.na(mat_data)] <- 0
-
-df_corr = mat_data %>%
-  pivot_longer(cols = c(2:ncol(.)), values_to = "proportion",names_to = "host_group_name") 
-
-
-df_wide <- df_corr %>%
-  pivot_wider(names_from = host_group_name, values_from = proportion)
-
-# calculate correlation between hosts
-corr_matrix <- cor(df_wide[, -1], use = "complete.obs", method = "pearson")
-corr_long <- as.data.frame(as.table(corr_matrix))
-
-colnames(corr_long) <- c("host1", "host2", "corr")
-
-is.na.data.frame <- function(x)
-  do.call(cbind, lapply(x, is.na))
-
-fix_na <- function (x) {
-  x[is.na(x)] <- 0
-  return(x)
-}
-corr_long = fix_na(corr_long)
-
-dim(corr_long)
-
-
-corr_long = corr_long %>%
-  as.data.frame() %>%
-  pivot_wider(names_from = host2, values_from = corr) %>%
-  fix_na() %>%
-  as.data.frame() %>%
-  set_rownames(.$host1) %>%
-  dplyr::select(-host1) %>%
-  as.matrix()
-
-dim(corr_long)
-
-
-# Extract host group and geographical group
-row_annotation_data <- data.frame(host_group_name = rownames(corr_long)) %>%
-  mutate(host_group = sapply(strsplit(as.character(host_group_name), "\\."), '[', 1),
-    geographic_group = sub("^[^.]+\\.[^.]+\\.([^\\(]+) \\(n=.*", "\\1", host_group_name)) %>%
-  dplyr::select(-host_group_name)
-
-# Unique values for coloring
-unique_host_groups <- unique(row_annotation_data$host_group)
-unique_geo_groups <- unique(row_annotation_data$geographic_group)
-
-# Generate colors for annotations
-set.seed(12)
-host_group_colors <- setNames(colorRampPalette(brewer.pal(8, "Set3"))(length(unique_host_groups)), unique_host_groups)
-geo_group_colors <- setNames(colorRampPalette(brewer.pal(8, "Paired"))(length(unique_geo_groups)), unique_geo_groups)
-
-
-
-# Create the row annotation
-ra <- rowAnnotation(
-  hostgroup = row_annotation_data$host_group,
-   Geographical_Group = row_annotation_data$geographic_group,
-  annotation_label = c("Host", "Geography"),
-  col = list(hostgroup = host_group_colors,
-             Geographical_Group = geo_group_colors),
-  annotation_width = unit(4, "mm")
-)
-
-rownames(corr_long) <- sub("^[^.]+\\.", "", rownames(corr_long))
-
-
-library(circlize)
-col_fun = colorRamp2(c(min(corr_long), 0, max(corr_long)), hcl_palette = "RdBu")
-col_fun(seq(-20, 20))
-
-# Increase space between heatmap body and the heatmap legend (right side)
-ht_opt$HEATMAP_LEGEND_PADDING = unit(10, "mm")   # try 5–20 mm
-
-# If you also have annotation legends on the right:
-ht_opt$ANNOTATION_LEGEND_PADDING = unit(10, "mm")
-
-
-ht <- Heatmap(
-  corr_long,
-  row_names_gp = gpar(fontsize = 9),
-  column_title="host-location",
-  row_title ="host-location",
-  show_column_names = FALSE,
-  col=col_fun,
-  row_split = 10,
-  column_split = 10,
-  heatmap_legend_param = list(
-    title = "Pearson correlation coefficient",
-    legend_direction = "horizontal"
-  ),
-  left_annotation = ra,
-  use_raster = TRUE, raster_quality = 5
-)
-
-pdf(paste0(plotdir,"ED6C_hm_hosts_corr_matrix.pdf"), width=14, height=10)
-
-draw(
-  ht,
-  heatmap_legend_side = "right",
-)
-
-
-
-dev.off()
-
-ht_opt(RESET = TRUE)
-```
-
-
-### ED6D. K-type frequency overall
-```{r}
-
-toplot <- totest %>%
-  filter(manual_ktyp == "K_pos") %>%
-  dplyr::group_by(predicted, group) %>%
-  dplyr::mutate(count = n()) %>%
-  mutate(proportion = (count / nrow(.)) * 100) %>%
-  ungroup() %>%
-  mutate(predicted = case_when(proportion < 0.5 ~ "other",
-                               TRUE ~ predicted)) %>%
-  dplyr::group_by(predicted, group) %>%
-  dplyr::summarise(count = n(), .groups = "drop") %>%
-  mutate(proportion = (count / sum(count)) * 100) %>%
-  ungroup()
-
-
-
-
-pdf(paste0(plotdir,"ED6D_ncbi_Ktype_prevalence.pdf"),width = 6,height=10)
-ggplot(toplot, aes(y = factor(predicted, levels = c("other",setdiff(predicted[order(proportion)], "other"))),
-                   x = proportion, fill = group)) +
-  geom_bar(stat = "identity", color = "black") +
-  scale_fill_manual(values = mycolors, guide = guide_legend(ncol = 1), na.value = "grey") +
- # coord_flip() +
-  geom_text(aes(x = proportion + 1, label = count),
-            size = 5, #angle = 90,
-            color = "black", #angle = 90, hjust = -0.1,
-            check_overlap = TRUE) + 
-  labs(x = expression(paste("% ", italic("kps"), "+ genomes")),
-       y= "", 
-       fill="Capsule Group", title="") + 
-  scale_x_continuous(limits = c(0, 20)) +
-  theme_bw() +
-  theme(axis.text.x = element_text(size = 15),
-        axis.title = element_text(size = 18),
-        axis.text.y = element_text(size = 15),
-        legend.position = "none",
-        strip.text = element_text(size = 15))
-
-
-dev.off()
-
-```
-
-##### for text
-```{r}
-
-toplot <- totest %>%
-   mutate(host_common_name = case_when(
-    host_group == "Environmental" & isolation_source %in% c("Sewage and wastewater", "River", "Seawater", "Sediment and soil","Air and dust","Manure","Unspecified Clinical Isolate") ~ isolation_source,
-    host_group == "Environmental" & host_common_name %in% c("Water") & !(isolation_source %in% c("Sewage and wastewater", "River", "Seawater")) ~ "Water",
-    host_group == "Human" ~ "Human",
-    host_group == "Laboratory" ~ "Laboratory",
-    TRUE ~ host_common_name)) %>%
-  mutate(host_common_name = gsub("Unmapped", "Unknown", host_common_name),
-         host_common_name = gsub("Environmental Source", "Unknown", host_common_name),
-         host_common_name = gsub("Food", "Unknown", host_common_name)) %>%
-  mutate(host_group = case_when(
-    host_group == "Other Animals" & host_common_name %in% c("Cat", "Dog", "Horse","Mouse","Rabbit") ~ "Pets",
-    host_group == "Other Animals" & !(host_common_name %in% c("Cat", "Dog", "Horse","Mouse","Rabbit")) ~ "Wild Animals",
-    host_group == "Environmental" ~ "Other Environmental Source",
-    host_group == "Human-/animal-\nassociated Environment" & host_common_name %in% c("Pig","Cow","Sheep","Other or unspecified livestock") ~ "Livestock-\nassociated Environment",
-    TRUE ~ host_group)) %>%
-  filter(manual_ktyp == "K_pos") %>%
-  dplyr::group_by(predicted, host_group) %>%
-  dplyr::summarise(count = n(), .groups = "drop") %>%
-  dplyr::group_by(host_group) %>% 
-  mutate(proportion = (count / sum(count)) * 100) %>%
-  ungroup()
-```
-
-
-### ED6E. geography
-
-```{r}
-toplot <- totest %>%
-  filter(manual_ktyp == "K_pos") %>%
-mutate(host_group = case_when(
-    host_group == "Other Animals" & host_common_name %in% c("Cat", "Dog", "Horse","Mouse","Rabbit") ~ "Pets",
-    host_group == "Other Animals" & !(host_common_name %in% c("Cat", "Dog", "Horse","Mouse","Rabbit")) ~ "Wild Animals",
-    host_group == "Environmental" ~ "Other Environmental Source",
-    host_group == "Human-/animal-\nassociated Environment" & host_common_name %in% c("Pig","Cow","Sheep","Other or unspecified livestock") ~ "Livestock-\nassociated Environment",
-    TRUE ~ host_group)) %>%
-  dplyr::group_by(host_group, geographic_group, predicted) %>%
-  dplyr::summarise(count = n(), .groups = "drop") %>%  # Count each K-type within the group
-  dplyr::group_by(host_group, geographic_group) %>%
-  dplyr::mutate(proportion = (count / sum(count)) * 100) %>%  # Normalize within group
-  ungroup() %>%
-  filter(!(host_group %in% c("Laboratory","Unknown")) & !(geographic_group %in% c("Asia", "Atlantic Ocean")))
-
-
-
-# this figure has the highest diversity of k-types so unified K-type legend should be generated here
-# group low proportion K-types as "other"
-test <- toplot %>%
-  mutate(predicted = ifelse(proportion < 8, "Other", predicted)) %>% 
-  # Recalculate total proportions
-  group_by(host_group, geographic_group, predicted) %>%
-  summarise(proportion = sum(proportion), .groups = "drop")  
-
-
-# Generate uniform palette to reuse throughout
-unique_ktypes <- unique(test$predicted)
-unique_ktypes <- unique_ktypes[unique_ktypes != "Other"]
-num_colors <- length(unique_ktypes)
-palette_colors <- colorRampPalette(brewer.pal(12, "Set3"))(num_colors)
-color_mapping <- c(setNames(palette_colors, unique_ktypes), Other = "#B0B0B0")
-
-saveRDS(color_mapping, file = paste0(outputdir,"Ktype_color_mapping.rds"))
-
-
-# Order legend with Other last
-k_levels <- setdiff(names(color_mapping), "Other")
-k_levels <- k_levels[order(as.integer(sub("^K", "", k_levels)))]
-test$predicted <- factor(test$predicted, levels = c(k_levels, "Other"))
-
-
-# order for geographic_group
-geo_order <- rev(c("Center and South America","North America",  "Europe","Middle East","Africa", "Indian Subcontinent", "China and South-East Asia", "North and Central Asia", "Japan",  "Oceania","Unknown"))
-test$geographic_group <- factor(test$geographic_group, levels = geo_order)
-
-# order for host_group
-host_order <- c("Human", "Human-/animal-\nassociated Environment", "Pets", "Livestock","Food",  "Livestock-\nassociated Environment", "Avian" ,"Wild Animals", "Other Environmental Source" )
-test$host_group <- factor(test$host_group, levels = host_order)
-
-test$predicted <- factor(test$predicted, levels = unique(test$predicted))
-
-
-pdf(paste0(plotdir,"ED6E_ktype_geography_distribution.pdf"),width = 15, height =7)
-
-totals <- toplot %>%
-  group_by(geographic_group, host_group) %>%
-  summarise(total_count = sum(count), .groups = "drop")
-
-
-ggplot(test, aes(x = geographic_group, y = proportion, fill = predicted)) +
-  geom_bar(stat = "identity") + 
-  scale_fill_manual(values = color_mapping) +  
-  geom_text(data = totals, aes(x = geographic_group, y = 105, label = total_count),
-            inherit.aes = FALSE,nudge_y = -3,
-            size = 3, hjust = 0.2) +
-  labs(title = "",
-       x = "", 
-       y = expression(paste("% ", italic("kps+"), "genomes")),
-       fill = "K-Type") +
-  coord_flip() +
-  scale_y_continuous(limits = c(0,110),breaks=c(0,25,50,75,100)) +
-  facet_wrap(~host_group, scales="free") +
-  theme_classic() +
-  theme(legend.text= element_text(size=8), 
-        legend.key.height = unit(4, "mm"),
-        legend.key.width = unit(2, "mm"),
-        legend.position="right") +
-  guides(fill = guide_legend(nrow = 25))
-
-
-dev.off()
-
-
-```
-
-##### for text: top K-types per environment
-
-```{r}
-
-toplot <- totest %>%
-  filter(manual_ktyp == "K_pos") %>%
-mutate(host_group = case_when(
-    host_group == "Other Animals" & host_common_name %in% c("Cat", "Dog", "Horse","Mouse","Rabbit") ~ "Pets",
-    host_group == "Other Animals" & !(host_common_name %in% c("Cat", "Dog", "Horse","Mouse","Rabbit")) ~ "Wild Animals",
-    host_group == "Environmental" ~ "Other Environmental Source",
-    host_group == "Human-/animal-\nassociated Environment" & host_common_name %in% c("Pig","Cow","Sheep","Other or unspecified livestock") ~ "Livestock-\nassociated Environment",
-    TRUE ~ host_group)) %>%
-  dplyr::group_by(host_group, predicted) %>%
-  dplyr::summarise(count = n(), .groups = "drop") %>%  
-  dplyr::group_by(host_group) %>%
-  dplyr::mutate(proportion = (count / sum(count)) * 100) %>%
-  ungroup() 
-
-```
-
-
-
-## ED Fig. 7
-
-### prep data (same as Fig. 3)
-```{r}
-totest = read_xlsx(paste0(outputdir,"ncbi_egli_combined_for_analysis.xlsx"))     
-
-```
-
-#### ED7A - phylogroups all hosts
-```{r}
-
-toplot = totest %>%
-  mutate(phylogroup = case_when(phylogroup == "C_original" ~"C",
-                                TRUE ~ phylogroup)) %>%
-  mutate(group = case_when(predicted == "K_neg_partial" ~ "kps -",
-                           TRUE ~ group)) %>%
-  dplyr::group_by(phylogroup) %>%
-  dplyr::mutate(total=n()) %>%
-  dplyr::ungroup() %>%
-  dplyr::group_by(group,total, phylogroup) %>%
-  dplyr::summarise(count = n()) %>%
-  mutate(proportion = (count/total)*100)
-
-
-mycolors = c(
-  "G2A" = "#71B7E2",
-  "G2B" = "#345C7B",
-  "G3A" = "#7653AB",
-  "G3B" = "#A48DCC",
-  "kps -" = "grey"
-)
-
-toplot = toplot %>%
-  filter(phylogroup != "NA")
-
-toplot$phylogroup <- factor(toplot$phylogroup, levels=c("A","B1","C","E1","E2","G","B2-1","B2-2","D1","D2","D3","F"))
-
-pdf(paste0(plotdir,"ED7A_phylogroup_group_percent_includingKneg_allhosts.pdf"),width = 8,height=3)
-ggplot(toplot,aes(x=phylogroup,y=proportion,fill=group,label=count)) +
-  geom_bar(stat = "identity", color = "black") +
-  scale_fill_manual(values = mycolors,guide = guide_legend(ncol = 1), na.value = "grey") +
-   geom_text(aes(y = proportion),
-            position = position_stack(vjust = 0.5), 
-            size = 5, 
-            color = "black",
-            check_overlap = TRUE) + 
-  labs(y = "% genomes", x= "Phylogroup", fill="Capsule Group") +
-  #coord_flip() +
-  theme_classic() +
-   theme(axis.text.x = element_text(hjust=0.5, size = 15),
-        axis.title=element_text(size=15),
-        axis.text.y = element_text(size = 15),
-        legend.position="none")
-dev.off()
-
-
-```
-
-##### text 
-
-```{r}
-
-toplot = totest %>%
-  mutate(nastyphy = case_when(phylogroup %in% c("B2-1","B2-2","D1","D2","D3","F") ~ "nasty",
-                              TRUE ~ "ok")) %>%
-  mutate(phylogroup = case_when(phylogroup == "C_original" ~"C",
-                                TRUE ~ phylogroup)) %>%
-  mutate(group = case_when(predicted == "K_neg_partial" ~ "kps -",
-                           TRUE ~ group)) %>%
-  dplyr::group_by(nastyphy) %>%
-  dplyr::mutate(total=n()) %>%
-  dplyr::ungroup() %>%
-  dplyr::group_by(group,total, nastyphy) %>%
-  dplyr::summarise(count = n()) %>%
-  mutate(proportion = (count/total)*100)
-```
-
-
-#### ED7B - isolation source ncbi + egli only Human
-```{r}
-
-toplot = totest %>%
-   filter(host_group == "Human" & host_common_name == "Human" & !(isolation_source %in% c("Food","Probiotic","Sewage and wastewater","Meat","Plant")))%>% 
-  mutate(isolation_source = case_when(isolation_source %in% c("Blood", "Brain and CSF","Urine and bladder","Stool","Unspecified Clinical Isolate") ~ isolation_source,
-                                                  TRUE ~ "Other")) %>%
- dplyr::group_by(phylogroup) %>%
-  dplyr::mutate(total=n()) %>%
-  dplyr::ungroup() %>%
-  dplyr::group_by(total, phylogroup,isolation_source) %>%
-  dplyr::summarise(count = n()) %>%
-  mutate(proportion = (count/total)*100)
-
-toplot %>% group_by(phylogroup) %>% summarise(n = sum(count))
-
-
-toplot = toplot %>%
-  filter(phylogroup != "NA")
-
-toplot$phylogroup <- factor(toplot$phylogroup, levels=c("A","B1","C","E1","E2","G","B2-1","B2-2","D1","D2","D3","F"))
-
-toplot = toplot %>%
-  mutate(isolation_source = case_when(isolation_source == "Urine and bladder" ~ "Urine and\nbladder",
-                                                 isolation_source == "Unspecified Clinical Isolate" ~ "Unspecified Clinical\nIsolate",
-                                                 TRUE ~ isolation_source))
-
-pdf(paste0(plotdir,"ED7B_phylogroup_percent_includingKneg_isolationsources_stacked.pdf"),width = 7,height=3.5)
-ggplot(toplot , aes(x = phylogroup, y = proportion, fill = isolation_source)) +
- geom_bar(stat = "identity", color = "black") +
-   geom_text(aes(y = proportion, label=count),
-            position = position_stack(vjust = 0.5),
-            size = 4,
-            color = "black",
-            check_overlap = TRUE) +
-  labs(y = "# genomes", x = "", fill = "Isolate source") +
-  scale_fill_manual(values = c("Blood" = "#c46c77", "Brain and CSF" = "white", "Urine and\nbladder" = "#cccc99", "Stool" = "#f7ddeb",  "Unspecified Clinical\nIsolate" = "lightblue", "Other" = "grey")) +
-  theme_classic() +
-  theme(#axis.text.x = element_text(hjust = 1, size = 15,angle=60),
-        axis.title = element_text(size = 15),
-        axis.text.y = element_text(size = 15),
-        axis.text.x = element_text(size = 15),
-        strip.text = element_text(size = 15),
-        legend.text=element_text(size = 12),
-        legend.title=element_text(size = 13),
-        legend.position="bottom",
-        legend.margin = margin(t = -20, r = -10, b = 1, l = -10),
-        legend.direction="horizontal")+
-  guides(fill = guide_legend(nrow = 2))
-dev.off()
-
-
-```
-
-#### ED7C - gut commensal global distribution
-```{r}
-gutmags = readxl::read_xlsx(paste0(outputdir,"gutmags_annotated_metad_ectyper.xlsx")) %>%
-  mutate(group = case_when(predicted %in% c("No KpsC identified", "No K-type assigned") ~ predicted,
-                           TRUE ~ group),
-         expec = 0,
-         phylogroup = case_when(phylogroup == "C_original" ~"C",
-                                TRUE ~ phylogroup)) %>%
-  mutate(group = case_when(predicted == "K_neg_partial" ~ "kps -",
-                           TRUE ~ group)) %>%
-  dplyr::ungroup()
-
-
-toplot = gutmags %>%
-  mutate(geographic_group= replace_na(geographic_group, "Unknown")) %>%
-  mutate(geographic_group= gsub("^$", "Unknown", geographic_group)) %>%
-  dplyr::group_by(geographic_group) %>%
-  mutate(total=n()) %>%
-  ungroup() %>%
-  mutate(posorneg = case_when(manual_ktyp == "K_pos" ~ "K_pos",
-                              TRUE ~ "K_neg")) %>%
-  dplyr::group_by(geographic_group, total, posorneg) %>%
-  summarise(count=n()) %>%
-  ungroup() 
-
-
-pdf(paste0(plotdir,"ED7C_gutmags_kps+_geography.pdf"),width = 7,height=3.5)
-ggplot(toplot,aes(x=reorder(geographic_group, count),y=count,fill=posorneg,label=count)) +
-  geom_bar(stat = "identity", color = "black") +
-   geom_text(aes(y = total+150, label =total),
-            size = 5,
-            color = "black",#fontface="bold",
-            check_overlap = TRUE) +
-  scale_fill_manual(values =c("white","grey"), label = c("-","+")) +
-  scale_y_continuous(limits=c(0,1780)) +
-  theme(legend.position="bottom",
-        axis.text.x=element_text(angle=60,hjust=1)) +
-  labs(y = "# genomes", x= "", fill="Capsule") +
-  coord_flip() +
-  theme_classic() +
-  theme(axis.text.x = element_text(hjust=0.5, size =15),
-        axis.text.y = element_text(size =15),
-        legend.position="inside",
-        legend.text = element_text(size=16,face = "bold"),
-        legend.title = element_text(size=16,face = "bold"),
-        axis.title=element_text(size=15))
-
-dev.off()
-
-
-gutmags %>%
-   mutate(posorneg = case_when(manual_ktyp == "K_pos" ~ "K_pos",
-                              TRUE ~ "K_neg")) %>%
-  dplyr::group_by(posorneg) %>%
-  dplyr::summarise(count=n())
-
-```
-
-
-
-#### ED7D - MAGs vs genomes (healthy vs disease phylogroups) - only in stool
-Same data as 4D (GLM)
-
-```{r}
-# ncbi isolates (subset)
-ncbi_analysis = read.xlsx(paste0(outputdir,"ncbi_annotated_derep_260112.xlsx")) %>% 
-  filter(host_group=="Human" & host_common_name == "Human" & !(isolation_source %in% c("Food","Probiotic","Sewage and wastewater","Meat","Plant"))) %>%
-  filter(isolation_source %in% c("Blood", "Brain and CSF") | host_health %in% c("Bloodstream Infection","Meningitis", "neonatal bacteremia","Healthy")) %>%
-  mutate(expec = case_when(host_health != "Healthy" ~ 1,
-                           TRUE ~ 0)) %>%
-  dplyr::ungroup() %>%
-  dplyr::select(predicted, host_gender, host_age, mlst, geographic_group, phylogroup,o_type,h_type, expec, group)
-
-# add healthy gut mags
-gutmags = readxl::read_xlsx(paste0(outputdir,"gutmags_annotated_metad_ectyper.xlsx")) %>%
-  mutate(group = case_when(predicted %in% c("No KpsC identified", "No K-type assigned") ~ predicted,
-                           TRUE ~ group),
-         expec = 0,
-         phylogroup = case_when(phylogroup == "C_original" ~"C",
-                                TRUE ~ phylogroup)) %>%
-  mutate(group = case_when(predicted == "K_neg_partial" ~ "kps -",
-                           TRUE ~ group)) %>%
-  dplyr::ungroup() %>%
-   dplyr::select(predicted, host_gender, host_age, mlst, geographic_group, phylogroup,o_type,h_type, expec, group)
-
-# add egli
-egli = readxl::read_xlsx(paste0(outputdir,"egli_annotated_metad_ectyper.xlsx")) %>%
-  filter(invasiveness == "invasive") %>%
-  mutate(expec = 1) %>%
-   dplyr::select(predicted, host_gender, host_age, mlst, geographic_group, phylogroup,o_type,h_type, expec, group)
-
-
-totest = gdata::combine(ncbi_analysis, gutmags, egli) %>%
-  filter(phylogroup != "NA") %>%
-  mutate(group = case_when(predicted == "K_neg_partial" | group %in% c("No K-type assigned","No KpsC identified") ~ "kps -",
-                           TRUE ~ group),
-         phylogroup = case_when(phylogroup == "C_original" ~"C",
-                                TRUE ~ phylogroup))
-
-
-toplot = totest %>%
-  dplyr::group_by(phylogroup, expec) %>%
-  dplyr::mutate(total=n()) %>%
-  dplyr::ungroup() %>%
-  dplyr::group_by(group,total, phylogroup,expec) %>%
-  dplyr::summarise(count = n()) %>%
-  mutate(proportion = (count/total)*100)
-
-
-mycolors = c(
-  "G2A" = "#71B7E2",
-  "G2B" = "#345C7B",
-  "G3A" = "#7653AB",
-  "G3B" = "#A48DCC",
-  "kps -" = "grey"
-)
-
-
-
-# Initialize results dataframe
-stat_results <- totest %>%
-  dplyr::group_by(phylogroup) %>%
-  dplyr::summarise(
-    p_value = ifelse(n_distinct(group) > 1, # Check if more than one group exists
-                     fisher.test(table(group, expec))$p.value, 
-                     NA)  # Assign NA if only one group present
-  )
-
-# Adjust p-values for multiple comparisons
-stat_results$p_adjusted <- p.adjust(stat_results$p_value, method = "bonferroni")
-
-# Convert p-values into significance labels
-stat_results$significance <- case_when(
-  is.na(stat_results$p_value) ~ "ns",
-  stat_results$p_adjusted < 0.001 ~ "***",
-  stat_results$p_adjusted < 0.01  ~ "**",
-  stat_results$p_adjusted < 0.05  ~ "*",
-  TRUE ~ "ns"
-)
-
-# Merge significance results into the plotting data
-toplot <- left_join(toplot, stat_results, by = "phylogroup")
-
-
-
-toplot$phylogroup <- factor(toplot$phylogroup, levels=c("A","B1","C","E1","E2","G","B2-1","B2-2","D1","D2","D3","F"))
-stat_results$phylogroup <- factor(stat_results$phylogroup, levels=c("A","B1","C","E1","E2","G","B2-1","B2-2","D1","D2","D3","F"))
-toplot$expec <- factor(toplot$expec, levels=c(0,1))
-
-pdf(paste0(plotdir,"ED7D_phylogroup_group_percent_includingKneg_NCBIandcommensals_onlyInvasiveasDisease_plusEgli.pdf"), width = 14, height = 3.5)
-
-ggplot(toplot , aes(x = expec, y = proportion, fill = group, label = count)) +
-  geom_bar(stat = "identity", color = "black") +
-  scale_fill_manual(values = mycolors, guide = guide_legend(ncol = 1), na.value = "grey") +
-  geom_text(aes(y = proportion),
-            position = position_stack(vjust = 0.5),
-            size = 5, 
-            color = "black",
-            check_overlap = TRUE) + 
-  labs(y = "% genomes", x = "", fill = "Capsule Group") +
-  
-  scale_x_discrete(labels = c("A", "I")) +
-  facet_grid(~ phylogroup) +
-  theme_classic() +
-  theme(axis.text.x = element_text(hjust = 0.5, size = 15),
-        axis.title = element_text(size = 15),
-        axis.text.y = element_text(size = 15),
-        strip.text = element_text(size = 15),
-        legend.position = "none") +
-  geom_text(aes(x = 1.5, y = 100 + 10, label = significance), 
-            size = 5, inherit.aes = FALSE, data = stat_results)
-
- dev.off()
-
-
-
-```
-
-
-#### ED7E-G - Simpson's diversity, richness and evenness
-same data as S5D.
-```{r}
-
-# Filter phylogroups with ≥25 genomes in both asymptomatic and invasive
-valid_phylogroups <- totest %>%
-  count(phylogroup, expec) %>%
-  pivot_wider(names_from = expec, values_from = n, values_fill = 0) %>%
-  filter(`0` >= 25,`1` >= 25) %>%
-  pull(phylogroup)
-
-# Apply filter to main data
-totest <- totest %>%
-  filter(phylogroup %in% valid_phylogroups)
-
-
-library(vegan)
-
-# Calculate diversity metrics
-diversity_data <- totest %>%
-  dplyr::group_by(phylogroup, expec, predicted) %>%
-  dplyr::summarise(count = n(), .groups = 'drop') %>%
-  pivot_wider(names_from = predicted, values_from = count, values_fill = 0) %>%
-  rowwise() %>%
-  mutate(
-    counts_vec = list(c_across(-c(phylogroup, expec))),
-    richness = sum(counts_vec > 0),
-    simpson = diversity(counts_vec, index = "simpson"),
-    simpson_inverse = diversity(counts_vec, index = "invsimpson"),
-    evenness_simpson = ifelse(richness > 1, simpson_inverse / richness, NA)) %>%
-  ungroup() %>%
-  select(phylogroup, expec, richness, simpson_inverse, evenness_simpson)
-
-# Count unique entries per disease group
-n_labels <- totest %>% 
-  filter(predicted != "K_neg_partial") %>%
-  mutate(phylogroup = case_when(phylogroup == "C_original" ~"C",
-                                TRUE ~ phylogroup)) %>%
-  mutate(expec = dplyr::recode(expec, `0` = "A", `1` = "I")) %>%
-  dplyr::group_by(expec) %>%
-  summarise(n = n(), .groups = "drop") %>%
-  mutate(label = paste0("n = ", n))
-
-# Long format for plotting
-diversity_long <- diversity_data %>%
-  pivot_longer(cols = c(richness, simpson_inverse, evenness_simpson),
-               names_to = "metric",
-               values_to = "value") %>%
-  filter(!is.na(value)) %>%
-  mutate(
-    expec = dplyr::recode(expec, `0` = "A", `1` = "I"),
-    expec = factor(expec, levels = c("A", "I")),
-    metric = factor(metric, levels = c("richness", "simpson_inverse", "evenness_simpson"),
-                    labels = c("Richness",
-                               "Simpson Diversity Index",
-                               "Evenness"))
-  )
-
-# Repeat n_labels for each metric panel
-metrics <- levels(diversity_long$metric)
-n_labels_plot <- tidyr::expand_grid(metric = metrics, n_labels)
-
-
-num_colors <- n_distinct(diversity_long$phylogroup) 
-palette_colors <- colorRampPalette(brewer.pal(12, "Set1"))(num_colors) 
-
-# separate nasty and nice phylogroups
-diversity_long = diversity_long %>% 
-  mutate(phylogroup = case_when(phylogroup == "C_original" ~"C",
-                                TRUE ~ phylogroup))
-
-
-pdf(paste0(plotdir,"ED7E_diversitySimpson.pdf"), width =3, height = 2.5)
-
-div_metric = "Simpson Diversity Index"
-
-ggplot(diversity_long %>% filter(metric == div_metric), aes(x = expec, y = value)) +
-  geom_boxplot(width = 0.4, outlier.shape = NA, alpha = 0.3,
-               position = position_dodge(0.2)) +
-  geom_line(aes(group = phylogroup,color = phylogroup),
-            position = position_dodge(0.15)) +
-  geom_point(aes(group = phylogroup,color = phylogroup), size = 2.5,
-             position = position_dodge(0.15)) +
-  geom_text_repel(aes(label = phylogroup,color = phylogroup),
-                  size = 3.5,
-                  position = position_dodge(0.1),
-                  show.legend = FALSE,
-                  max.overlaps = 20) +
-  scale_y_continuous(n.breaks = 5) + 
-  scale_color_manual(values=palette_colors) +
-  geom_text(data = n_labels_plot,
-    aes(x = expec, y = 16, label = label),
-    inherit.aes = F, check_overlap = T, 
-    #vjust = -3.5,
-    size = 4) +
-  labs(x = "",y = div_metric) +
-  theme_bw() +
-  theme(legend.position = "none",
-        axis.text=element_text(size=12),
-        strip.text = element_blank())
-
-dev.off()
-
-
-
-#### Richness
-pdf(paste0(plotdir,"ED7F_Richness.pdf"), width = 3, height = 2.5)
-
-div_metric = "Richness"
-
-ggplot(diversity_long %>% filter(metric == div_metric), aes(x = expec, y = value)) +
-  geom_boxplot(width = 0.4, outlier.shape = NA, alpha = 0.3,
-               position = position_dodge(0.2)) +
-  geom_line(aes(group = phylogroup,color = phylogroup),
-            position = position_dodge(0.15)) +
-  geom_point(aes(group = phylogroup,color = phylogroup), size = 2.5,
-             position = position_dodge(0.15)) +
-  geom_text_repel(aes(label = phylogroup,color = phylogroup),
-                  size = 3.5,
-                  position = position_dodge(0.1),
-                  show.legend = FALSE,
-                  max.overlaps = 10) +
-  scale_y_continuous(n.breaks = 5) + 
-  scale_color_manual(values=palette_colors) +
-  geom_text(
-    data = n_labels_plot,
-    aes(x = expec, y = 31, label = label),
-    inherit.aes = FALSE, check_overlap = T,
-    #vjust = -3.5,
-    size = 4
-  ) +
-  labs(
-    x = "",
-    y = "Richness") +
-  theme_bw() +
-  theme(legend.position = "none",
-        axis.text=element_text(size=12))
-
-
-dev.off()
-
-
-pdf(paste0(plotdir,"ED7G_Evenness.pdf"), width = 3, height = 2.5)
-
-div_metric = "Evenness"
-
-ggplot(diversity_long %>% filter(metric == div_metric), aes(x = expec, y = value)) +
-  geom_boxplot(width = 0.4, outlier.shape = NA, alpha = 0.3,
-               position = position_dodge(0.2)) +
-  geom_line(aes(group = phylogroup,color = phylogroup),
-            position = position_dodge(0.1)) +
-  geom_point(aes(group = phylogroup,color = phylogroup), size = 2.5,
-             position = position_dodge(0.1)) +
-  geom_text_repel(aes(label = phylogroup,color = phylogroup),
-                  size = 3.5,
-                  position = position_dodge(0.1),
-                  show.legend = FALSE,
-                  max.overlaps = 10) +
-  scale_y_continuous(breaks = c(0,0.2,0.4,0.6), limits = c(0,0.7)) + 
-  scale_color_manual(values=palette_colors) +
-  geom_text(
-    data = n_labels_plot,
-    aes(x = expec, y = 0.65, label = label),
-    inherit.aes = FALSE, check_overlap = T,
-    size = 4) +
-  labs(x = "",y = "Evenness") +
-  theme_bw() +
-  theme(legend.position = "none",
-        axis.text=element_text(size=12))
-
-
-dev.off()
-```
-
-
-
-#### ED7H - distribution of Ktypes per isolation source
-
-Same data as 4C.
-###### left with K-neg
-
-```{r}
-
-### prep ncbi data
-ncbi_analysis = read.xlsx(paste0(outputdir,"ncbi_annotated_derep_260112.xlsx")) %>% 
-  filter(host_group == "Human" & host_common_name == "Human" & !(isolation_source %in% c("Food","Probiotic","Sewage and wastewater","Meat","Plant"))) %>%
-  mutate(isolation_source = case_when(!(isolation_source %in% c("Stool","Urine and bladder", "Blood","Brain and CSF")) ~ "Other body sites",
-                                      TRUE ~ isolation_source),
-         host_health = case_when(host_health %in% c("asymptomatic bacteriuria", "Urinary Tract Infection", "recurrent uti") | isolation_source == "Urine and bladder" ~ "UTI",
-                                 host_health %in% c("Bloodstream Infection", "neonatal bacteremia") | isolation_source == "Blood" ~ "BSI",
-                                 host_health %in% c("Meningitis") | isolation_source == "Brain and CSF" ~ "Meningitis",
-                                 host_health %in% c("GI Tract and Diarrhoea", "HUS and TTP", "STEC/Shigella/EHEC") ~ "InPEC",
-                                 host_health == "Healthy" & isolation_source == "Stool" ~ "Healthy (stool)",
-                                 host_health == "Healthy" & isolation_source != "Stool"~ "Healthy (other)",
-                                 TRUE ~ "Other disease")) %>%
-  dplyr::ungroup() %>%
-  #add genome id column for merging with other datasets - after dereplication we didn't have it anymore
-  mutate(genome_id = row_number(),
-        group = case_when(predicted == "K_neg_partial" ~ "kps -",
-                           TRUE ~ group)) %>%
-  dplyr::select(genome_id, predicted, host_health,host_age,geographic_group, host_gender, group)
-
-
-# prep healthy gut MAGs
-gutmags = readxl::read_xlsx(paste0(outputdir,"gutmags_annotated_metad_ectyper.xlsx")) %>%
-  mutate(group = case_when(predicted %in% c("No KpsC identified", "No K-type assigned") ~ predicted,
-                           predicted == "K_neg_partial" ~ "kps -",
-                           TRUE ~ group),
-         phylogroup = case_when(phylogroup == "C_original" ~"C",
-                                TRUE ~ phylogroup)) %>%
-  dplyr::ungroup() %>%
-   dplyr::select(genome_id,predicted, host_health,host_age, host_gender, geographic_group, group) %>%
-    mutate(host_health = "MAGs")
-
-
-
-# prep egli collection
-egli = readxl::read_xlsx(paste0(outputdir,"egli_annotated_metad_ectyper.xlsx")) %>%
-  mutate(group = case_when(predicted == "K_neg_partial" ~ "kps -",
-                           TRUE ~ group),
-         host_health = case_when(invasiveness=="invasive" ~ "BSI",
-                                                 TRUE ~ "UTI")) %>%
-  dplyr::select(predicted, host_gender, host_health,host_age,geographic_group, group)
-
-
-common_cols <- intersect(intersect(names(ncbi_analysis), names(egli)), names(gutmags))
-totest_invasive <- gdata::combine(ncbi_analysis[common_cols], egli[common_cols], gutmags[common_cols])
-
-
-
-leftpanel <- totest_invasive %>%
-  group_by(host_health) %>%
-  mutate(total = n()) %>%
-  ungroup() %>%
-  group_by(predicted, total, host_health) %>%
-  summarise(count = n(), .groups = "drop") %>%
-  mutate(proportion = (count / total) * 100) %>%
-  mutate(predicted = case_when(proportion > 2 ~ predicted,
-                               TRUE ~ "Other")) %>%
-  group_by(host_health, predicted) %>%
-  summarise(count = sum(count), .groups = "drop") %>%
-  group_by(host_health) %>%
-  mutate(total = sum(count),
-         proportion = (count / total) * 100) %>%
-  ungroup()
-
-rightpanel <- totest_invasive %>%
-  filter(predicted != "K_neg_partial") %>%
-  mutate(predicted = gsub("K54_96", "K96", predicted)) %>%
-  group_by(host_health) %>%
-  mutate(total = n()) %>%
-  ungroup() %>%
-  group_by(predicted, total, host_health) %>%
-  summarise(count = n(), .groups = "drop") %>%
-  mutate(proportion = (count / total) * 100) %>%
-  mutate(predicted = case_when(proportion > 4 ~ predicted,
-                               TRUE ~ "Other")) %>%
-  group_by(host_health, predicted) %>%
-  summarise(count = sum(count), .groups = "drop") %>%
-  group_by(host_health) %>%
-  mutate(total = sum(count),
-         proportion = (count / total) * 100) %>%
-  ungroup()
-
-
-#take color mapping from S4B
-color_mapping <- readRDS(paste0(outputdir,"Ktype_color_mapping.rds"))
-color_mapping <- c(color_mapping[names(color_mapping) %in% unique(c(leftpanel$predicted, rightpanel$predicted))],
-                   K_neg_partial = "white")
-
-# Define consistent K-type order
-all_predicted <- union(leftpanel$predicted,rightpanel$predicted)
-core_ktypes <- setdiff(all_predicted, c("K_neg_partial", "Other"))
-predicted_levels <- c(sort(core_ktypes), "Other", "K_neg_partial")
-
-# Apply to both panels
-leftpanel$predicted <- factor(leftpanel$predicted, levels = predicted_levels)
-rightpanel$predicted <- factor(rightpanel$predicted, levels = predicted_levels)
-
-
-
-
-leftpanel$host_health <- factor(leftpanel$host_health, levels=rev(c("MAGs","Healthy (stool)","Healthy (other)","InPEC","UTI","BSI","Meningitis","Other disease")))
-
-
-pdf(paste0(plotdir,"ED7H_left_K_type_disease.pdf"), width = 7, height = 3)
-
-totals <- leftpanel %>%
-  group_by(host_health) %>%
-  summarise(total_count = sum(count), .groups = "drop")
-
-ggplot(leftpanel, aes(x = host_health, y = proportion, fill = predicted, label = count)) +
-  geom_bar(stat = "identity", color="grey30",linewidth = 0.15) +
-  scale_fill_manual(values = color_mapping) +  
-  labs(y = "% genomes", x = "", fill = "K-type") +
-  scale_y_continuous(breaks=c(0,25,50,75,100), limits=c(0,110)) +
-  geom_text(data = totals, aes(x = host_health, y = 107, label = total_count),
-            inherit.aes = FALSE,nudge_y = -3,
-            size = 4.5, hjust = 0.2) +
-  theme_classic() +
-  coord_flip() +
-  theme(axis.text.x = element_text(size = 16),
-        axis.title = element_text(size = 17),
-        axis.text.y = element_text(size = 16),
-        strip.text = element_text(size = 17),
-        legend.position = "none")
-    
-dev.off()
-
-
-
-```
-
-##### right without K-neg
-
-```{r}
-
-rightpanel$host_health <- factor(rightpanel$host_health, levels=rev(c("MAGs","Healthy (stool)",
-                                                                                "Healthy (other)","InPEC",
-                                                                                "UTI","BSI","Meningitis",
-                                                                                "Other disease")))
-
-
-pdf(paste0(plotdir,"ED7H_right_K_type_disease_onlyKpos.pdf"), width = 9, height = 3)
-
-# Calculate total counts per bar (disease + phylogroup)
-totals <- rightpanel %>%
-  group_by(host_health) %>%
-  summarise(total_count = sum(count), .groups = "drop")
-
-ggplot(rightpanel, aes(x = host_health, y = proportion, fill = predicted, label = count)) +
-  geom_bar(stat = "identity", color="grey30",linewidth = 0.15) +
-  scale_fill_manual(values = color_mapping) +  
-  scale_y_continuous(breaks=c(0,25,50,75,100), limits=c(0,110)) +
-  geom_text(data = totals, aes(x = host_health, y = 107, label = total_count),
-            inherit.aes = FALSE,nudge_y = -3,
-            size = 4.5, hjust = 0.2) +
-  labs(y = expression(paste("% ", italic("kps"), "+ genomes")), x= "", fill="K-type") +
-  theme_classic() +
-  coord_flip() +
-  theme(axis.text.x = element_text(size = 16),
-        axis.title = element_text(size = 17),
-        axis.text.y = element_text(size = 16),
-        strip.text = element_text(size = 17),
-        legend.text=element_text(size = 12),
-        legend.title=element_text(size = 14),
-        legend.key.height = unit(7, "mm"),
-        legend.key.width = unit(7, "mm"),
-        legend.position = "right") + guides(fill = guide_legend(ncol = 3))
-
-
-
-dev.off()
-
-
-
-```
-
-
-## ED Fig. 8
-
-##### prep data - same as fig. 4C
+same data as 4C
 NCBI + Egli + gutmags
 
 ```{r}
@@ -2727,7 +1310,6 @@ totest %>% group_by(source) %>%
   summarise(count=n())
 ```
 
-### ED8A - ST representative vs K-type
 
 ```{r}
 
@@ -2752,7 +1334,7 @@ mycolors = c(
   "kps -" = "grey"
 )
 
-pdf(paste0(plotdir,"ED8A_sequencetype_genomes_ktypes_onKtypeside_ncbi_egli_gut.pdf"),width = 4,height = 3)
+pdf(paste0(plotdir,"4D_sequencetype_genomes_ktypes_onKtypeside_ncbi_egli_gut.pdf"),width = 4,height = 3)
 
 ggplot(toplot, aes(x=no_genomes,y = no_mlst)) +
   geom_point(aes(fill = group), pch=21,size =2, alpha=0.5) +
@@ -2767,9 +1349,22 @@ ggplot(toplot, aes(x=no_genomes,y = no_mlst)) +
 
 dev.off()
 
+
+file_path = paste0(home_dir,"sourcedatadir/Source_Data_Fig4.xlsx")
+sheet_name = "4D_ST_Ktypes.pdf"
+
+# Load existing file if it exists, otherwise create new
+wb <- if (file.exists(file_path)) loadWorkbook(file_path) else createWorkbook()
+
+# Add sheet and data
+addWorksheet(wb, sheet_name)
+writeData(wb, sheet_name, toplot)
+
+# Save
+saveWorkbook(wb, file_path, overwrite = TRUE)
 ```
 
-### ED8B - capsule diversity within ST (Shannon, Simpson)
+### Fig. 4E - capsule diversity within ST (Shannon, Simpson)
 
 ```{r}
 library(forcats)
@@ -2798,22 +1393,35 @@ div_ST = div_ST %>%
     mlst_label = fct_reorder(mlst_label, shannon)
   )
 
-pdf(paste0(plotdir, "ED8B_ST_capsule_diversity_shannon.pdf"),width = 9,height = 3)
+pdf(paste0(plotdir, "4E_ST_capsule_diversity_shannon.pdf"),width = 3,height = 9)
 
-ggplot(div_ST, aes(x = reorder(mlst_label,-shannon), y = shannon)) +
+ggplot(div_ST, aes(y = reorder(mlst_label,shannon), x = shannon)) +
   geom_bar(stat="identity") +
   theme_bw() +
-  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
-  labs(x = "Sequence type (ST)", y = "Shannon diversity (K-type)")
+  #theme(axis.text.y = element_text(angle = 90, vjust = 0.5, hjust=1)) +
+  labs(y = "Sequence type (ST)", x = "Shannon diversity (K-type)")
 
 dev.off()
 
 
 
+file_path = paste0(home_dir,"sourcedatadir/Source_Data_Fig4.xlsx")
+sheet_name = "4E_ST_Shannon.pdf"
+
+# Load existing file if it exists, otherwise create new
+wb <- if (file.exists(file_path)) loadWorkbook(file_path) else createWorkbook()
+
+# Add sheet and data
+addWorksheet(wb, sheet_name)
+writeData(wb, sheet_name, div_ST)
+
+# Save
+saveWorkbook(wb, file_path, overwrite = TRUE)
+
 ```
 
 
-### ED8C - ST vs capsule heatmap
+### Fig. 4F - ST vs capsule heatmap
 
 ```{r}
 #remove STs with <20 genomes and kps-neg genomes
@@ -2897,7 +1505,8 @@ ha_caps <- HeatmapAnnotation(
   )),
   show_legend = TRUE,
   annotation_legend_param = list(
-    group = list(direction = "horizontal", nrow = 1)
+    group = list(direction = "vertical") 
+                 #nrow = 1)
   )
 )
 
@@ -2934,7 +1543,7 @@ col_fun <- colorRamp2(
     c("white", "orange", "red")
 )
 
-pdf(paste0(plotdir, "ED8C_ST_capsule_heatmap.pdf"), width = 8, height = 9)
+pdf(paste0(plotdir, "4F_ST_capsule_heatmap.pdf"), width = 9.5, height = 8)
 
 hm <- Heatmap(
   mat_A_xy,
@@ -2965,22 +1574,43 @@ hm <- Heatmap(
 
   heatmap_legend_param = list(
     title = "genomes in K-type\n(proportion)",
-    direction = "horizontal"
+    direction = "vertical"
   )
 )
 
+# draw(
+#   hm,
+#   heatmap_legend_side = "top",
+#   annotation_legend_side = "top",
+#   merge_legend = TRUE
+# )
 draw(
-  hm,
-  heatmap_legend_side = "top",
-  annotation_legend_side = "top",
+  hm, 
+  heatmap_legend_side = "right", 
+  annotation_legend_side = "right",
   merge_legend = TRUE
 )
 
 dev.off()
 
+
+
+file_path = paste0(home_dir,"sourcedatadir/Source_Data_Fig4.xlsx")
+sheet_name = "4F_ST_matrix.pdf"
+
+# Load existing file if it exists, otherwise create new
+wb <- if (file.exists(file_path)) loadWorkbook(file_path) else createWorkbook()
+
+# Add sheet and data
+addWorksheet(wb, sheet_name)
+writeData(wb, sheet_name, mat_A_xy)
+
+# Save
+saveWorkbook(wb, file_path, overwrite = TRUE)
+
 ```
 
-### ED8D - Global association strength (Cramér's V) + permutation null (shuffle capsule within phylogroup)
+### Fig. 4G - Global association strength (Cramér's V) + permutation null (shuffle capsule within phylogroup)
 
 
 #### - analysis w/o kps- or partial genomes
@@ -3066,7 +1696,7 @@ df_V <- tibble(
 )
 
 #takes a while to compute so save for fast replotting
-write.table(df_V, file=paste0(outputdir,"ED8D_cramersV_permutation_nokps-.tsv"),sep="\t", row.names=FALSE, col.names=TRUE, quote=FALSE)
+write.table(df_V, file=paste0(outputdir,"Fig4G_cramersV_permutation_nokps-.tsv"),sep="\t", row.names=FALSE, col.names=TRUE, quote=FALSE)
 
 ```
 
@@ -3154,7 +1784,7 @@ df_V <- tibble(
   type = c("Observed", rep("Permuted", length(V_perm)))
 )
 
-write.table(df_V, file=paste0(outputdir,"ED8D_cramersV_permutation_withkps-.tsv"),
+write.table(df_V, file=paste0(outputdir,"Fig4G_cramersV_permutation_withkps-.tsv"),
             sep="\t", row.names=FALSE, col.names=TRUE, quote=FALSE)
 
 ```
@@ -3163,9 +1793,9 @@ write.table(df_V, file=paste0(outputdir,"ED8D_cramersV_permutation_withkps-.tsv"
 #### - plot
 ```{r}
 
-df_nokps <- read.table(paste0(outputdir, "ED8D_cramersV_permutation_nokps-.tsv"),sep = "\t", header = TRUE)
+df_nokps <- read.table(paste0(outputdir, "Fig4G_cramersV_permutation_nokps-.tsv"),sep = "\t", header = TRUE)
 
-df_withkps <- read.table(paste0(outputdir, "ED8D_cramersV_permutation_withkps-.tsv"),sep = "\t", header = TRUE)
+df_withkps <- read.table(paste0(outputdir, "Fig4G_cramersV_permutation_withkps-.tsv"),sep = "\t", header = TRUE)
 
 # Extract observed values
 V_obs_nokps  <- df_nokps  %>% filter(type == "Observed") %>% dplyr::slice(1) %>% pull(V)
@@ -3224,10 +1854,25 @@ ggplot(df_perm, aes(x = V, fill = dataset)) +
   guides(color="none")
 dev.off()
 
+
+
+file_path = paste0(home_dir,"sourcedatadir/Source_Data_Fig4.xlsx")
+sheet_name = "4G_ST_Cramer.pdf"
+
+# Load existing file if it exists, otherwise create new
+wb <- if (file.exists(file_path)) loadWorkbook(file_path) else createWorkbook()
+
+# Add sheet and data
+addWorksheet(wb, sheet_name)
+writeData(wb, sheet_name, df_perm)
+
+# Save
+saveWorkbook(wb, file_path, overwrite = TRUE)
+
 ```
 
 
-###ED8E - ncbi collection - compare ST similarity according to K-types w/ ST similarity according to genomes (ANI99) or environments
+### Fig. 4H - ncbi collection - compare ST similarity according to K-types w/ ST similarity according to genomes (ANI99) or environments
 I can do this only for ncbi where ANI99 clusters are available.
 
 ##### - prep data
@@ -3521,13 +2166,13 @@ df_obs <- tibble(
 
 
 #write these down to avoid recomputing
-write.table(df_mantel, file=paste0(outputdir,"ED6E_mantel_permutation.tsv"),sep="\t", row.names=FALSE, col.names=TRUE, quote=FALSE)
+write.table(df_mantel, file=paste0(outputdir,"Fig4H_mantel_permutation.tsv"),sep="\t", row.names=FALSE, col.names=TRUE, quote=FALSE)
 
-write.table(df_obs, file=paste0(outputdir,"ED6E_mantel_observed.tsv"),sep="\t", row.names=FALSE, col.names=TRUE, quote=FALSE)
+write.table(df_obs, file=paste0(outputdir,"Fig4H_mantel_observed.tsv"),sep="\t", row.names=FALSE, col.names=TRUE, quote=FALSE)
 
 #read these back
-df_mantel <- read.table(paste0(outputdir,"ED6E_mantel_permutation.tsv"),sep = "\t", header = TRUE)
-df_obs <- read.table(paste0(outputdir,"ED6E_mantel_observed.tsv"),sep = "\t", header = TRUE)
+df_mantel <- read.table(paste0(outputdir,"Fig4H_mantel_permutation.tsv"),sep = "\t", header = TRUE)
+df_obs <- read.table(paste0(outputdir,"Fig4H_mantel_observed.tsv"),sep = "\t", header = TRUE)
 
 
 pdf(paste0(plotdir, "ED8E_mantel_overlay_histograms.pdf"), width = 4.5, height = 3)
@@ -3557,11 +2202,1797 @@ ggplot(df_mantel, aes(x = rho, fill = comparison)) +
 
 dev.off()
 
+
+file_path = paste0(home_dir,"sourcedatadir/Source_Data_Fig4.xlsx")
+sheet_name = "4H_ST_Mantel.pdf"
+
+# Load existing file if it exists, otherwise create new
+wb <- if (file.exists(file_path)) loadWorkbook(file_path) else createWorkbook()
+
+# Add sheet and data
+addWorksheet(wb, sheet_name)
+writeData(wb, sheet_name, df_mantel)
+
+# Save
+saveWorkbook(wb, file_path, overwrite = TRUE)
 ```
 
 
 
-## ED Fig. 9
+###Fig. 4I - GLMM
+
+same data as for 4B-C but restricting to BSI and meningitis vs healthy stool.
+
+#### 1. data prep
+```{r}
+
+# ncbi isolates (subset)
+ncbi_analysis = read.xlsx(paste0(outputdir,"ncbi_annotated_derep_260112.xlsx")) %>% 
+  filter(host_group=="Human" & host_common_name == "Human" & !(isolation_source %in% c("Food","Probiotic","Sewage and wastewater","Meat","Plant"))) %>%
+  filter(isolation_source %in% c("Blood", "Brain and CSF") | host_health %in% c("Bloodstream Infection","Meningitis", "neonatal bacteremia","Healthy")) %>%
+  mutate(expec = case_when(host_health != "Healthy" ~ 1,
+                           TRUE ~ 0)) %>%
+  dplyr::ungroup() %>%
+  dplyr::select(predicted, host_gender, host_age, mlst, geographic_group, phylogroup,o_type,h_type, expec)
+
+# add healthy gut mags
+gutmags = readxl::read_xlsx(paste0(outputdir,"gutmags_annotated_metad_ectyper.xlsx")) %>%
+ filter(!(host_health %in% c("IBD", "GI Tract and Diarrhoea","Urinary Tract Infection","Premature"))) %>%
+  mutate(group = case_when(predicted %in% c("No KpsC identified", "No K-type assigned") ~ predicted,
+                           TRUE ~ group),
+         expec = 0,
+         phylogroup = case_when(phylogroup == "C_original" ~"C",
+                                TRUE ~ phylogroup)) %>%
+  mutate(group = case_when(predicted == "K_neg_partial" ~ "kps -",
+                           TRUE ~ group)) %>%
+  dplyr::ungroup() %>%
+   dplyr::select(predicted, host_gender, host_age, mlst, geographic_group, phylogroup,o_type,h_type, expec)
+
+# add egli
+egli = readxl::read_xlsx(paste0(outputdir,"egli_annotated_metad_ectyper.xlsx")) %>%
+  filter(invasiveness == "invasive") %>%
+  mutate(expec = 1) %>%
+   dplyr::select(predicted, host_gender, host_age, mlst, geographic_group, phylogroup,o_type,h_type, expec)
+
+
+totest = gdata::combine(ncbi_analysis, gutmags, egli) %>%
+  filter(phylogroup != "NA") %>%
+   mutate(mlst = gsub("\\.0","",mlst))
+
+# fix O-type annotation as in fig. S6A
+#-------- harmonise O types
+harmonize_serotype <- function(x) {
+  if (grepl("/", x)) {
+    parts <- unlist(strsplit(x, "/"))
+    parts <- sort(parts)
+    return(paste(parts, collapse = "/"))
+  } else {
+    return(x)
+  }
+}
+
+totest$o_type <- sapply(totest$o_type, harmonize_serotype)
+
+
+totest %>% group_by(expec,source) %>%
+  summarise(n = n())
+
+```
+
+
+#### 2. GLM
+
+
+```{r}
+
+# Merge rare factor levels
+totest$o_type <- as.factor(ifelse(table(totest$o_type)[totest$o_type] < 15, "Other", totest$o_type))
+totest$h_type <- as.factor(ifelse(table(totest$h_type)[totest$h_type] < 10, "Other", totest$h_type))
+totest$mlst     <- as.factor(ifelse(table(totest$mlst)[totest$mlst] < 10, "Other", totest$mlst))
+
+# Merge rare geographic groups
+totest <- totest %>%
+  mutate(geographic_group = case_when(
+    geographic_group == "Middle East" ~ "Africa",
+    geographic_group == "Japan" ~ "Oceania",
+    TRUE ~ geographic_group
+  ))
+
+
+totest = totest %>%
+  mutate(host_age = as.factor(host_age),
+         geographic_group=as.factor(geographic_group),
+         host_gender=as.factor(host_gender))
+
+# pool k-types with 0 in any expected class
+predicted_expec_counts <- totest %>%
+  group_by(predicted, expec) %>%
+  summarise(n = n(), .groups = "drop") %>%
+  tidyr::pivot_wider(names_from = expec, values_from = n, values_fill = 0) %>%
+  filter(`0` <= 5 | `1` <= 5) %>%
+  pull(predicted)
+
+totest <- totest %>%
+  mutate(predicted = ifelse(predicted %in% predicted_expec_counts, "Other", as.character(predicted))) %>%
+  mutate(predicted = as.factor(predicted))
+
+# # flag K-type at risk (low sample size in combination with other factors)
+# totest <- totest %>%
+#   group_by(predicted, o_type, h_type, phylogroup, host_age, host_gender, geographic_group, mlst) %>%
+#   mutate(combo_n = n()) %>%
+#   ungroup() %>%
+#   mutate(rare_combo = combo_n < 6)
+
+# predicted_flags <- totest %>%
+#   group_by(predicted) %>%
+#   summarise(predicted_at_risk = all(rare_combo)) %>%
+#   ungroup()
+# 
+# totest <- totest %>%
+#   left_join(predicted_flags, by = "predicted")
+
+
+model <- glm(
+  expec ~ predicted + o_type + h_type + phylogroup + host_age + host_gender + geographic_group + mlst,
+  data = totest,
+  family=binomial)
+
+
+# View(totest %>%
+#   group_by(predicted, expec) %>%
+#   summarise(count = n()) %>%
+#   pivot_wider(names_from = expec, values_from = count))
+
+```
+
+
+#### 3. convert to OR
+```{r}
+
+coefs <- coef(summary(model))
+model_results = coefs %>%
+  as.data.frame() %>%
+  rownames_to_column(var="term") %>%
+  clean_names() %>%
+  dplyr::rename(p.value = pr_z) %>%
+  #dplyr::rename(p.value=pr_t) %>%
+  mutate(fixed_effect = case_when(grepl("predicted", term) ~ "K-type",
+                                  grepl("o_type", term) ~ "O-type",
+                                  grepl("phylogroup", term) ~ "Phylogroup",
+                                  grepl("mlst", term) ~ "MLST",
+                                  TRUE ~ "Other"),
+         term_update = gsub("o_type|mlst|phylogroup|predicted", "", term),
+         conf.low = estimate - 1.96 * std_error,
+         conf.high = estimate + 1.96 * std_error,
+         OR = exp(estimate),
+         OR_lower = exp(conf.low),
+         OR_upper = exp(conf.high),
+         significance=case_when(p.value <= 0.01 ~"0.01",
+                                p.value <= 0.05 & p.value > 0.01 ~"0.05",
+                                TRUE ~ "Not Significant"))
+
+
+towrite = model_results %>%
+  filter(fixed_effect == "K-type") %>%
+  dplyr::select(term_update, std_error,p.value,OR,OR_lower,OR_upper,significance) %>%
+  dplyr::rename(term=term_update)
+  
+# join number of K-types
+numberktypes=totest %>% group_by(predicted) %>% summarise(count=n())
+
+towrite= towrite %>% left_join(numberktypes, by=c("term"="predicted")) %>%
+  dplyr::select(term, count, everything())
+
+#write.table(model_results, paste0(outputdir,"OddsRatio_GLMM_260122.tsv"), sep = "\t",quote = F,row.names = F)
+#write.table(model_results, paste0(outputdir,"OddsRatio_GLMM_260307.tsv"), sep = "\t",quote = F,row.names = F)
+```
+
+
+### ED Table 14 - GLMM results K-types
+
+```{r}
+
+towritesupptable = towrite %>%
+  select(-significance)
+write.xlsx(towritesupptable, paste0(outputdir,"EDTable_14_OR_invasiveness.xlsx"))
+
+```
+
+####Figure
+```{r}
+plot_dat <- towrite %>%
+  mutate(
+   # sig_ci = ifelse(OR_lower > 1 | OR_upper < 1, "CI excludes 1", "CI includes 1"),
+    term_label = paste0(term, " (n=", count, ")"),
+    or_label = sprintf("%.2f (%.2f–%.2f)", OR, OR_lower, OR_upper)
+  ) %>%
+  arrange(desc(OR)) %>%
+  mutate(term_label = factor(term_label, levels = term_label)) %>%
+  {
+    other_row <- filter(., term == "Other")
+    rest <- filter(., term != "Other")
+    bind_rows(rest, other_row)
+  } %>%
+  mutate(term_label = factor(term_label, levels = term_label))
+
+ymax <- max(plot_dat$OR_upper, na.rm = TRUE)
+ymin <- min(plot_dat$OR_lower, na.rm = TRUE)
+
+pdf(paste0(plotdir,"4I_OR_glm_predicted_expec_forfigure.pdf"), width = 8.5, height = 3.5)
+
+ggplot(plot_dat, aes(y = OR, x = term_label, ymin = OR_lower, ymax = OR_upper)) +
+  geom_hline(yintercept = 1, linetype = "dashed", linewidth = 0.6, color = "black") +
+  geom_errorbar(aes(color = significance), height = 0.05, linewidth = 0.5, width=0.45) +
+  geom_point(aes(color = significance), size = 2.2) +
+  # geom_text(
+  #   aes(y = xmax * 1.18, label = or_label),
+  #   hjust = 0,
+  #   size = 3.4,
+  #   color = "black"
+  # ) +
+  scale_y_log10(
+    breaks = c(0.125,0.25, 0.5, 1, 2, 4, 8, 16, 32, 64, 128),
+    labels = c("0.125","0.25", "0.5", "1", "2", "4", "8", "16", "32", "64", "128"),
+    limits = c(ymin * 0.8, ymax * 1.9)
+  ) +
+  scale_color_manual(
+    values = c("0.01" = "darkblue", "0.05" = "dodgerblue2", "Not Significant" = "gray"),
+    labels = c("Not Significant" = "p ≥ 0.05", "0.05" = "p < 0.05", "0.01" = "p < 0.01")
+  ) +
+  # scale_color_manual(
+  #   values = c("CI excludes 1" = "black", "CI includes 1" = "gray55"),
+  #   guide = "none"
+  # ) +
+  labs(
+    y = "Odds ratio",
+    x = "K-type",
+    color=""
+  ) +
+  theme_bw() +
+  #coord_cartesian(clip = "off") +
+  theme(
+    axis.text.x = element_text(size = 11,angle=45,hjust=1),
+    axis.text.y = element_text(size = 11),
+    axis.title = element_text(size = 12),
+    legend.title = element_blank(),
+    legend.position="inside",
+    legend.position.inside = c(0.85,0.75)
+    #panel.grid.minor = element_blank(),
+    #panel.grid.major.x = element_blank(),
+    #plot.margin = margin(5.5, 110, 5.5, 5.5)
+  )
+
+dev.off()
+
+
+# for text
+
+towrite %>%
+  filter(significance != "Not Significant") %>%
+  arrange(desc(OR)) %>%
+  select(term, OR, p.value, significance)
+
+
+file_path = paste0(home_dir,"sourcedatadir/Source_Data_Fig4.xlsx")
+sheet_name = "4I_GLM"
+
+# Load existing file if it exists, otherwise create new
+wb <- if (file.exists(file_path)) loadWorkbook(file_path) else createWorkbook()
+
+# Add sheet and data
+addWorksheet(wb, sheet_name)
+writeData(wb, sheet_name, towrite)
+
+# Save
+saveWorkbook(wb, file_path, overwrite = TRUE)
+
+```
+
+
+
+# ---------- SUPPLEMENTARY FIGS------------
+
+## ED Fig. 3
+
+```{r}
+
+refseq_short = fread(paste0(inputdir,"refseq37_flank_20260107_ktyps.tsv")) %>%
+  dplyr::distinct(genome_id, predicted, pred_nr_genes, pred_genes_in_genome,pred_acc_bitscore,pred_is_complete, KpsEDCSMT_nr_genes,
+                  KpsEDCSMT_genes_in_genome,
+                  KpsEDCSMT_acc_bitscore, KpsEDCSMT_is_complete,
+                  KpsFU_nr_genes,KpsFU_genes_in_genome,
+                  KpsFU_acc_bitscore,KpsFU_is_complete) %>%
+  mutate(manual_ktyp = case_when(pred_is_complete == 1 & KpsEDCSMT_is_complete == 1 ~ "K_pos",
+                                 pred_is_complete ==0 & KpsEDCSMT_is_complete == 0 ~ "K_neg",
+                                 TRUE ~ "K_partial")) 
+
+# quick check of KpsC unidentified  
+table(refseq_short$manual_ktyp, refseq_short$predicted)
+
+table(refseq_short$manual_ktyp, refseq_short$pred_is_complete, refseq_short$KpsEDCSMT_is_complete)
+
+```
+
+### ED3A - upset plot categories refseq
+
+```{r}
+
+pacman::p_load(dplyr, UpSetR)
+
+toplot_upset <- refseq_short %>%
+  transmute(
+    `all K-type-specific genes` = as.integer(pred_is_complete == 1),
+    `complete kpsEDCMST`        = as.integer(KpsEDCSMT_is_complete == 1),
+    `complete kpsFU`            = as.integer(KpsFU_is_complete == 1),
+    kpsC     = as.integer(!predicted %in% c("No KpsC identified")),
+    assigned = as.integer(!predicted %in% c("No KpsC identified", "No K-type assigned"))
+  ) %>%
+  mutate(
+    `none` = as.integer(
+      `all K-type-specific genes` == 0 &
+      `complete kpsEDCMST` == 0 &
+      `complete kpsFU` == 0 &
+      kpsC == 0 &
+      assigned == 0
+    )
+  )
+
+set_order <- c(
+  "all K-type-specific genes",
+  "complete kpsEDCMST",
+  "complete kpsFU",
+  "kpsC",
+  "assigned",
+  "none"# bottom
+)
+
+# Write one PDF per page
+base_pattern <- file.path(plotdir, "ED3A_upsetRefseq_%03d.pdf")
+final_pdf    <- file.path(plotdir, "ED3A_upsetRefseq.pdf")
+
+pdf(base_pattern, width = 5, height = 2.5, onefile = FALSE)
+UpSetR::upset(
+  toplot_upset,
+  sets = set_order,
+  nsets = length(set_order),
+  keep.order = TRUE,
+  order.by = "freq",
+  nintersects = NA,
+  
+  mb.ratio = c(0.3, 0.3),
+
+  point.size = 1.8,
+  line.size  = 0.6,
+  text.scale = c(1, 1, 0.85, 0.75, 0.75, 0.85)
+)
+
+
+dev.off()
+
+# Keep page 2 (the plot) and delete page 1 (blank)
+file.rename(sprintf(base_pattern, 2), final_pdf)
+unlink(sprintf(base_pattern, 1))
+
+
+file_path = paste0(home_dir,"sourcedatadir/Source_Data_EDFig3.xlsx")
+sheet_name = "ED3A_upset_refseq.pdf"
+
+# Load existing file if it exists, otherwise create new
+wb <- if (file.exists(file_path)) loadWorkbook(file_path) else createWorkbook()
+
+# Add sheet and data
+addWorksheet(wb, sheet_name)
+writeData(wb, sheet_name, toplot_upset)
+
+# Save
+saveWorkbook(wb, file_path, overwrite = TRUE)
+
+```
+
+
+
+### for text
+
+```{r}
+refseq_short %>%
+  #filter(predicted %in% c("No KpsC identified", "No K-type assigned")) %>%
+  mutate(assigned = case_when(predicted %in% c("No KpsC identified", "No K-type assigned") ~ "not assigned",
+                              TRUE ~ "assigned"),
+         kpsC = case_when(predicted %in% c("No KpsC identified") ~ "-",
+                              TRUE ~ "+")) %>%
+  group_by(manual_ktyp, assigned,kpsC, pred_is_complete,KpsEDCSMT_is_complete, KpsFU_is_complete) %>%
+  summarise(n = n()) %>% 
+  arrange(assigned)
+  
+
+```
+
+### ED3B - barplot K-types
+
+```{r}
+
+Kgroups <- readxl::read_xlsx(paste0(inputdir,"subgroups.xlsx"))
+
+refseq_short = refseq_short %>%
+  left_join(Kgroups, by=c("predicted"="new_name")) %>%
+  mutate(group = case_when(predicted %in% c("No KpsC identified", "No K-type assigned") ~ predicted,
+                           TRUE ~ group))
+
+toplot <- refseq_short %>%
+  filter(manual_ktyp == "K_pos") %>%
+  dplyr::group_by(predicted, group) %>%
+  dplyr::mutate(count = n()) %>%
+  mutate(proportion = (count / nrow(.)) * 100) %>%
+  ungroup() %>%
+  dplyr::group_by(predicted, group) %>%
+  dplyr::summarise(count = n(), .groups = "drop") %>%
+  mutate(proportion = (count / sum(count)) * 100) %>%
+  ungroup()
+
+
+pdf(paste0(plotdir,"ED3B_Refseq_Ktype_prevalence.pdf"),width = 18,height=5)
+ggplot(toplot, aes(x = reorder(predicted, -proportion),
+                   y = proportion, fill = group)) +
+  geom_bar(stat = "identity", color = "black") +
+  scale_fill_manual(values = c("G2A" = "#71B7E2",
+                               "G2B" = "#345C7B",
+                               "G3A" = "#7653AB",
+                               "G3B" = "#A48DCC",
+                               "K_partial_or_neg" = "grey"),
+  guide = guide_legend(ncol = 1),
+  na.value = "grey") +
+ # coord_flip() +
+  geom_text(aes(y = proportion + 1, label = count,angle=90, hjust=0.2),
+            size = 5, #angle = 90,
+            color = "black", #angle = 90, hjust = -0.1,
+            check_overlap = TRUE) + 
+  labs(y = expression(paste("% ", italic("kps"), "+ genomes")),
+       x= "", 
+       fill="Capsule Group", title="") + 
+  scale_y_continuous(limits = c(0, 20)) +
+  theme_bw() +
+  theme(axis.text.x = element_text(size = 15, angle=60, hjust=1),
+        axis.title = element_text(size = 18),
+        axis.text.y = element_text(size = 15),
+        legend.position = "none",
+        strip.text = element_text(size = 15))
+
+
+dev.off()
+
+
+
+file_path = paste0(home_dir,"sourcedatadir/Source_Data_EDFig3.xlsx")
+sheet_name = "ED3B_Refseq_Ktype_prevalence"
+
+# Load existing file if it exists, otherwise create new
+wb <- if (file.exists(file_path)) loadWorkbook(file_path) else createWorkbook()
+
+# Add sheet and data
+addWorksheet(wb, sheet_name)
+writeData(wb, sheet_name, toplot)
+
+# Save
+saveWorkbook(wb, file_path, overwrite = TRUE)
+
+```
+
+
+## ED Fig. 4
+
+#### prep data (same as Fig. 3)
+```{r}
+totest = readxl::read_xlsx(paste0(outputdir, "ncbi_egli_combined_for_analysis.xlsx"))
+```
+
+
+### ED4A. Geography capsule positivity
+
+```{r}
+toplot = totest %>%
+  mutate(posorneg = case_when(manual_ktyp == "K_pos" ~ "K_pos",
+                              TRUE ~ "K_neg")) %>%
+  mutate(geographic_group= replace_na(geographic_group, "Unknown")) %>%
+  mutate(geographic_group= gsub("^$", "Unknown", geographic_group)) %>%
+  dplyr::group_by(geographic_group) %>%
+  mutate(total=n()) %>% ungroup() %>%
+  dplyr::group_by(geographic_group, total, posorneg) %>%
+  summarise(count=n()) %>%
+  ungroup() 
+
+
+pdf(paste0(plotdir,"ED4A_ncbi_kps+_geography.pdf"),width = 8,height=5)
+ggplot(toplot,aes(x=reorder(geographic_group, count),y=count,fill=posorneg,label=count)) +
+  geom_bar(stat = "identity", color = "black") +
+   geom_text(aes(y = total+400, label =total),
+            size = 5,
+            color = "black",
+            check_overlap = TRUE) +
+  scale_fill_manual(values =c("white","grey"), label = c("-","+")) +
+  theme(legend.position="bottom",
+        axis.text.x=element_text(angle=60,hjust=1)) +
+  labs(y = "# genomes", x= "", fill="Capsule") +
+  coord_flip() +
+  theme_classic() +
+  theme(axis.text.x = element_text(hjust=0.5, size =15),
+        axis.text.y = element_text(size =15),
+        legend.position="inside",
+        legend.text = element_text(size=8),
+        axis.title=element_text(size=15))
+
+dev.off()
+
+
+
+file_path = paste0(home_dir,"sourcedatadir/Source_Data_EDFig4.xlsx")
+sheet_name = "ED4A_kps+geo"
+
+# Load existing file if it exists, otherwise create new
+wb <- if (file.exists(file_path)) loadWorkbook(file_path) else createWorkbook()
+
+# Add sheet and data
+addWorksheet(wb, sheet_name)
+writeData(wb, sheet_name, toplot)
+
+# Save
+saveWorkbook(wb, file_path, overwrite = TRUE)
+
+```
+
+### ED4B -  Barplot of k-types
+
+##### for text: how many distinct k-types per environment?
+
+```{r}
+
+toplot = totest %>%
+  filter(manual_ktyp == "K_pos") %>%
+  dplyr::mutate(total = nrow(.)) %>%
+  dplyr::ungroup() %>%
+  dplyr::group_by(total, predicted) %>%
+  dplyr::summarise(count = n()) %>%
+  ungroup() %>%
+  mutate(proportion = (count/total) * 100)
+
+```
+
+
+
+##### figure
+```{r}
+
+toplot = totest %>%
+  filter(manual_ktyp == "K_pos") %>%
+  mutate(host_common_name = case_when(
+    host_group == "Environmental" & isolation_source %in% c("Sewage and wastewater", "River", "Seawater", "Sediment and soil","Air and dust","Manure","Unspecified Clinical Isolate") ~ isolation_source,
+    host_group == "Environmental" & host_common_name %in% c("Water") & !(isolation_source %in% c("Sewage and wastewater", "River", "Seawater")) ~ "Water",
+    host_group == "Human" ~ "Human",
+    host_group == "Laboratory" ~ "Laboratory",
+    TRUE ~ host_common_name)) %>%
+  mutate(host_common_name = gsub("Unmapped", "Unknown", host_common_name),
+         host_common_name = gsub("Environmental Source", "Unknown", host_common_name),
+         host_common_name = gsub("Food", "Unknown", host_common_name)) %>%
+  mutate(host_group = case_when(
+    host_group == "Other Animals" & host_common_name %in% c("Cat", "Dog", "Horse","Mouse","Rabbit") ~ "Pets",
+    host_group == "Other Animals" & !(host_common_name %in% c("Cat", "Dog", "Horse","Mouse","Rabbit")) ~ "Wild Animals",
+    host_group == "Environmental" ~ "Other Environmental Source",
+    host_group == "Human-/animal-\nassociated Environment" & host_common_name %in% c("Pig","Cow","Sheep","Other or unspecified livestock") ~ "Livestock-\nassociated Environment",
+    TRUE ~ host_group)) %>%
+  dplyr::group_by(host_group) %>%
+  dplyr::mutate(total = n()) %>%
+  dplyr::ungroup() %>%
+  dplyr::group_by(total, host_group, predicted) %>%
+  dplyr::summarise(count = n()) %>%
+  ungroup() %>%
+  mutate(proportion = (count/total) * 100) %>%
+  dplyr::select(host_group, predicted, proportion,total)
+
+
+# --- GROUP LOW PROPORTION K-TYPES (< 0.5%) AS "OTHER" ---
+test <- toplot %>%
+  mutate(predicted = ifelse(proportion < 8, "Other", predicted)) %>% 
+  # Recalculate total proportions
+  group_by(host_group, predicted) %>%
+  summarise(proportion = sum(proportion), .groups = "drop")  
+
+
+test$host_group <- factor(test$host_group, levels=rev(c("Human","Human-/animal-\nassociated Environment","Pets","Avian","Livestock","Food","Livestock-\nassociated Environment","Wild Animals","Other Environmental Source","Laboratory","Unknown")))
+
+
+#take color mapping from ED6E --> need to plot this first if rerunning all figures
+color_mapping <- readRDS(paste0(outputdir,"Ktype_color_mapping.rds"))
+
+
+pdf(paste0(plotdir,"ED4B_ktype_hostdistribution.pdf"),width = 7, height =4.5)
+
+# set order
+test <- test %>%
+  arrange(host_group, desc(proportion))  
+test$predicted <- factor(test$predicted, levels = unique(test$predicted))
+
+
+# calculate total counts per bar (disease + phylogroup)
+
+totals <- toplot %>%
+  group_by(host_group) %>%
+  summarise(total_count = unique(total), .groups = "drop")
+
+
+ggplot(test, aes(x = host_group, y = proportion, fill = predicted)) +
+  geom_bar(stat = "identity", color = "black") +  # Dodge for clustered bars
+  scale_fill_manual(values = color_mapping,
+                  guide = guide_legend(nrow = 3)) +
+  labs(title = "",
+       x = "", 
+       y = expression(paste("% ", italic("kps"), "+ genomes")),
+       fill = "K-Type") +
+    geom_text(data = totals, aes(x = host_group, y = 105, label = total_count),
+            inherit.aes = FALSE,nudge_y = -3,
+            size = 3, hjust = 0.2) +
+  coord_flip() +
+  theme_classic() +
+  theme(legend.text= element_text(size=10),
+        legend.key.height = unit(3, "mm"),
+        legend.key.width = unit(5, "mm"),
+        legend.position="bottom",
+        axis.text = element_text(size = 11))
+
+dev.off()
+
+
+
+file_path = paste0(home_dir,"sourcedatadir/Source_Data_EDFig4.xlsx")
+sheet_name = "ED4B_kps+hosts"
+
+# Load existing file if it exists, otherwise create new
+wb <- if (file.exists(file_path)) loadWorkbook(file_path) else createWorkbook()
+
+# Add sheet and data
+addWorksheet(wb, sheet_name)
+writeData(wb, sheet_name, test)
+
+# Save
+saveWorkbook(wb, file_path, overwrite = TRUE)
+```
+
+
+### ED4C. Heatmap Ktypes individual hosts - CORRELATION VERSION
+```{r}
+toplot = totest %>%
+  filter(manual_ktyp == "K_pos") %>%
+  mutate(host_common_name = case_when(host_group == "Environmental" & isolation_source %in% c("Sewage and wastewater", "River", "Seawater", "Sediment and soil","Air and dust","Manure","Unspecified Clinical Isolate") ~ isolation_source,
+                                      host_group == "Environmental" & host_common_name %in% c("Water") & !(isolation_source %in% c("Sewage and wastewater", "River", "Seawater")) ~ "Water",
+                                      host_group == "Human" ~ "Human",
+                                      host_group == "Laboratory" ~ "Laboratory",
+                                      TRUE ~ host_common_name)) %>%
+    mutate(host_common_name= gsub("Unmapped", "Unknown", host_common_name)) %>%
+  mutate(host_common_name= gsub("Environmental Source", "Unknown", host_common_name)) %>%
+  mutate(host_common_name= gsub("Food", "Unknown", host_common_name)) %>%
+    mutate(host_group = case_when(host_group == "Other Animals" & host_common_name %in% c("Cat", "Dog", "Horse","Mouse","Rabbit") ~ "Pets",
+                                host_group == "Other Animals" & !(host_common_name %in% c("Cat", "Dog", "Horse","Mouse","Rabbit")) ~ "Wild Animals",
+                                host_group == "Environmental" ~ "Other Environmental Source",
+                                host_group == "Human-/animal-\nassociated Environment" & host_common_name %in% c("Pig","Cow","Sheep","Other or unspecified livestock") ~ "Livestock-\nassociated Environment",
+                                TRUE ~ host_group)) %>%
+  mutate(host_group_name=interaction(host_group,host_common_name, geographic_group)) %>%
+  dplyr::group_by(host_group, host_group_name) %>%
+  dplyr::mutate(total=n()) %>%
+  dplyr::ungroup() %>%
+  # keep only hosts with > 15
+  filter(total >= 15 ) %>%
+  dplyr::group_by(total, host_group,host_group_name,predicted) %>%
+  dplyr::summarise(count = n()) %>%
+  ungroup() %>%
+  mutate(proportion = (count/total)*100) %>%
+  filter(predicted != "K_neg_partial") %>%
+ # filter(proportion > 10) %>%
+  mutate(host_group_name=paste0(host_group_name, " (n=",total,")")) %>%
+  complete(host_group_name, predicted, fill = list(proportion = NA, label = ""))
+  
+
+mat_data = toplot %>%
+  distinct(predicted,host_group_name, proportion) %>%
+  pivot_wider(names_from = host_group_name,values_from = proportion)
+
+mat_data[is.na(mat_data)] <- 0
+
+df_corr = mat_data %>%
+  pivot_longer(cols = c(2:ncol(.)), values_to = "proportion",names_to = "host_group_name") 
+
+
+df_wide <- df_corr %>%
+  pivot_wider(names_from = host_group_name, values_from = proportion)
+
+# calculate correlation between hosts
+corr_matrix <- cor(df_wide[, -1], use = "complete.obs", method = "pearson")
+corr_long <- as.data.frame(as.table(corr_matrix))
+
+colnames(corr_long) <- c("host1", "host2", "corr")
+
+is.na.data.frame <- function(x)
+  do.call(cbind, lapply(x, is.na))
+
+fix_na <- function (x) {
+  x[is.na(x)] <- 0
+  return(x)
+}
+corr_long = fix_na(corr_long)
+
+dim(corr_long)
+
+
+corr_long = corr_long %>%
+  as.data.frame() %>%
+  pivot_wider(names_from = host2, values_from = corr) %>%
+  fix_na() %>%
+  as.data.frame() %>%
+  set_rownames(.$host1) %>%
+  dplyr::select(-host1) %>%
+  as.matrix()
+
+dim(corr_long)
+
+
+# Extract host group and geographical group
+row_annotation_data <- data.frame(host_group_name = rownames(corr_long)) %>%
+  mutate(host_group = sapply(strsplit(as.character(host_group_name), "\\."), '[', 1),
+    geographic_group = sub("^[^.]+\\.[^.]+\\.([^\\(]+) \\(n=.*", "\\1", host_group_name)) %>%
+  dplyr::select(-host_group_name)
+
+# Unique values for coloring
+unique_host_groups <- unique(row_annotation_data$host_group)
+unique_geo_groups <- unique(row_annotation_data$geographic_group)
+
+# Generate colors for annotations
+set.seed(12)
+host_group_colors <- setNames(colorRampPalette(brewer.pal(8, "Set3"))(length(unique_host_groups)), unique_host_groups)
+geo_group_colors <- setNames(colorRampPalette(brewer.pal(8, "Paired"))(length(unique_geo_groups)), unique_geo_groups)
+
+
+
+# Create the row annotation
+ra <- rowAnnotation(
+  hostgroup = row_annotation_data$host_group,
+   Geographical_Group = row_annotation_data$geographic_group,
+  annotation_label = c("Host", "Geography"),
+  col = list(hostgroup = host_group_colors,
+             Geographical_Group = geo_group_colors),
+  annotation_width = unit(4, "mm")
+)
+
+rownames(corr_long) <- sub("^[^.]+\\.", "", rownames(corr_long))
+
+
+library(circlize)
+col_fun = colorRamp2(c(min(corr_long), 0, max(corr_long)), hcl_palette = "RdBu")
+col_fun(seq(-20, 20))
+
+# Increase space between heatmap body and the heatmap legend (right side)
+ht_opt$HEATMAP_LEGEND_PADDING = unit(10, "mm")   # try 5–20 mm
+
+# If you also have annotation legends on the right:
+ht_opt$ANNOTATION_LEGEND_PADDING = unit(10, "mm")
+
+
+ht <- Heatmap(
+  corr_long,
+  row_names_gp = gpar(fontsize = 9),
+  column_title="host-location",
+  row_title ="host-location",
+  show_column_names = FALSE,
+  col=col_fun,
+  row_split = 10,
+  column_split = 10,
+  heatmap_legend_param = list(
+    title = "Pearson correlation coefficient",
+    legend_direction = "horizontal"
+  ),
+  left_annotation = ra,
+  use_raster = TRUE, raster_quality = 5
+)
+
+pdf(paste0(plotdir,"ED4C_hm_hosts_corr_matrix.pdf"), width=14, height=10)
+
+draw(
+  ht,
+  heatmap_legend_side = "right",
+)
+
+
+
+dev.off()
+
+ht_opt(RESET = TRUE)
+
+
+
+
+file_path = paste0(home_dir,"sourcedatadir/Source_Data_EDFig4.xlsx")
+sheet_name = "ED4C_host_correl"
+
+# Load existing file if it exists, otherwise create new
+wb <- if (file.exists(file_path)) loadWorkbook(file_path) else createWorkbook()
+
+# Add sheet and data
+addWorksheet(wb, sheet_name)
+writeData(wb, sheet_name, corr_long)
+
+# Save
+saveWorkbook(wb, file_path, overwrite = TRUE)
+```
+
+
+### ED4D. K-type frequency overall
+```{r}
+
+toplot <- totest %>%
+  filter(manual_ktyp == "K_pos") %>%
+  dplyr::group_by(predicted, group) %>%
+  dplyr::mutate(count = n()) %>%
+  mutate(proportion = (count / nrow(.)) * 100) %>%
+  ungroup() %>%
+  mutate(predicted = case_when(proportion < 0.5 ~ "other",
+                               TRUE ~ predicted)) %>%
+  dplyr::group_by(predicted, group) %>%
+  dplyr::summarise(count = n(), .groups = "drop") %>%
+  mutate(proportion = (count / sum(count)) * 100) %>%
+  ungroup()
+
+
+
+
+pdf(paste0(plotdir,"ED4D_ncbi_Ktype_prevalence.pdf"),width = 6,height=10)
+ggplot(toplot, aes(y = factor(predicted, levels = c("other",setdiff(predicted[order(proportion)], "other"))),
+                   x = proportion, fill = group)) +
+  geom_bar(stat = "identity", color = "black") +
+  scale_fill_manual(values = mycolors, guide = guide_legend(ncol = 1), na.value = "grey") +
+ # coord_flip() +
+  geom_text(aes(x = proportion + 1, label = count),
+            size = 5, #angle = 90,
+            color = "black", #angle = 90, hjust = -0.1,
+            check_overlap = TRUE) + 
+  labs(x = expression(paste("% ", italic("kps"), "+ genomes")),
+       y= "", 
+       fill="Capsule Group", title="") + 
+  scale_x_continuous(limits = c(0, 20)) +
+  theme_bw() +
+  theme(axis.text.x = element_text(size = 15),
+        axis.title = element_text(size = 18),
+        axis.text.y = element_text(size = 15),
+        legend.position = "none",
+        strip.text = element_text(size = 15))
+
+
+dev.off()
+
+file_path = paste0(home_dir,"sourcedatadir/Source_Data_EDFig4.xlsx")
+sheet_name = "ED4D_Ktype_prevalence"
+
+# Load existing file if it exists, otherwise create new
+wb <- if (file.exists(file_path)) loadWorkbook(file_path) else createWorkbook()
+
+# Add sheet and data
+addWorksheet(wb, sheet_name)
+writeData(wb, sheet_name, toplot)
+
+# Save
+saveWorkbook(wb, file_path, overwrite = TRUE)
+
+```
+
+##### for text
+```{r}
+
+toplot <- totest %>%
+   mutate(host_common_name = case_when(
+    host_group == "Environmental" & isolation_source %in% c("Sewage and wastewater", "River", "Seawater", "Sediment and soil","Air and dust","Manure","Unspecified Clinical Isolate") ~ isolation_source,
+    host_group == "Environmental" & host_common_name %in% c("Water") & !(isolation_source %in% c("Sewage and wastewater", "River", "Seawater")) ~ "Water",
+    host_group == "Human" ~ "Human",
+    host_group == "Laboratory" ~ "Laboratory",
+    TRUE ~ host_common_name)) %>%
+  mutate(host_common_name = gsub("Unmapped", "Unknown", host_common_name),
+         host_common_name = gsub("Environmental Source", "Unknown", host_common_name),
+         host_common_name = gsub("Food", "Unknown", host_common_name)) %>%
+  mutate(host_group = case_when(
+    host_group == "Other Animals" & host_common_name %in% c("Cat", "Dog", "Horse","Mouse","Rabbit") ~ "Pets",
+    host_group == "Other Animals" & !(host_common_name %in% c("Cat", "Dog", "Horse","Mouse","Rabbit")) ~ "Wild Animals",
+    host_group == "Environmental" ~ "Other Environmental Source",
+    host_group == "Human-/animal-\nassociated Environment" & host_common_name %in% c("Pig","Cow","Sheep","Other or unspecified livestock") ~ "Livestock-\nassociated Environment",
+    TRUE ~ host_group)) %>%
+  filter(manual_ktyp == "K_pos") %>%
+  dplyr::group_by(predicted, host_group) %>%
+  dplyr::summarise(count = n(), .groups = "drop") %>%
+  dplyr::group_by(host_group) %>% 
+  mutate(proportion = (count / sum(count)) * 100) %>%
+  ungroup()
+```
+
+
+### ED4E. geography
+
+```{r}
+toplot <- totest %>%
+  filter(manual_ktyp == "K_pos") %>%
+mutate(host_group = case_when(
+    host_group == "Other Animals" & host_common_name %in% c("Cat", "Dog", "Horse","Mouse","Rabbit") ~ "Pets",
+    host_group == "Other Animals" & !(host_common_name %in% c("Cat", "Dog", "Horse","Mouse","Rabbit")) ~ "Wild Animals",
+    host_group == "Environmental" ~ "Other Environmental Source",
+    host_group == "Human-/animal-\nassociated Environment" & host_common_name %in% c("Pig","Cow","Sheep","Other or unspecified livestock") ~ "Livestock-\nassociated Environment",
+    TRUE ~ host_group)) %>%
+  dplyr::group_by(host_group, geographic_group, predicted) %>%
+  dplyr::summarise(count = n(), .groups = "drop") %>%  # Count each K-type within the group
+  dplyr::group_by(host_group, geographic_group) %>%
+  dplyr::mutate(proportion = (count / sum(count)) * 100) %>%  # Normalize within group
+  ungroup() %>%
+  filter(!(host_group %in% c("Laboratory","Unknown")) & !(geographic_group %in% c("Asia", "Atlantic Ocean")))
+
+
+
+# this figure has the highest diversity of k-types so unified K-type legend should be generated here
+# group low proportion K-types as "other"
+test <- toplot %>%
+  mutate(predicted = ifelse(proportion < 8, "Other", predicted)) %>% 
+  # Recalculate total proportions
+  group_by(host_group, geographic_group, predicted) %>%
+  summarise(proportion = sum(proportion), .groups = "drop")  
+
+
+# Generate uniform palette to reuse throughout
+unique_ktypes <- unique(test$predicted)
+unique_ktypes <- unique_ktypes[unique_ktypes != "Other"]
+num_colors <- length(unique_ktypes)
+palette_colors <- colorRampPalette(brewer.pal(12, "Set3"))(num_colors)
+color_mapping <- c(setNames(palette_colors, unique_ktypes), Other = "#B0B0B0")
+
+saveRDS(color_mapping, file = paste0(outputdir,"Ktype_color_mapping.rds"))
+
+
+# Order legend with Other last
+k_levels <- setdiff(names(color_mapping), "Other")
+k_levels <- k_levels[order(as.integer(sub("^K", "", k_levels)))]
+test$predicted <- factor(test$predicted, levels = c(k_levels, "Other"))
+
+
+# order for geographic_group
+geo_order <- rev(c("Center and South America","North America",  "Europe","Middle East","Africa", "Indian Subcontinent", "China and South-East Asia", "North and Central Asia", "Japan",  "Oceania","Unknown"))
+test$geographic_group <- factor(test$geographic_group, levels = geo_order)
+
+# order for host_group
+host_order <- c("Human", "Human-/animal-\nassociated Environment", "Pets", "Livestock","Food",  "Livestock-\nassociated Environment", "Avian" ,"Wild Animals", "Other Environmental Source" )
+test$host_group <- factor(test$host_group, levels = host_order)
+
+test$predicted <- factor(test$predicted, levels = unique(test$predicted))
+
+
+pdf(paste0(plotdir,"ED4E_ktype_geography_distribution.pdf"),width = 15, height =7)
+
+totals <- toplot %>%
+  group_by(geographic_group, host_group) %>%
+  summarise(total_count = sum(count), .groups = "drop")
+
+
+ggplot(test, aes(x = geographic_group, y = proportion, fill = predicted)) +
+  geom_bar(stat = "identity") + 
+  scale_fill_manual(values = color_mapping) +  
+  geom_text(data = totals, aes(x = geographic_group, y = 105, label = total_count),
+            inherit.aes = FALSE,nudge_y = -3,
+            size = 3, hjust = 0.2) +
+  labs(title = "",
+       x = "", 
+       y = expression(paste("% ", italic("kps+"), "genomes")),
+       fill = "K-Type") +
+  coord_flip() +
+  scale_y_continuous(limits = c(0,110),breaks=c(0,25,50,75,100)) +
+  facet_wrap(~host_group, scales="free") +
+  theme_classic() +
+  theme(legend.text= element_text(size=8), 
+        legend.key.height = unit(4, "mm"),
+        legend.key.width = unit(2, "mm"),
+        legend.position="right") +
+  guides(fill = guide_legend(nrow = 25))
+
+
+dev.off()
+
+
+file_path = paste0(home_dir,"sourcedatadir/Source_Data_EDFig4.xlsx")
+sheet_name = "ED4E_Ktype_geo_resolved"
+
+# Load existing file if it exists, otherwise create new
+wb <- if (file.exists(file_path)) loadWorkbook(file_path) else createWorkbook()
+
+# Add sheet and data
+addWorksheet(wb, sheet_name)
+writeData(wb, sheet_name, test)
+
+# Save
+saveWorkbook(wb, file_path, overwrite = TRUE)
+
+```
+
+##### for text: top K-types per environment
+
+```{r}
+
+toplot <- totest %>%
+  filter(manual_ktyp == "K_pos") %>%
+mutate(host_group = case_when(
+    host_group == "Other Animals" & host_common_name %in% c("Cat", "Dog", "Horse","Mouse","Rabbit") ~ "Pets",
+    host_group == "Other Animals" & !(host_common_name %in% c("Cat", "Dog", "Horse","Mouse","Rabbit")) ~ "Wild Animals",
+    host_group == "Environmental" ~ "Other Environmental Source",
+    host_group == "Human-/animal-\nassociated Environment" & host_common_name %in% c("Pig","Cow","Sheep","Other or unspecified livestock") ~ "Livestock-\nassociated Environment",
+    TRUE ~ host_group)) %>%
+  dplyr::group_by(host_group, predicted) %>%
+  dplyr::summarise(count = n(), .groups = "drop") %>%  
+  dplyr::group_by(host_group) %>%
+  dplyr::mutate(proportion = (count / sum(count)) * 100) %>%
+  ungroup() 
+
+```
+
+
+
+## ED Fig. 5
+
+### prep data (same as Fig. 3)
+```{r}
+totest = read_xlsx(paste0(outputdir,"ncbi_egli_combined_for_analysis.xlsx"))     
+
+```
+
+#### ED5A - phylogroups all hosts
+```{r}
+
+toplot = totest %>%
+  mutate(phylogroup = case_when(phylogroup == "C_original" ~"C",
+                                TRUE ~ phylogroup)) %>%
+  mutate(group = case_when(predicted == "K_neg_partial" ~ "kps -",
+                           TRUE ~ group)) %>%
+  dplyr::group_by(phylogroup) %>%
+  dplyr::mutate(total=n()) %>%
+  dplyr::ungroup() %>%
+  dplyr::group_by(group,total, phylogroup) %>%
+  dplyr::summarise(count = n()) %>%
+  mutate(proportion = (count/total)*100)
+
+
+mycolors = c(
+  "G2A" = "#71B7E2",
+  "G2B" = "#345C7B",
+  "G3A" = "#7653AB",
+  "G3B" = "#A48DCC",
+  "kps -" = "grey"
+)
+
+toplot = toplot %>%
+  filter(phylogroup != "NA")
+
+toplot$phylogroup <- factor(toplot$phylogroup, levels=c("A","B1","C","E1","E2","G","B2-1","B2-2","D1","D2","D3","F"))
+
+pdf(paste0(plotdir,"ED7A_phylogroup_group_percent_includingKneg_allhosts.pdf"),width = 8,height=3)
+ggplot(toplot,aes(x=phylogroup,y=proportion,fill=group,label=count)) +
+  geom_bar(stat = "identity", color = "black") +
+  scale_fill_manual(values = mycolors,guide = guide_legend(ncol = 1), na.value = "grey") +
+   geom_text(aes(y = proportion),
+            position = position_stack(vjust = 0.5), 
+            size = 5, 
+            color = "black",
+            check_overlap = TRUE) + 
+  labs(y = "% genomes", x= "Phylogroup", fill="Capsule Group") +
+  #coord_flip() +
+  theme_classic() +
+   theme(axis.text.x = element_text(hjust=0.5, size = 15),
+        axis.title=element_text(size=15),
+        axis.text.y = element_text(size = 15),
+        legend.position="none")
+dev.off()
+
+
+
+file_path = paste0(home_dir,"sourcedatadir/Source_Data_EDFig5.xlsx")
+sheet_name = "ED5A_phylogroup_group"
+
+# Load existing file if it exists, otherwise create new
+wb <- if (file.exists(file_path)) loadWorkbook(file_path) else createWorkbook()
+
+# Add sheet and data
+addWorksheet(wb, sheet_name)
+writeData(wb, sheet_name, toplot)
+
+# Save
+saveWorkbook(wb, file_path, overwrite = TRUE)
+```
+
+##### text 
+
+```{r}
+
+toplot = totest %>%
+  mutate(nastyphy = case_when(phylogroup %in% c("B2-1","B2-2","D1","D2","D3","F") ~ "nasty",
+                              TRUE ~ "ok")) %>%
+  mutate(phylogroup = case_when(phylogroup == "C_original" ~"C",
+                                TRUE ~ phylogroup)) %>%
+  mutate(group = case_when(predicted == "K_neg_partial" ~ "kps -",
+                           TRUE ~ group)) %>%
+  dplyr::group_by(nastyphy) %>%
+  dplyr::mutate(total=n()) %>%
+  dplyr::ungroup() %>%
+  dplyr::group_by(group,total, nastyphy) %>%
+  dplyr::summarise(count = n()) %>%
+  mutate(proportion = (count/total)*100)
+```
+
+
+#### ED5B - isolation source ncbi + egli only Human
+```{r}
+
+toplot = totest %>%
+   filter(host_group == "Human" & host_common_name == "Human" & !(isolation_source %in% c("Food","Probiotic","Sewage and wastewater","Meat","Plant")))%>% 
+  mutate(isolation_source = case_when(isolation_source %in% c("Blood", "Brain and CSF","Urine and bladder","Stool","Unspecified Clinical Isolate") ~ isolation_source,
+                                                  TRUE ~ "Other")) %>%
+ dplyr::group_by(phylogroup) %>%
+  dplyr::mutate(total=n()) %>%
+  dplyr::ungroup() %>%
+  dplyr::group_by(total, phylogroup,isolation_source) %>%
+  dplyr::summarise(count = n()) %>%
+  mutate(proportion = (count/total)*100)
+
+toplot %>% group_by(phylogroup) %>% summarise(n = sum(count))
+
+
+toplot = toplot %>%
+  filter(phylogroup != "NA")
+
+toplot$phylogroup <- factor(toplot$phylogroup, levels=c("A","B1","C","E1","E2","G","B2-1","B2-2","D1","D2","D3","F"))
+
+toplot = toplot %>%
+  mutate(isolation_source = case_when(isolation_source == "Urine and bladder" ~ "Urine and\nbladder",
+                                                 isolation_source == "Unspecified Clinical Isolate" ~ "Unspecified Clinical\nIsolate",
+                                                 TRUE ~ isolation_source))
+
+pdf(paste0(plotdir,"ED5B_phylogroup_percent_includingKneg_isolationsources_stacked.pdf"),width = 7,height=3.5)
+ggplot(toplot , aes(x = phylogroup, y = proportion, fill = isolation_source)) +
+ geom_bar(stat = "identity", color = "black") +
+   geom_text(aes(y = proportion, label=count),
+            position = position_stack(vjust = 0.5),
+            size = 4,
+            color = "black",
+            check_overlap = TRUE) +
+  labs(y = "# genomes", x = "", fill = "Isolate source") +
+  scale_fill_manual(values = c("Blood" = "#c46c77", "Brain and CSF" = "white", "Urine and\nbladder" = "#cccc99", "Stool" = "#f7ddeb",  "Unspecified Clinical\nIsolate" = "lightblue", "Other" = "grey")) +
+  theme_classic() +
+  theme(#axis.text.x = element_text(hjust = 1, size = 15,angle=60),
+        axis.title = element_text(size = 15),
+        axis.text.y = element_text(size = 15),
+        axis.text.x = element_text(size = 15),
+        strip.text = element_text(size = 15),
+        legend.text=element_text(size = 12),
+        legend.title=element_text(size = 13),
+        legend.position="bottom",
+        legend.margin = margin(t = -20, r = -10, b = 1, l = -10),
+        legend.direction="horizontal")+
+  guides(fill = guide_legend(nrow = 2))
+dev.off()
+
+
+file_path = paste0(home_dir,"sourcedatadir/Source_Data_EDFig5.xlsx")
+sheet_name = "ED5B_isolation_source"
+
+# Load existing file if it exists, otherwise create new
+wb <- if (file.exists(file_path)) loadWorkbook(file_path) else createWorkbook()
+
+# Add sheet and data
+addWorksheet(wb, sheet_name)
+writeData(wb, sheet_name, toplot)
+
+# Save
+saveWorkbook(wb, file_path, overwrite = TRUE)
+
+```
+
+#### ED5C - gut commensal global distribution
+```{r}
+gutmags = readxl::read_xlsx(paste0(outputdir,"gutmags_annotated_metad_ectyper.xlsx")) %>%
+  mutate(group = case_when(predicted %in% c("No KpsC identified", "No K-type assigned") ~ predicted,
+                           TRUE ~ group),
+         expec = 0,
+         phylogroup = case_when(phylogroup == "C_original" ~"C",
+                                TRUE ~ phylogroup)) %>%
+  mutate(group = case_when(predicted == "K_neg_partial" ~ "kps -",
+                           TRUE ~ group)) %>%
+  dplyr::ungroup()
+
+
+toplot = gutmags %>%
+  mutate(geographic_group= replace_na(geographic_group, "Unknown")) %>%
+  mutate(geographic_group= gsub("^$", "Unknown", geographic_group)) %>%
+  dplyr::group_by(geographic_group) %>%
+  mutate(total=n()) %>%
+  ungroup() %>%
+  mutate(posorneg = case_when(manual_ktyp == "K_pos" ~ "K_pos",
+                              TRUE ~ "K_neg")) %>%
+  dplyr::group_by(geographic_group, total, posorneg) %>%
+  summarise(count=n()) %>%
+  ungroup() 
+
+
+pdf(paste0(plotdir,"ED5C_gutmags_kps+_geography.pdf"),width = 7,height=3.5)
+ggplot(toplot,aes(x=reorder(geographic_group, count),y=count,fill=posorneg,label=count)) +
+  geom_bar(stat = "identity", color = "black") +
+   geom_text(aes(y = total+150, label =total),
+            size = 5,
+            color = "black",#fontface="bold",
+            check_overlap = TRUE) +
+  scale_fill_manual(values =c("white","grey"), label = c("-","+")) +
+  scale_y_continuous(limits=c(0,1780)) +
+  theme(legend.position="bottom",
+        axis.text.x=element_text(angle=60,hjust=1)) +
+  labs(y = "# genomes", x= "", fill="Capsule") +
+  coord_flip() +
+  theme_classic() +
+  theme(axis.text.x = element_text(hjust=0.5, size =15),
+        axis.text.y = element_text(size =15),
+        legend.position="inside",
+        legend.text = element_text(size=16,face = "bold"),
+        legend.title = element_text(size=16,face = "bold"),
+        axis.title=element_text(size=15))
+
+dev.off()
+
+
+gutmags %>%
+   mutate(posorneg = case_when(manual_ktyp == "K_pos" ~ "K_pos",
+                              TRUE ~ "K_neg")) %>%
+  dplyr::group_by(posorneg) %>%
+  dplyr::summarise(count=n())
+
+
+
+file_path = paste0(home_dir,"sourcedatadir/Source_Data_EDFig5.xlsx")
+sheet_name = "ED5C_gutmags"
+
+# Load existing file if it exists, otherwise create new
+wb <- if (file.exists(file_path)) loadWorkbook(file_path) else createWorkbook()
+
+# Add sheet and data
+addWorksheet(wb, sheet_name)
+writeData(wb, sheet_name, toplot)
+
+# Save
+saveWorkbook(wb, file_path, overwrite = TRUE)
+
+```
+
+
+
+#### ED5D - MAGs vs genomes (healthy vs disease phylogroups) - only in stool
+Same data as 4D (GLM)
+
+```{r}
+# ncbi isolates (subset)
+ncbi_analysis = read.xlsx(paste0(outputdir,"ncbi_annotated_derep_260112.xlsx")) %>% 
+  filter(host_group=="Human" & host_common_name == "Human" & !(isolation_source %in% c("Food","Probiotic","Sewage and wastewater","Meat","Plant"))) %>%
+  filter(isolation_source %in% c("Blood", "Brain and CSF") | host_health %in% c("Bloodstream Infection","Meningitis", "neonatal bacteremia","Healthy")) %>%
+  mutate(expec = case_when(host_health != "Healthy" ~ 1,
+                           TRUE ~ 0)) %>%
+  dplyr::ungroup() %>%
+  dplyr::select(predicted, host_gender, host_age, mlst, geographic_group, phylogroup,o_type,h_type, expec, group)
+
+# add healthy gut mags
+gutmags = readxl::read_xlsx(paste0(outputdir,"gutmags_annotated_metad_ectyper.xlsx")) %>%
+  mutate(group = case_when(predicted %in% c("No KpsC identified", "No K-type assigned") ~ predicted,
+                           TRUE ~ group),
+         expec = 0,
+         phylogroup = case_when(phylogroup == "C_original" ~"C",
+                                TRUE ~ phylogroup)) %>%
+  mutate(group = case_when(predicted == "K_neg_partial" ~ "kps -",
+                           TRUE ~ group)) %>%
+  dplyr::ungroup() %>%
+   dplyr::select(predicted, host_gender, host_age, mlst, geographic_group, phylogroup,o_type,h_type, expec, group)
+
+# add egli
+egli = readxl::read_xlsx(paste0(outputdir,"egli_annotated_metad_ectyper.xlsx")) %>%
+  filter(invasiveness == "invasive") %>%
+  mutate(expec = 1) %>%
+   dplyr::select(predicted, host_gender, host_age, mlst, geographic_group, phylogroup,o_type,h_type, expec, group)
+
+
+totest = gdata::combine(ncbi_analysis, gutmags, egli) %>%
+  filter(phylogroup != "NA") %>%
+  mutate(group = case_when(predicted == "K_neg_partial" | group %in% c("No K-type assigned","No KpsC identified") ~ "kps -",
+                           TRUE ~ group),
+         phylogroup = case_when(phylogroup == "C_original" ~"C",
+                                TRUE ~ phylogroup))
+
+
+toplot = totest %>%
+  dplyr::group_by(phylogroup, expec) %>%
+  dplyr::mutate(total=n()) %>%
+  dplyr::ungroup() %>%
+  dplyr::group_by(group,total, phylogroup,expec) %>%
+  dplyr::summarise(count = n()) %>%
+  mutate(proportion = (count/total)*100)
+
+
+mycolors = c(
+  "G2A" = "#71B7E2",
+  "G2B" = "#345C7B",
+  "G3A" = "#7653AB",
+  "G3B" = "#A48DCC",
+  "kps -" = "grey"
+)
+
+
+
+# Initialize results dataframe
+stat_results <- totest %>%
+  dplyr::group_by(phylogroup) %>%
+  dplyr::summarise(
+    p_value = ifelse(n_distinct(group) > 1, # Check if more than one group exists
+                     fisher.test(table(group, expec))$p.value, 
+                     NA)  # Assign NA if only one group present
+  )
+
+# Adjust p-values for multiple comparisons
+stat_results$p_adjusted <- p.adjust(stat_results$p_value, method = "bonferroni")
+
+# Convert p-values into significance labels
+stat_results$significance <- case_when(
+  is.na(stat_results$p_value) ~ "ns",
+  stat_results$p_adjusted < 0.001 ~ "***",
+  stat_results$p_adjusted < 0.01  ~ "**",
+  stat_results$p_adjusted < 0.05  ~ "*",
+  TRUE ~ "ns"
+)
+
+# Merge significance results into the plotting data
+toplot <- left_join(toplot, stat_results, by = "phylogroup")
+
+
+
+toplot$phylogroup <- factor(toplot$phylogroup, levels=c("A","B1","C","E1","E2","G","B2-1","B2-2","D1","D2","D3","F"))
+stat_results$phylogroup <- factor(stat_results$phylogroup, levels=c("A","B1","C","E1","E2","G","B2-1","B2-2","D1","D2","D3","F"))
+toplot$expec <- factor(toplot$expec, levels=c(0,1))
+
+pdf(paste0(plotdir,"ED7D_phylogroup_group_percent_includingKneg_NCBIandcommensals_onlyInvasiveasDisease_plusEgli.pdf"), width = 14, height = 3.5)
+
+ggplot(toplot , aes(x = expec, y = proportion, fill = group, label = count)) +
+  geom_bar(stat = "identity", color = "black") +
+  scale_fill_manual(values = mycolors, guide = guide_legend(ncol = 1), na.value = "grey") +
+  geom_text(aes(y = proportion),
+            position = position_stack(vjust = 0.5),
+            size = 5, 
+            color = "black",
+            check_overlap = TRUE) + 
+  labs(y = "% genomes", x = "", fill = "Capsule Group") +
+  
+  scale_x_discrete(labels = c("A", "I")) +
+  facet_grid(~ phylogroup) +
+  theme_classic() +
+  theme(axis.text.x = element_text(hjust = 0.5, size = 15),
+        axis.title = element_text(size = 15),
+        axis.text.y = element_text(size = 15),
+        strip.text = element_text(size = 15),
+        legend.position = "none") +
+  geom_text(aes(x = 1.5, y = 100 + 10, label = significance), 
+            size = 5, inherit.aes = FALSE, data = stat_results)
+
+ dev.off()
+
+ 
+ 
+file_path = paste0(home_dir,"sourcedatadir/Source_Data_EDFig5.xlsx")
+sheet_name = "ED5D_invasive_phylogroups"
+
+# Load existing file if it exists, otherwise create new
+wb <- if (file.exists(file_path)) loadWorkbook(file_path) else createWorkbook()
+
+# Add sheet and data
+addWorksheet(wb, sheet_name)
+writeData(wb, sheet_name, toplot)
+
+# Save
+saveWorkbook(wb, file_path, overwrite = TRUE)
+
+```
+
+
+#### ED5E-G - Simpson's diversity, richness and evenness
+same data as ED7D.
+```{r}
+
+# Filter phylogroups with ≥25 genomes in both asymptomatic and invasive
+valid_phylogroups <- totest %>%
+  count(phylogroup, expec) %>%
+  pivot_wider(names_from = expec, values_from = n, values_fill = 0) %>%
+  filter(`0` >= 25,`1` >= 25) %>%
+  pull(phylogroup)
+
+# Apply filter to main data
+totest <- totest %>%
+  filter(phylogroup %in% valid_phylogroups)
+
+
+library(vegan)
+
+# Calculate diversity metrics
+diversity_data <- totest %>%
+  dplyr::group_by(phylogroup, expec, predicted) %>%
+  dplyr::summarise(count = n(), .groups = 'drop') %>%
+  pivot_wider(names_from = predicted, values_from = count, values_fill = 0) %>%
+  rowwise() %>%
+  mutate(
+    counts_vec = list(c_across(-c(phylogroup, expec))),
+    richness = sum(counts_vec > 0),
+    simpson = diversity(counts_vec, index = "simpson"),
+    simpson_inverse = diversity(counts_vec, index = "invsimpson"),
+    evenness_simpson = ifelse(richness > 1, simpson_inverse / richness, NA)) %>%
+  ungroup() %>%
+  select(phylogroup, expec, richness, simpson_inverse, evenness_simpson)
+
+# Count unique entries per disease group
+n_labels <- totest %>% 
+  filter(predicted != "K_neg_partial") %>%
+  mutate(phylogroup = case_when(phylogroup == "C_original" ~"C",
+                                TRUE ~ phylogroup)) %>%
+  mutate(expec = dplyr::recode(expec, `0` = "A", `1` = "I")) %>%
+  dplyr::group_by(expec) %>%
+  summarise(n = n(), .groups = "drop") %>%
+  mutate(label = paste0("n = ", n))
+
+# Long format for plotting
+diversity_long <- diversity_data %>%
+  pivot_longer(cols = c(richness, simpson_inverse, evenness_simpson),
+               names_to = "metric",
+               values_to = "value") %>%
+  filter(!is.na(value)) %>%
+  mutate(
+    expec = dplyr::recode(expec, `0` = "A", `1` = "I"),
+    expec = factor(expec, levels = c("A", "I")),
+    metric = factor(metric, levels = c("richness", "simpson_inverse", "evenness_simpson"),
+                    labels = c("Richness",
+                               "Simpson Diversity Index",
+                               "Evenness"))
+  )
+
+# Repeat n_labels for each metric panel
+metrics <- levels(diversity_long$metric)
+n_labels_plot <- tidyr::expand_grid(metric = metrics, n_labels)
+
+
+num_colors <- n_distinct(diversity_long$phylogroup) 
+palette_colors <- colorRampPalette(brewer.pal(12, "Set1"))(num_colors) 
+
+# separate nasty and nice phylogroups
+diversity_long = diversity_long %>% 
+  mutate(phylogroup = case_when(phylogroup == "C_original" ~"C",
+                                TRUE ~ phylogroup))
+
+
+pdf(paste0(plotdir,"ED5E_diversitySimpson.pdf"), width =3, height = 2.5)
+
+div_metric = "Simpson Diversity Index"
+
+ggplot(diversity_long %>% filter(metric == div_metric), aes(x = expec, y = value)) +
+  geom_boxplot(width = 0.4, outlier.shape = NA, alpha = 0.3,
+               position = position_dodge(0.2)) +
+  geom_line(aes(group = phylogroup,color = phylogroup),
+            position = position_dodge(0.15)) +
+  geom_point(aes(group = phylogroup,color = phylogroup), size = 2.5,
+             position = position_dodge(0.15)) +
+  geom_text_repel(aes(label = phylogroup,color = phylogroup),
+                  size = 3.5,
+                  position = position_dodge(0.1),
+                  show.legend = FALSE,
+                  max.overlaps = 20) +
+  scale_y_continuous(n.breaks = 5) + 
+  scale_color_manual(values=palette_colors) +
+  geom_text(data = n_labels_plot,
+    aes(x = expec, y = 16, label = label),
+    inherit.aes = F, check_overlap = T, 
+    #vjust = -3.5,
+    size = 4) +
+  labs(x = "",y = div_metric) +
+  theme_bw() +
+  theme(legend.position = "none",
+        axis.text=element_text(size=12),
+        strip.text = element_blank())
+
+dev.off()
+
+
+
+#### Richness
+pdf(paste0(plotdir,"ED5F_Richness.pdf"), width = 3, height = 2.5)
+
+div_metric = "Richness"
+
+ggplot(diversity_long %>% filter(metric == div_metric), aes(x = expec, y = value)) +
+  geom_boxplot(width = 0.4, outlier.shape = NA, alpha = 0.3,
+               position = position_dodge(0.2)) +
+  geom_line(aes(group = phylogroup,color = phylogroup),
+            position = position_dodge(0.15)) +
+  geom_point(aes(group = phylogroup,color = phylogroup), size = 2.5,
+             position = position_dodge(0.15)) +
+  geom_text_repel(aes(label = phylogroup,color = phylogroup),
+                  size = 3.5,
+                  position = position_dodge(0.1),
+                  show.legend = FALSE,
+                  max.overlaps = 10) +
+  scale_y_continuous(n.breaks = 5) + 
+  scale_color_manual(values=palette_colors) +
+  geom_text(
+    data = n_labels_plot,
+    aes(x = expec, y = 31, label = label),
+    inherit.aes = FALSE, check_overlap = T,
+    #vjust = -3.5,
+    size = 4
+  ) +
+  labs(
+    x = "",
+    y = "Richness") +
+  theme_bw() +
+  theme(legend.position = "none",
+        axis.text=element_text(size=12))
+
+
+dev.off()
+
+
+pdf(paste0(plotdir,"ED5G_Evenness.pdf"), width = 3, height = 2.5)
+
+div_metric = "Evenness"
+
+ggplot(diversity_long %>% filter(metric == div_metric), aes(x = expec, y = value)) +
+  geom_boxplot(width = 0.4, outlier.shape = NA, alpha = 0.3,
+               position = position_dodge(0.2)) +
+  geom_line(aes(group = phylogroup,color = phylogroup),
+            position = position_dodge(0.1)) +
+  geom_point(aes(group = phylogroup,color = phylogroup), size = 2.5,
+             position = position_dodge(0.1)) +
+  geom_text_repel(aes(label = phylogroup,color = phylogroup),
+                  size = 3.5,
+                  position = position_dodge(0.1),
+                  show.legend = FALSE,
+                  max.overlaps = 10) +
+  scale_y_continuous(breaks = c(0,0.2,0.4,0.6), limits = c(0,0.7)) + 
+  scale_color_manual(values=palette_colors) +
+  geom_text(
+    data = n_labels_plot,
+    aes(x = expec, y = 0.65, label = label),
+    inherit.aes = FALSE, check_overlap = T,
+    size = 4) +
+  labs(x = "",y = "Evenness") +
+  theme_bw() +
+  theme(legend.position = "none",
+        axis.text=element_text(size=12))
+
+
+dev.off()
+
+
+
+file_path = paste0(home_dir,"sourcedatadir/Source_Data_EDFig5.xlsx")
+sheet_name = "ED5EFG_phylogroup_diversity"
+
+# Load existing file if it exists, otherwise create new
+wb <- if (file.exists(file_path)) loadWorkbook(file_path) else createWorkbook()
+
+# Add sheet and data
+addWorksheet(wb, sheet_name)
+writeData(wb, sheet_name, diversity_long)
+
+# Save
+saveWorkbook(wb, file_path, overwrite = TRUE)
+```
+
+
+
+#### ED5H - distribution of Ktypes per isolation source
+
+Same data as 4C.
+###### left with K-neg
+
+```{r}
+
+### prep ncbi data
+ncbi_analysis = read.xlsx(paste0(outputdir,"ncbi_annotated_derep_260112.xlsx")) %>% 
+  filter(host_group == "Human" & host_common_name == "Human" & !(isolation_source %in% c("Food","Probiotic","Sewage and wastewater","Meat","Plant"))) %>%
+  mutate(isolation_source = case_when(!(isolation_source %in% c("Stool","Urine and bladder", "Blood","Brain and CSF")) ~ "Other body sites",
+                                      TRUE ~ isolation_source),
+         host_health = case_when(host_health %in% c("asymptomatic bacteriuria", "Urinary Tract Infection", "recurrent uti") | isolation_source == "Urine and bladder" ~ "UTI",
+                                 host_health %in% c("Bloodstream Infection", "neonatal bacteremia") | isolation_source == "Blood" ~ "BSI",
+                                 host_health %in% c("Meningitis") | isolation_source == "Brain and CSF" ~ "Meningitis",
+                                 host_health %in% c("GI Tract and Diarrhoea", "HUS and TTP", "STEC/Shigella/EHEC") ~ "InPEC",
+                                 host_health == "Healthy" & isolation_source == "Stool" ~ "Healthy (stool)",
+                                 host_health == "Healthy" & isolation_source != "Stool"~ "Healthy (other)",
+                                 TRUE ~ "Other disease")) %>%
+  dplyr::ungroup() %>%
+  #add genome id column for merging with other datasets - after dereplication we didn't have it anymore
+  mutate(genome_id = row_number(),
+        group = case_when(predicted == "K_neg_partial" ~ "kps -",
+                           TRUE ~ group)) %>%
+  dplyr::select(genome_id, predicted, host_health,host_age,geographic_group, host_gender, group)
+
+
+# prep healthy gut MAGs
+gutmags = readxl::read_xlsx(paste0(outputdir,"gutmags_annotated_metad_ectyper.xlsx")) %>%
+  mutate(group = case_when(predicted %in% c("No KpsC identified", "No K-type assigned") ~ predicted,
+                           predicted == "K_neg_partial" ~ "kps -",
+                           TRUE ~ group),
+         phylogroup = case_when(phylogroup == "C_original" ~"C",
+                                TRUE ~ phylogroup)) %>%
+  dplyr::ungroup() %>%
+   dplyr::select(genome_id,predicted, host_health,host_age, host_gender, geographic_group, group) %>%
+    mutate(host_health = "MAGs")
+
+
+
+# prep egli collection
+egli = readxl::read_xlsx(paste0(outputdir,"egli_annotated_metad_ectyper.xlsx")) %>%
+  mutate(group = case_when(predicted == "K_neg_partial" ~ "kps -",
+                           TRUE ~ group),
+         host_health = case_when(invasiveness=="invasive" ~ "BSI",
+                                                 TRUE ~ "UTI")) %>%
+  dplyr::select(predicted, host_gender, host_health,host_age,geographic_group, group)
+
+
+common_cols <- intersect(intersect(names(ncbi_analysis), names(egli)), names(gutmags))
+totest_invasive <- gdata::combine(ncbi_analysis[common_cols], egli[common_cols], gutmags[common_cols])
+
+
+
+leftpanel <- totest_invasive %>%
+  group_by(host_health) %>%
+  mutate(total = n()) %>%
+  ungroup() %>%
+  group_by(predicted, total, host_health) %>%
+  summarise(count = n(), .groups = "drop") %>%
+  mutate(proportion = (count / total) * 100) %>%
+  mutate(predicted = case_when(proportion > 2 ~ predicted,
+                               TRUE ~ "Other")) %>%
+  group_by(host_health, predicted) %>%
+  summarise(count = sum(count), .groups = "drop") %>%
+  group_by(host_health) %>%
+  mutate(total = sum(count),
+         proportion = (count / total) * 100) %>%
+  ungroup()
+
+rightpanel <- totest_invasive %>%
+  filter(predicted != "K_neg_partial") %>%
+  mutate(predicted = gsub("K54_96", "K96", predicted)) %>%
+  group_by(host_health) %>%
+  mutate(total = n()) %>%
+  ungroup() %>%
+  group_by(predicted, total, host_health) %>%
+  summarise(count = n(), .groups = "drop") %>%
+  mutate(proportion = (count / total) * 100) %>%
+  mutate(predicted = case_when(proportion > 4 ~ predicted,
+                               TRUE ~ "Other")) %>%
+  group_by(host_health, predicted) %>%
+  summarise(count = sum(count), .groups = "drop") %>%
+  group_by(host_health) %>%
+  mutate(total = sum(count),
+         proportion = (count / total) * 100) %>%
+  ungroup()
+
+
+#take color mapping from S4B
+color_mapping <- readRDS(paste0(outputdir,"Ktype_color_mapping.rds"))
+color_mapping <- c(color_mapping[names(color_mapping) %in% unique(c(leftpanel$predicted, rightpanel$predicted))],
+                   K_neg_partial = "white")
+
+# Define consistent K-type order
+all_predicted <- union(leftpanel$predicted,rightpanel$predicted)
+core_ktypes <- setdiff(all_predicted, c("K_neg_partial", "Other"))
+predicted_levels <- c(sort(core_ktypes), "Other", "K_neg_partial")
+
+# Apply to both panels
+leftpanel$predicted <- factor(leftpanel$predicted, levels = predicted_levels)
+rightpanel$predicted <- factor(rightpanel$predicted, levels = predicted_levels)
+
+
+
+
+leftpanel$host_health <- factor(leftpanel$host_health, levels=rev(c("MAGs","Healthy (stool)","Healthy (other)","InPEC","UTI","BSI","Meningitis","Other disease")))
+
+
+pdf(paste0(plotdir,"ED5H_left_K_type_disease.pdf"), width = 7, height = 3)
+
+totals <- leftpanel %>%
+  group_by(host_health) %>%
+  summarise(total_count = sum(count), .groups = "drop")
+
+ggplot(leftpanel, aes(x = host_health, y = proportion, fill = predicted, label = count)) +
+  geom_bar(stat = "identity", color="grey30",linewidth = 0.15) +
+  scale_fill_manual(values = color_mapping) +  
+  labs(y = "% genomes", x = "", fill = "K-type") +
+  scale_y_continuous(breaks=c(0,25,50,75,100), limits=c(0,110)) +
+  geom_text(data = totals, aes(x = host_health, y = 107, label = total_count),
+            inherit.aes = FALSE,nudge_y = -3,
+            size = 4.5, hjust = 0.2) +
+  theme_classic() +
+  coord_flip() +
+  theme(axis.text.x = element_text(size = 16),
+        axis.title = element_text(size = 17),
+        axis.text.y = element_text(size = 16),
+        strip.text = element_text(size = 17),
+        legend.position = "none")
+    
+dev.off()
+
+file_path = paste0(home_dir,"sourcedatadir/Source_Data_EDFig5.xlsx")
+sheet_name = "ED5Hleft_Ktype_disease"
+
+# Load existing file if it exists, otherwise create new
+wb <- if (file.exists(file_path)) loadWorkbook(file_path) else createWorkbook()
+
+# Add sheet and data
+addWorksheet(wb, sheet_name)
+writeData(wb, sheet_name, leftpanel)
+
+# Save
+saveWorkbook(wb, file_path, overwrite = TRUE)
+
+```
+
+##### right without K-neg
+
+```{r}
+
+rightpanel$host_health <- factor(rightpanel$host_health, levels=rev(c("MAGs","Healthy (stool)",
+                                                                                "Healthy (other)","InPEC",
+                                                                                "UTI","BSI","Meningitis",
+                                                                                "Other disease")))
+
+
+pdf(paste0(plotdir,"ED5H_right_K_type_disease_onlyKpos.pdf"), width = 9, height = 3)
+
+# Calculate total counts per bar (disease + phylogroup)
+totals <- rightpanel %>%
+  group_by(host_health) %>%
+  summarise(total_count = sum(count), .groups = "drop")
+
+ggplot(rightpanel, aes(x = host_health, y = proportion, fill = predicted, label = count)) +
+  geom_bar(stat = "identity", color="grey30",linewidth = 0.15) +
+  scale_fill_manual(values = color_mapping) +  
+  scale_y_continuous(breaks=c(0,25,50,75,100), limits=c(0,110)) +
+  geom_text(data = totals, aes(x = host_health, y = 107, label = total_count),
+            inherit.aes = FALSE,nudge_y = -3,
+            size = 4.5, hjust = 0.2) +
+  labs(y = expression(paste("% ", italic("kps"), "+ genomes")), x= "", fill="K-type") +
+  theme_classic() +
+  coord_flip() +
+  theme(axis.text.x = element_text(size = 16),
+        axis.title = element_text(size = 17),
+        axis.text.y = element_text(size = 16),
+        strip.text = element_text(size = 17),
+        legend.text=element_text(size = 12),
+        legend.title=element_text(size = 14),
+        legend.key.height = unit(7, "mm"),
+        legend.key.width = unit(7, "mm"),
+        legend.position = "right") + guides(fill = guide_legend(ncol = 3))
+
+
+
+dev.off()
+
+
+file_path = paste0(home_dir,"sourcedatadir/Source_Data_EDFig5.xlsx")
+sheet_name = "ED5Hright_Ktype_disease_Kpos"
+
+# Load existing file if it exists, otherwise create new
+wb <- if (file.exists(file_path)) loadWorkbook(file_path) else createWorkbook()
+
+# Add sheet and data
+addWorksheet(wb, sheet_name)
+writeData(wb, sheet_name, rightpanel)
+
+# Save
+saveWorkbook(wb, file_path, overwrite = TRUE)
+```
+
+
+## ED Fig. 6
 
 ##### load annotation O-types
 ```{r}
@@ -3645,7 +4076,7 @@ totest %>% group_by(source) %>%
 ```
 
 
-### ED9A - K-type/O-type proportions
+### ED6A - K-type/O-type proportions
 
 
 ```{r}
@@ -3699,7 +4130,7 @@ toplot <- toplot %>%
 
 
 # upper panel
-pdf(paste0(plotdir,"ED9A_upperpanel_OKtype_barplot_normgenomes.pdf"),width=10,height=5)
+pdf(paste0(plotdir,"ED6A_upperpanel_OKtype_barplot_normgenomes.pdf"),width=10,height=5)
 ggplot(toplot, aes(x = reorder(o_type, -total_height),
                    y = unique_ktypes, fill = h_type)) +
   geom_bar(stat = "identity", color = "black") +
@@ -3718,6 +4149,19 @@ ggplot(toplot, aes(x = reorder(o_type, -total_height),
 
 dev.off()
 
+
+file_path = paste0(home_dir,"sourcedatadir/Source_Data_EDFig6.xlsx")
+sheet_name = "ED6Atop_Otype"
+
+# Load existing file if it exists, otherwise create new
+wb <- if (file.exists(file_path)) loadWorkbook(file_path) else createWorkbook()
+
+# Add sheet and data
+addWorksheet(wb, sheet_name)
+writeData(wb, sheet_name, toplot)
+
+# Save
+saveWorkbook(wb, file_path, overwrite = TRUE)
 
 # lower panel (kps+ / - )
 toplot = toplot %>% 
@@ -3763,10 +4207,22 @@ ggplot(toplot, aes(x = o_type, y = proportion, fill = manual_ktyp, label = count
 dev.off()
 
 
+file_path = paste0(home_dir,"sourcedatadir/Source_Data_EDFig6.xlsx")
+sheet_name = "ED6Abottom_Otype_Kpos"
+
+# Load existing file if it exists, otherwise create new
+wb <- if (file.exists(file_path)) loadWorkbook(file_path) else createWorkbook()
+
+# Add sheet and data
+addWorksheet(wb, sheet_name)
+writeData(wb, sheet_name, toplot)
+
+# Save
+saveWorkbook(wb, file_path, overwrite = TRUE)
 
 ```
 
-###ED9B - O-type-K-type heatmap
+###ED6B - O-type-K-type heatmap
 
 
 ```{r}
@@ -3897,7 +4353,7 @@ col_fun <- colorRamp2(
 )
 
 # plot
-pdf(paste0(plotdir, "ED9B_clustered_OK.pdf"), width = 19, height = 16)
+pdf(paste0(plotdir, "ED6B_clustered_OK.pdf"), width = 19, height = 16)
 
 
 hm <- Heatmap(mat_data,
@@ -3922,6 +4378,19 @@ draw(hm,
 
 dev.off()
 
+
+file_path = paste0(home_dir,"sourcedatadir/Source_Data_EDFig6.xlsx")
+sheet_name = "ED6B_OKtype_heatmap"
+
+# Load existing file if it exists, otherwise create new
+wb <- if (file.exists(file_path)) loadWorkbook(file_path) else createWorkbook()
+
+# Add sheet and data
+addWorksheet(wb, sheet_name)
+writeData(wb, sheet_name, mat_data)
+
+# Save
+saveWorkbook(wb, file_path, overwrite = TRUE)
 
 ```
 
