@@ -2492,6 +2492,30 @@ saveWorkbook(wb, file_path, overwrite = TRUE)
 
 # ---------- SUPPLEMENTARY FIGS------------
 
+## ED Fig. 2C - MS data
+
+reformatting for source data - rest goes in Zenodo
+```{r}
+msdata = list.files(paste0(inputdir,"peak_list/"), full.names = TRUE) %>%
+  set_names(basename(.)) %>%
+  map_dfr(read.table, sep = "\t", header = TRUE, .id = "file") %>%
+  select(file, everything()) %>%
+  mutate(file = gsub("\\.txt$", "", file))
+
+#write as source data
+file_path = paste0(home_dir,"sourcedatadir/Source_Data_EDFig2.xlsx")
+sheet_name = "ED2C_MS_data"
+# Load existing file if it exists, otherwise create new
+wb <- if (file.exists(file_path)) loadWorkbook(file_path) else createWorkbook()
+# Add sheet and data
+addWorksheet(wb, sheet_name)
+writeData(wb, sheet_name, msdata)
+# Save
+saveWorkbook(wb, file_path, overwrite = TRUE)
+
+```
+
+
 ## ED Fig. 3
 
 ```{r}
