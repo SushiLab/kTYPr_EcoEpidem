@@ -2,6 +2,12 @@
 
 This repository contains code and data used for the analysis of *E. coli* transporter-dependent-capsule (K-type) diversity, ecology and epidemiology. 
 
+## Profiled collections:
+- RefSeq inputdir/refseq37_flank_20260107_ktyps.tsv
+- NCBI inputdir/ncbi_flank_20260108_ktyps.tsv
+- Egli inputdir/egli_flank_20260115_ktyps.tsv
+- Gut MAGs inputdir/commensal_flank_20260115_ktyps.tsv
+
 ## Main repository structure
 
 This refers to Figures 3-4, Extended Data Figures 3, 6-9 and Tables 12-14  in the study "The natural diversity of *E. coli* transporter-dependent capsules".
