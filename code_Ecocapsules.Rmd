@@ -831,7 +831,7 @@ toplot = totest %>%
                                 host_group == "Human-/animal-\nassociated Environment" & !(host_common_name %in% c("Pig","Cow","Sheep","Other or unspecified livestock")) | host_group == "Human" ~ "Human and related",
                                 TRUE ~ host_group)) %>%
   mutate(num = as.numeric(str_extract(predicted, "\\d+")),
-         Knovel = ifelse(num >= 104, "novel", "known")) %>%
+         Knovel = ifelse(num >= 104, "uncharacterised", "known")) %>%
   dplyr::group_by(host_group) %>%
   dplyr::mutate(total=n()) %>%
   dplyr::ungroup() %>%
@@ -854,7 +854,7 @@ toplot = totest %>%
                                 host_group == "Human-/animal-\nassociated Environment" & host_common_name %in% c("Pig","Cow","Sheep","Other or unspecified livestock") ~ "Livestock-\nassociated Environment",
                                 TRUE ~ host_group)) %>%
   mutate(num = as.numeric(str_extract(predicted, "\\d+")),
-         Knovel = ifelse(num >= 104, "novel", "known")) %>%
+         Knovel = ifelse(num >= 104, "uncharacterised", "known")) %>%
   dplyr::group_by(host_group) %>%
   dplyr::mutate(total=n()) %>%
   dplyr::ungroup() %>%
@@ -872,7 +872,7 @@ ktype_colors["other"] <- "grey"
 
 toplot$host_group <- factor(toplot$host_group, levels=rev(c("Human","Human-/animal-\nassociated Environment","Pets","Avian","Livestock","Livestock-\nassociated Environment","Wild Animals","Food","Other Environmental Source","Laboratory","Unknown")))
 
-pdf(paste0(plotdir,"3E_ncbi_k_type_novel_old_hosts.pdf"),width = 9,height=4)
+pdf(paste0(plotdir,"3E_ncbi_k_type_novel_old_hosts.pdf"),width = 9.5,height=4)
 
 ggplot(toplot,aes(x=host_group,y=proportion,fill=Knovel,label=count)) +
   geom_bar(stat = "identity", color = "black") +
@@ -924,7 +924,7 @@ toplot = totest %>%
                                        TRUE ~ geographic_location),
         geographic_location = tolower(geographic_location)) %>%
   mutate(num = as.numeric(str_extract(predicted, "\\d+")),
-         Knovel = ifelse(num >= 104, "novel", "known"),
+         Knovel = ifelse(num >= 104, "uncharacterised", "known"),
          host_group = interaction(host_common_name,geographic_location)) %>%
   ungroup() %>%
   # correct by the number of genomes 
