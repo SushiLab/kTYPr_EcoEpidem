@@ -13,7 +13,7 @@ This repository contains code and data used for the analysis of *E. coli* transp
 
 ## Main repository structure
 
-This refers to Figures 3-4, Extended Data Figures 3, 6-9 and Tables 12-14  in the study "The natural diversity of *E. coli* transporter-dependent capsules".
+This refers to Figures 3-4, Extended Data Figures 3-6 and Tables 12-14  in the study "The natural diversity of *E. coli* transporter-dependent capsules".
 
 ```text
 code_Ecocapsules.Rmd   # Main analysis and figure-generation code
